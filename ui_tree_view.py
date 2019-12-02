@@ -7,7 +7,7 @@ class UiTreeView:
 
         self.tree_view = tree_view
         self.tab_table = tab_table
-        self.parent_items = {}
+        self.parent_items = {}  # key: display names
         self.help = UiHelpers()
 
         self.tree_view.itemDoubleClicked.connect( self.open_tree_item_in_tab )
