@@ -5,7 +5,7 @@ class UiHelpers:
     def __init__(self):
         self.translate = QtCore.QCoreApplication.translate
 
-    def add_tab(self, object_name, name, table_widget):
+    def add_tab(self, object_name, name, table_widget): # NOTE: this has been implermented into UI_tabs.
         """ Adds new tab to table widget
 
         :param object_name:     name of the object (should be unique to app)
