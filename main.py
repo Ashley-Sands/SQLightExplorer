@@ -1,6 +1,10 @@
 import amsql_viewer_ui
 import ui_helpers
 from ui_tab_table import ui_tabTable
+from ui_tree_view import UiTreeView
+
+# Signal functions
+
 
 if __name__ == "__main__":
 
@@ -18,7 +22,7 @@ if __name__ == "__main__":
 
     # Setup the classes to manage the UI elements :)
     ui_tab_table = ui_tabTable( main_app.tab_view )
-
+    ui_tree_view = UiTreeView(main_app.treeWidget, ui_tab_table)
 
 
     # Finaly show the window :D
