@@ -80,28 +80,6 @@ class Ui_MainWindow(object):
         self.tab_view.setTabBarAutoHide(False)
         self.tab_view.setObjectName("tab_view")
 
-        self.tab_welcome = QtWidgets.QWidget()
-        self.tab_welcome.setObjectName("tab_welcome")
-
-        self.label = QtWidgets.QLabel(self.tab_welcome)
-        self.label.setEnabled(True)
-        self.label.setGeometry(QtCore.QRect(6, 10, 571, 371))
-
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
-
-        self.label.setSizePolicy(sizePolicy)
-        self.label.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.label.setFrameShadow(QtWidgets.QFrame.Plain)
-        self.label.setTextFormat(QtCore.Qt.RichText)
-        self.label.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
-        self.label.setWordWrap(True)
-        self.label.setObjectName("label")
-
-        self.tab_view.addTab(self.tab_welcome, "")
-
         self.tab_default = QtWidgets.QWidget()
         self.tab_default.setObjectName("tab_default")
         self.table_default = QtWidgets.QTableWidget(self.tab_default)
@@ -197,8 +175,7 @@ class Ui_MainWindow(object):
         self.treeWidget.setSortingEnabled(__sortingEnabled)
         self.button_add_table.setText(_translate("MainWindow", "Add Table"))
         self.button_drop_table.setText(_translate("MainWindow", "Drop Table"))
-        self.label.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:600;\">AMSql </span><span style=\" font-size:14pt; vertical-align:super;\">v0.2</span></p><p align=\"center\"><span style=\" font-size:12pt;\">AMSql is simple tool to view and edit sql lite databases over http/https</span></p><p><br/></p><p><span style=\" font-size:10pt;\">Once you have added a database, double click on a table nested in the database to view in a new tab :)</span></p><p><br/></p><p><span style=\" font-size:10pt;\">Featchers...</span></p></body></html>"))
-        self.tab_view.setTabText(self.tab_view.indexOf(self.tab_welcome), _translate("MainWindow", "Welcome"))
+
         item = self.table_default.verticalHeaderItem(0)
         item.setText(_translate("MainWindow", "0"))
         item = self.table_default.horizontalHeaderItem(0)
@@ -225,6 +202,37 @@ class Ui_MainWindow(object):
         self.actionSettings.setText(_translate("MainWindow", "Settings"))
         self.actionQuit.setText(_translate("MainWindow", "Quit"))
         self.actionShow_Welcome_Screen.setText(_translate("MainWindow", "Show Welcome Screen"))
+
+    def welcom_tab(self):
+        # TODO: need to select self :)
+        _translate = QtCore.QCoreApplication.translate
+
+        self.tab_welcome = QtWidgets.QWidget()
+        self.tab_welcome.setObjectName("tab_welcome")
+
+        self.label = QtWidgets.QLabel(self.tab_welcome)
+        self.label.setEnabled(True)
+        self.label.setGeometry(QtCore.QRect(6, 10, 571, 371))
+
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
+
+        self.label.setSizePolicy(sizePolicy)
+        self.label.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.label.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.label.setTextFormat(QtCore.Qt.RichText)
+        self.label.setAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignTop)
+        self.label.setWordWrap(True)
+        self.label.setObjectName("label")
+
+        self.tab_view.addTab(self.tab_welcome, "")
+
+        self.label.setText(_translate("MainWindow",
+                                      "<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:600;\">AMSql </span><span style=\" font-size:14pt; vertical-align:super;\">v0.2</span></p><p align=\"center\"><span style=\" font-size:12pt;\">AMSql is simple tool to view and edit sql lite databases over http/https</span></p><p><br/></p><p><span style=\" font-size:10pt;\">Once you have added a database, double click on a table nested in the database to view in a new tab :)</span></p><p><br/></p><p><span style=\" font-size:10pt;\">Featchers...</span></p></body></html>"))
+        self.tab_view.setTabText(self.tab_view.indexOf(self.tab_welcome), _translate("MainWindow", "Welcome"))
+
 
 
 if __name__ == "__main__":
