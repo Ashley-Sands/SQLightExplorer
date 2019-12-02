@@ -141,6 +141,7 @@ class Ui_MainWindow(object):
 
         self.actionShow_Welcome_Screen = QtWidgets.QAction(MainWindow)
         self.actionShow_Welcome_Screen.setObjectName("actionShow_Welcome_Screen")
+        self.actionShow_Welcome_Screen.triggered.connect(self.add_new_welcome_tab)
 
         self.menuFile.addAction(self.actionShow_Welcome_Screen)
         self.menuFile.addAction(self.actionSettings)
@@ -203,7 +204,10 @@ class Ui_MainWindow(object):
         self.actionQuit.setText(_translate("MainWindow", "Quit"))
         self.actionShow_Welcome_Screen.setText(_translate("MainWindow", "Show Welcome Screen"))
 
-    def welcom_tab(self):
+    def add_new_welcome_tab(self, checked):
+        self.welcome_tab()
+
+    def welcome_tab(self):
         # TODO: need to select self :)
         _translate = QtCore.QCoreApplication.translate
 
@@ -232,6 +236,7 @@ class Ui_MainWindow(object):
         self.label.setText(_translate("MainWindow",
                                       "<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:600;\">AMSql </span><span style=\" font-size:14pt; vertical-align:super;\">v0.2</span></p><p align=\"center\"><span style=\" font-size:12pt;\">AMSql is simple tool to view and edit sql lite databases over http/https</span></p><p><br/></p><p><span style=\" font-size:10pt;\">Once you have added a database, double click on a table nested in the database to view in a new tab :)</span></p><p><br/></p><p><span style=\" font-size:10pt;\">Featchers...</span></p></body></html>"))
         self.tab_view.setTabText(self.tab_view.indexOf(self.tab_welcome), _translate("MainWindow", "Welcome"))
+        self.tab_view.setCurrentIndex(self.tab_view.indexOf(self.tab_welcome))
 
 
 
