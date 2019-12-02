@@ -6,6 +6,7 @@
 #
 # WARNING! All changes made in this file will be lost!
 
+# This code has been changed by Ashley Sands
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -18,42 +19,54 @@ class Ui_MainWindow(object):
         MainWindow.setMaximumSize(QtCore.QSize(823, 512))
         MainWindow.setDocumentMode(False)
         MainWindow.setDockOptions(QtWidgets.QMainWindow.AllowTabbedDocks|QtWidgets.QMainWindow.AnimatedDocks)
+
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
+
         self.horizontalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
         self.horizontalLayoutWidget.setGeometry(QtCore.QRect(10, 10, 181, 31))
         self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
+
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget)
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout.setObjectName("horizontalLayout")
+
         self.button_new_database = QtWidgets.QPushButton(self.horizontalLayoutWidget)
         self.button_new_database.setObjectName("button_new_database")
         self.horizontalLayout.addWidget(self.button_new_database)
+
         self.button_open_database = QtWidgets.QPushButton(self.horizontalLayoutWidget)
         self.button_open_database.setObjectName("button_open_database")
         self.horizontalLayout.addWidget(self.button_open_database)
+
         self.treeWidget = QtWidgets.QTreeWidget(self.centralwidget)
         self.treeWidget.setGeometry(QtCore.QRect(10, 50, 181, 371))
         self.treeWidget.setObjectName("treeWidget")
         item_0 = QtWidgets.QTreeWidgetItem(self.treeWidget)
         item_1 = QtWidgets.QTreeWidgetItem(item_0)
+
         self.horizontalLayoutWidget_2 = QtWidgets.QWidget(self.centralwidget)
         self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(10, 430, 181, 31))
         self.horizontalLayoutWidget_2.setObjectName("horizontalLayoutWidget_2")
+
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget_2)
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+
         self.button_add_table = QtWidgets.QPushButton(self.horizontalLayoutWidget_2)
         self.button_add_table.setObjectName("button_add_table")
         self.horizontalLayout_2.addWidget(self.button_add_table)
+
         self.button_drop_table = QtWidgets.QPushButton(self.horizontalLayoutWidget_2)
         self.button_drop_table.setObjectName("button_drop_table")
         self.horizontalLayout_2.addWidget(self.button_drop_table)
+
         self.line = QtWidgets.QFrame(self.centralwidget)
         self.line.setGeometry(QtCore.QRect(190, 10, 20, 451))
         self.line.setFrameShape(QtWidgets.QFrame.VLine)
         self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line.setObjectName("line")
+
         self.tab_view = QtWidgets.QTabWidget(self.centralwidget)
         self.tab_view.setEnabled(True)
         self.tab_view.setGeometry(QtCore.QRect(210, 10, 600, 421))
@@ -66,15 +79,19 @@ class Ui_MainWindow(object):
         self.tab_view.setMovable(True)
         self.tab_view.setTabBarAutoHide(False)
         self.tab_view.setObjectName("tab_view")
+
         self.tab_welcome = QtWidgets.QWidget()
         self.tab_welcome.setObjectName("tab_welcome")
+
         self.label = QtWidgets.QLabel(self.tab_welcome)
         self.label.setEnabled(True)
         self.label.setGeometry(QtCore.QRect(6, 10, 571, 371))
+
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
+
         self.label.setSizePolicy(sizePolicy)
         self.label.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.label.setFrameShadow(QtWidgets.QFrame.Plain)
@@ -82,21 +99,26 @@ class Ui_MainWindow(object):
         self.label.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
         self.label.setWordWrap(True)
         self.label.setObjectName("label")
+
         self.tab_view.addTab(self.tab_welcome, "")
+
         self.tab_default = QtWidgets.QWidget()
         self.tab_default.setObjectName("tab_default")
         self.table_default = QtWidgets.QTableWidget(self.tab_default)
         self.table_default.setGeometry(QtCore.QRect(0, 0, 600, 391))
+
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.table_default.sizePolicy().hasHeightForWidth())
+
         self.table_default.setSizePolicy(sizePolicy)
         self.table_default.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.table_default.setFrameShadow(QtWidgets.QFrame.Plain)
         self.table_default.setObjectName("table_default")
         self.table_default.setColumnCount(7)
         self.table_default.setRowCount(1)
+
         item = QtWidgets.QTableWidgetItem()
         self.table_default.setVerticalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
@@ -115,35 +137,48 @@ class Ui_MainWindow(object):
         self.table_default.setHorizontalHeaderItem(6, item)
         item = QtWidgets.QTableWidgetItem()
         self.table_default.setItem(0, 0, item)
+
         self.tab_view.addTab(self.tab_default, "")
+
         MainWindow.setCentralWidget(self.centralwidget)
+
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 823, 21))
         self.menubar.setObjectName("menubar")
+
         self.menuFile = QtWidgets.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")
         MainWindow.setMenuBar(self.menubar)
+
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setSizeGripEnabled(False)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
+
         self.actionSettings = QtWidgets.QAction(MainWindow)
         self.actionSettings.setObjectName("actionSettings")
+
         self.actionQuit = QtWidgets.QAction(MainWindow)
         self.actionQuit.setObjectName("actionQuit")
+
         self.actionShow_Welcome_Screen = QtWidgets.QAction(MainWindow)
         self.actionShow_Welcome_Screen.setObjectName("actionShow_Welcome_Screen")
+
         self.menuFile.addAction(self.actionShow_Welcome_Screen)
         self.menuFile.addAction(self.actionSettings)
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionQuit)
+
         self.menubar.addAction(self.menuFile.menuAction())
 
         self.retranslateUi(MainWindow)
         self.tab_view.setCurrentIndex(0)
+
         self.treeWidget.doubleClicked['QModelIndex'].connect(self.treeWidget.collapseAll)
         self.table_default.cellChanged['int','int'].connect(self.table_default.hideRow)
+
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
         MainWindow.setTabOrder(self.button_new_database, self.button_open_database)
         MainWindow.setTabOrder(self.button_open_database, self.treeWidget)
         MainWindow.setTabOrder(self.treeWidget, self.tab_view)
