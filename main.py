@@ -25,6 +25,7 @@ if __name__ == "__main__":
     ui_tree_view = UiTreeView(main_app.treeWidget, ui_tab_table)
 
 
+
     # Finaly show the window :D
     MainWindow.show()
 
