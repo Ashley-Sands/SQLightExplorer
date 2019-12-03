@@ -2,7 +2,7 @@ from windows import amsql_explorer_window
 from ui_objects.ui_tab_table import ui_tabTable
 from ui_objects.ui_tree_view import UiTreeView
 from dialogue_window import DialogueWindow_Warning, DialogueWindow_TextEnter, DialogueWindow_Config, DialogueWindow_Message
-from web_querys import WebQuerys
+from actions import Action
 
 def dialogue_callback( dialog_name, accepted ):
     pass
@@ -49,13 +49,14 @@ if __name__ == "__main__":
     dialog_message = DialogueWindow_Message("message")
 
     # Setup actions
+    open_database_action = Action(dialog_message, ui_tree_view)
 
     # Setup dialogue instances
     dialogs = {}
 
-    dialogs["drop_table"] = DialogueWindow_Warning("drop_table", dialogue_callback)  #TODO: Remove name from class / __init__
+    dialogs["drop_table"] = DialogueWindow_Warning("drop_table", dialogue_callback)  #TODO: Remove name from class / __init__ as the callback now sets it self insted of its name :)
     dialogs["new_database"] = DialogueWindow_TextEnter("new_database", dialogue_callback)
-    dialogs["open_database"] = DialogueWindow_TextEnter("open_database", dialogue_callback)
+    dialogs["open_database"] = DialogueWindow_TextEnter("open_database", open_database_action.dialog_action)
     dialogs["config"] = DialogueWindow_Config("config")
 
     # set dict of dialogues in each dialogue instance to prevent multiple windows from being opened
