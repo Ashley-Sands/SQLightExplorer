@@ -1,5 +1,5 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
-from ui_helpers import UiHelpers
+from PyQt5 import QtCore, QtWidgets
+from ui_objects.ui_helpers import UiHelpers
 
 class ui_tabTable:
 
