@@ -14,7 +14,7 @@ class UiTreeView:
 
     def open_tree_item_in_tab(self, tree_item, column_id):
 
-        if tree_item.parent() != None :
+        if tree_item.parent() == None :
             return;
 
         # add new tab and table.
