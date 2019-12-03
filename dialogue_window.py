@@ -27,10 +27,8 @@ class DialogueWindow:
 
     def set_signals(self):
         """ Setup signals"""
-        self.app.buttons_yes.accepted.connect( self.dialog_accepted )
-        self.app.buttons_yes.rejected.connect( self.dialog_rejected )
+        self.dialog.finished.connect( self.dialog_closed )
         QtCore.QMetaObject.connectSlotsByName(self.dialog)
-
 
     def reset_status(self):
         """ Resets status"""
@@ -42,22 +40,29 @@ class DialogueWindow:
 
     def dialog_accepted(self):
         """Signal function for accepted status"""
-        self.clear_window()
         print("accepted")
         pass
 
     def dialog_rejected(self):
         """Signal function for rejected status"""
-        self.clear_window()
         print("rejected")
         pass
+
+    def dialog_closed(self, status):
+
+        if status == 0:
+            self.dialog_rejected()
+        else:
+            self.dialog_accepted()
+
+        self.clear_window()
+        print("closed status", status)
 
 
 class DialogueWindow_Warning(DialogueWindow):
 
     def __init__(self):
         super().__init__()
-        self.text = ""
 
     def window(self):
 
