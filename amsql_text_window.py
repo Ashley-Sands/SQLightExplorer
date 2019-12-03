@@ -14,11 +14,11 @@ class UiTextDialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.resize(572, 120)
-        self.buttons_open = QtWidgets.QDialogButtonBox(Dialog)
-        self.buttons_open.setGeometry(QtCore.QRect(20, 80, 531, 32))
-        self.buttons_open.setOrientation(QtCore.Qt.Horizontal)
-        self.buttons_open.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Open)
-        self.buttons_open.setObjectName("buttons_open")
+        self.buttons_yes = QtWidgets.QDialogButtonBox(Dialog)
+        self.buttons_yes.setGeometry(QtCore.QRect(20, 80, 531, 32))
+        self.buttons_yes.setOrientation(QtCore.Qt.Horizontal)
+        self.buttons_yes.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel | QtWidgets.QDialogButtonBox.Open)
+        self.buttons_yes.setObjectName("buttons_open")
         self.text_input = QtWidgets.QLineEdit(Dialog)
         self.text_input.setGeometry(QtCore.QRect(20, 40, 531, 31))
         self.text_input.setObjectName("text_input")
@@ -31,8 +31,8 @@ class UiTextDialog(object):
         self.object_name.setObjectName("object_name")
 
         self.retranslateUi(Dialog)
-        self.buttons_open.accepted.connect(Dialog.accept)
-        self.buttons_open.rejected.connect(Dialog.reject)
+        self.buttons_yes.accepted.connect(Dialog.accept)
+        self.buttons_yes.rejected.connect(Dialog.reject)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
