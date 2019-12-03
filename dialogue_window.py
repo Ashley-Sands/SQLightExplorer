@@ -74,7 +74,7 @@ class DialogueWindow:
         self.clear_window()
 
         if self.callback is not None:
-            self.callback(self.name, status)
+            self.callback(self, status)
 
         print("closed status", status)
 
