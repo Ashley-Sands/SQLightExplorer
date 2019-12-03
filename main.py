@@ -2,7 +2,7 @@ from windows import amsql_explorer_window
 from ui_objects.ui_tab_table import ui_tabTable
 from ui_objects.ui_tree_view import UiTreeView
 from dialogue_window import DialogueWindow_Warning, DialogueWindow_TextEnter, DialogueWindow_Config, DialogueWindow_Message
-from actions import Action
+from actions import Action_OpenDatabase
 
 def dialogue_callback( dialog_name, accepted ):
     pass
@@ -49,7 +49,7 @@ if __name__ == "__main__":
     dialog_message = DialogueWindow_Message("message")
 
     # Setup actions
-    open_database_action = Action(dialog_message, ui_tree_view)
+    open_database_action = Action_OpenDatabase(dialog_message, ui_tree_view)
 
     # Setup dialogue instances
     dialogs = {}
