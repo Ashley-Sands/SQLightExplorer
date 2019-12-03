@@ -18,7 +18,7 @@ dialogs["new_database"].set_dialog_windows(dialogs)
 dialogs["open_database"].set_dialog_windows(dialogs)
 
 if __name__ == "__main__":
-
+    import amsql_config  # setups default config.
     import sys
     import amsql_config
     from PyQt5 import QtCore, QtGui, QtWidgets
