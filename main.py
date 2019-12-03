@@ -9,9 +9,6 @@ text_dialogue = DialogueWindow();
 
 # new window functions
 
-
-
-
 def new_text_window():
     pass
 
@@ -35,6 +32,8 @@ if __name__ == "__main__":
     ui_tree_view = UiTreeView(main_app.treeWidget, ui_tab_table)
 
     main_app.button_drop_table.clicked.connect(warning_dialogue.new_warning_window)
+    main_app.button_new_database.clicked.connect(text_dialogue.new_text_window)
+    main_app.button_open_database.clicked.connect(text_dialogue.new_text_window)
 
     # Finaly show the window :D
     MainWindow.show()
