@@ -42,6 +42,11 @@ if __name__ == "__main__":
     main_app.button_new_database.clicked.connect(dialogs["new_database"].new_window)
     main_app.button_open_database.clicked.connect(dialogs["open_database"].new_window)
 
+    # bind 'File' context menu buttons
+    main_app.actionShow_Welcome_Screen.triggered.connect(main_app.welcome_tab)
+    main_app.actionSettings.triggered.connect(dialogs["config"].new_window)
+    main_app.actionQuit.triggered.connect(quit)
+
     # Finaly show the window :D
     MainWindow.show()
 

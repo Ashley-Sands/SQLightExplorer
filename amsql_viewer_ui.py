@@ -141,7 +141,7 @@ class Ui_MainWindow(object):
 
         self.actionShow_Welcome_Screen = QtWidgets.QAction(MainWindow)
         self.actionShow_Welcome_Screen.setObjectName("actionShow_Welcome_Screen")
-        self.actionShow_Welcome_Screen.triggered.connect(self.add_new_welcome_tab)
+        #self.actionShow_Welcome_Screen.triggered.connect(self.add_new_welcome_tab)
 
         self.menuFile.addAction(self.actionShow_Welcome_Screen)
         self.menuFile.addAction(self.actionSettings)
