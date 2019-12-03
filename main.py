@@ -2,7 +2,7 @@ from windows import amsql_explorer_window
 from ui_objects.ui_tab_table import ui_tabTable
 from ui_objects.ui_tree_view import UiTreeView
 from dialogue_window import DialogueWindow_Warning, DialogueWindow_TextEnter, DialogueWindow_Config, DialogueWindow_Message
-from actions import Action_OpenDatabase
+from actions import Action_OpenDatabase, Action_NewDatabase
 
 def dialogue_callback( dialog_name, accepted ):
     pass
@@ -49,13 +49,14 @@ if __name__ == "__main__":
     dialog_message = DialogueWindow_Message("message")
 
     # Setup actions
-    open_database_action = Action_OpenDatabase(dialog_message, ui_tree_view)
+    open_database_action = Action_OpenDatabase(dialog_message, ui_tree_view, message404="Error: Database Not Found")
+    new_database_action = Action_NewDatabase(dialog_message, ui_tree_view, message404="Error: Database Already Exist")
 
     # Setup dialogue instances
     dialogs = {}
 
     dialogs["drop_table"] = DialogueWindow_Warning("drop_table", dialogue_callback)  #TODO: Remove name from class / __init__ as the callback now sets it self insted of its name :)
-    dialogs["new_database"] = DialogueWindow_TextEnter("new_database", dialogue_callback)
+    dialogs["new_database"] = DialogueWindow_TextEnter("new_database", new_database_action.dialog_action)
     dialogs["open_database"] = DialogueWindow_TextEnter("open_database", open_database_action.dialog_action)
     dialogs["config"] = DialogueWindow_Config("config")
 

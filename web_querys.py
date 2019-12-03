@@ -49,7 +49,7 @@ class WebQuerys:
         return response_status, response_data
 
     def open_database(self, db_name):
-        """ Request to open the data to view the tables
+        """ Request to open the database to view the tables
 
         :param db_name: name of db
         :return:        tuple (response status, list of tables)
@@ -63,9 +63,20 @@ class WebQuerys:
 
         return response_status, response_data
 
-
     def new_database(self, db_name):
-        pass
+        """ Request a new database the data to view the tables
+
+        :param db_name: name of db
+        :return:        tuple (response status, list of tables)
+        """
+        response_status, response_data = self.send_query("POST", "/new_database", db_name)
+
+        if response_status == 200 or response_status == "200":
+            response = json.loads( response_data )
+            response_status = response["status"]
+            response_data = response["response"]
+
+        return response_status, response_data
 
     def new_table(self, table_name, columns, types):
         """ sends request to server to create new table
