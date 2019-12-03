@@ -75,11 +75,14 @@ class DialogueWindow_Warning(DialogueWindow):
         self.app.setupUi(self.dialog)
         self.dialog.show()
 
+    def dialog_accepted(self):
+        super().dialog_accepted()
 
 class DialogueWindow_TextEnter(DialogueWindow):
 
     def __init__(self):
         super().__init__()
+        self.text = ""
 
     def window(self):
 
@@ -91,3 +94,8 @@ class DialogueWindow_TextEnter(DialogueWindow):
         self.app = amsql_text_window.UiTextDialog()
         self.app.setupUi(self.dialog)
         self.dialog.show()
+
+    def dialog_accepted(self):
+        self.text = self.app.text_input.text()
+        super().dialog_accepted()
+        print("TEXT: ", self.text)
