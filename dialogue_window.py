@@ -14,27 +14,42 @@ class DialogueWindow:
         self.dialogStatus = self.DIALOG_STATUS_NONE
 
     def new_window(self):
-
+        """ Creates new dialog window, and handles resetting status (do not override)
+            Use window function to setup the dialogue window.
+         """
         self.reset_status()
+        self.window()
         self.set_signals()
 
-    def set_signals(self):
-        self.app.button_yes.accepted.connect( self.dialog_accepted() )
-        self.app.button_yes.rejected.connect( self.dialog_rejected() )
-
-    def reset_status(self):
-        self.dialog = None
-        self.app = None
-        self.dialogStatus = self.DIALOG_STATUS_NONE
-
-    def dialog_accepted(self):
-
-        self.dialog = None
+    def window(self):
+        """ The window to be created """
         pass
 
-    def dialogu_rejected(self):
+    def set_signals(self):
+        """ Setup signals"""
+        self.app.buttons_yes.accepted.connect( self.dialog_accepted )
+        self.app.buttons_yes.rejected.connect( self.dialog_rejected )
+        QtCore.QMetaObject.connectSlotsByName(self.dialog)
 
+
+    def reset_status(self):
+        """ Resets status"""
+        self.dialogStatus = self.DIALOG_STATUS_NONE
+
+    def clear_window(self):
         self.dialog = None
+        self.app = None
+
+    def dialog_accepted(self):
+        """Signal function for accepted status"""
+        self.clear_window()
+        print("accepted")
+        pass
+
+    def dialog_rejected(self):
+        """Signal function for rejected status"""
+        self.clear_window()
+        print("rejected")
         pass
 
 
@@ -44,12 +59,10 @@ class DialogueWindow_Warning(DialogueWindow):
         super().__init__()
         self.text = ""
 
-    def new_window(self):
+    def window(self):
 
         if self.dialog != None:
             return
-
-        super().new_window()
 
         # create new dialogue window
         self.dialog = QtWidgets.QDialog()
@@ -57,17 +70,16 @@ class DialogueWindow_Warning(DialogueWindow):
         self.app.setupUi(self.dialog)
         self.dialog.show()
 
+
 class DialogueWindow_TextEnter(DialogueWindow):
 
     def __init__(self):
         super().__init__()
 
-    def new_window(self):
+    def window(self):
 
         if self.dialog != None:
             return
-
-        super().new_window()
 
         # create out text input window
         self.dialog = QtWidgets.QDialog()
