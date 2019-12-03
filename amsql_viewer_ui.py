@@ -208,7 +208,6 @@ class Ui_MainWindow(object):
         self.welcome_tab()
 
     def welcome_tab(self):
-        # TODO: need to select self :)
         _translate = QtCore.QCoreApplication.translate
 
         self.tab_welcome = QtWidgets.QWidget()
