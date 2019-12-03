@@ -7,9 +7,8 @@
 # WARNING! All changes made in this file will be lost!
 
 
-from PyQt5 import QtCore, QtGui, QtWidgets
-import ui_helpers as ui_helper
-
+from PyQt5 import QtCore, QtWidgets
+from ui_objects import ui_helpers as ui_helper
 
 
 class MainWindowUi(object):

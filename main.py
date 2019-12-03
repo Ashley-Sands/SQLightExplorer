@@ -1,7 +1,6 @@
 from windows import amsql_explorer_window
-import global_config
-from ui_tab_table import ui_tabTable
-from ui_tree_view import UiTreeView
+from ui_objects.ui_tab_table import ui_tabTable
+from ui_objects.ui_tree_view import UiTreeView
 from dialogue_window import DialogueWindow_Warning, DialogueWindow_TextEnter, DialogueWindow_Config
 
 dialogs = {}
@@ -19,7 +18,6 @@ dialogs["open_database"].set_dialog_windows(dialogs)
 dialogs["config"].set_dialog_windows(dialogs)
 
 if __name__ == "__main__":
-    import amsql_config  # setups default config.
     import sys
     from PyQt5 import QtWidgets
 
