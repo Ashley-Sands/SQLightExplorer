@@ -6,26 +6,6 @@ from actions import Action_OpenDatabase, Action_NewDatabase
 
 def dialogue_callback( dialog_name, accepted ):
     pass
-'''
-    if accepted == 0:
-        return
-
-    web_query = WebQuerys()
-
-    if dialog_name == "open_database":
-        response = web_query.open_database( dialogs["open_database"].text )
-        if str( response[0] ) == "404":
-            dialog_message.set_message("Error: Database Not Found")
-            dialog_message.new_window()
-        elif str( response[0] ) == "408":
-            dialog_message.set_message("Error: Connection Timed Out :(")
-            dialog_message.new_window()
-        else:
-            # Add the data to the tree
-            pass
-
-    print("data:", response[0], response[1])
-'''
 
 if __name__ == "__main__":
     import amsql_config # setup config
