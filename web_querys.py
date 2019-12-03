@@ -5,7 +5,7 @@ import json
 class WebQuerys:
 
     def __init__(self):
-        self.connection = http.client.HTTPConnection( Config.get("host"), Config.get("port"), timeout=Config.get("connection_timeout") )
+        self.connection = None
 
     def send_query(self, request_type, page, data_to_send):
         """ Sends the query to host
@@ -18,6 +18,9 @@ class WebQuerys:
         response = None
         response_data = None
         response_status = 404
+        page = Config.get("remote_root") + page
+
+        self.connection = http.client.HTTPConnection(Config.get("host"), Config.get("port"))
 
         try:
             # send GET request
@@ -28,7 +31,8 @@ class WebQuerys:
                 headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
                 self.connection.request("POST", page, data_to_send.encode(), headers)
             else:
-                return 0, "Error, their is not request type "+request_type.upper()
+                response_status = 404
+                response_data = "Error: their is not request type "+request_type.upper()
 
             print("Sending", response_data, "request: ", page)
             # get the response data from the request
@@ -37,12 +41,24 @@ class WebQuerys:
             response_status = response.status
 
         except:
-            return 0, "Error, Connection timed out"
+            response_status = 404
+            response_data = "Error: Connection timed out"
+
+        self.connection.close()
 
         return response_status, response_data
 
     def open_database(self, db_name):
-        pass
+
+        response_status, response_data = self.send_query("POST", "/open_database", db_name)
+
+        if response_status == 200 or response_status == "200":
+            response = json.loads( response_data )
+            response_status = response["status"]
+            response_data = response["response"]
+
+        return response_status, response_data
+
 
     def new_database(self, db_name):
         pass
