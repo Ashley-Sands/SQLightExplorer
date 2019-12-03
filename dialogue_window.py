@@ -8,19 +8,23 @@ class DialogueWindow:
     DIALOG_STATUS_ACCEPTED = 1
     DIALOG_STATUS_REJECTED = 2
 
-    def __init__(self):
-
+    def __init__(self, name, callback=None):
+        self.name = name
         self.dialog = None  # Dialog window
         self.app = None     # App class (access to UI elements)
         self.dialogStatus = self.DIALOG_STATUS_NONE
         self.dialog_windows = {}
+        self.callback = callback
 
     def set_dialog_windows(self, dialog_dict):
         """ sets dialog window classes. (will overwrite)
-        :param dialog_dict:     dict of all dialogue windows(use to prevent opening multiple dialog windows)
+        :param dialog_dict:     dict of all dialogue windows (use to prevent opening multiple dialog windows)
                                 (can include self)
         """
         self.dialog_windows = dialog_dict
+
+    def set_name(self, name):
+        self.name = name
 
     def new_window(self):
         """ Creates new dialog window, and handles resetting status (do not override)
@@ -68,6 +72,10 @@ class DialogueWindow:
             self.dialog_accepted()
 
         self.clear_window()
+
+        if self.callback is not None:
+            self.callback(self.name, status)
+
         print("closed status", status)
 
     def is_open(self):
@@ -91,8 +99,8 @@ class DialogueWindow:
 
 class DialogueWindow_Warning(DialogueWindow):
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, name, callback):
+        super().__init__(name, callback)
 
     def window(self):
 
@@ -105,10 +113,11 @@ class DialogueWindow_Warning(DialogueWindow):
     def dialog_accepted(self):
         super().dialog_accepted()
 
+
 class DialogueWindow_TextEnter(DialogueWindow):
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, name, callback):
+        super().__init__(name, callback)
         self.text = ""
 
     def window(self):

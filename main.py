@@ -2,14 +2,29 @@ from windows import amsql_explorer_window
 from ui_objects.ui_tab_table import ui_tabTable
 from ui_objects.ui_tree_view import UiTreeView
 from dialogue_window import DialogueWindow_Warning, DialogueWindow_TextEnter, DialogueWindow_Config
+from web_querys import WebQuerys
+
+
+def dialogue_callback( dialog_name, accepted ):
+
+    if accepted == 0:
+        return
+
+    web_query = WebQuerys()
+
+    if dialog_name == "open_database":
+        response = web_query.open_database( dialogs["open_database"].text )
+
+    print(response[0], response[1])
+
 
 dialogs = {}
 
 # create our dialogue instances
-dialogs["drop_table"] = DialogueWindow_Warning()
-dialogs["new_database"] = DialogueWindow_TextEnter()
-dialogs["open_database"] = DialogueWindow_TextEnter()
-dialogs["config"] = DialogueWindow_Config();
+dialogs["drop_table"] = DialogueWindow_Warning("drop_table", dialogue_callback)
+dialogs["new_database"] = DialogueWindow_TextEnter("new_database", dialogue_callback)
+dialogs["open_database"] = DialogueWindow_TextEnter("open_database", dialogue_callback)
+dialogs["config"] = DialogueWindow_Config("config")
 
 # set dict of dialogues in each dialogue instance to prevent multiple windows from being opened
 dialogs["drop_table"].set_dialog_windows(dialogs)
@@ -18,6 +33,7 @@ dialogs["open_database"].set_dialog_windows(dialogs)
 dialogs["config"].set_dialog_windows(dialogs)
 
 if __name__ == "__main__":
+    import amsql_config # setup config
     import sys
     from PyQt5 import QtWidgets
 
