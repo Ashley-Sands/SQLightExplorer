@@ -19,7 +19,7 @@ def dialogue_callback( dialog_name, accepted ):
         if str( response[0] ) == "404":
             dialog_message.set_message("Error: Database Not Found")
             dialog_message.new_window()
-        elif str( response[0] ) == "0":
+        elif str( response[0] ) == "408":
             dialog_message.set_message("Error: Connection Timed Out :(")
             dialog_message.new_window()
         else:

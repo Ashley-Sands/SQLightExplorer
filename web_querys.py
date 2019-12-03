@@ -41,7 +41,7 @@ class WebQuerys:
             response_status = response.status
 
         except:
-            response_status = 404
+            response_status = 408
             response_data = "Error: Connection timed out"
 
         self.connection.close()
@@ -49,7 +49,11 @@ class WebQuerys:
         return response_status, response_data
 
     def open_database(self, db_name):
+        """ Request to open the data to view the tables
 
+        :param db_name: name of db
+        :return:        tuple (response status, list of tables)
+        """
         response_status, response_data = self.send_query("POST", "/open_database", db_name)
 
         if response_status == 200 or response_status == "200":
