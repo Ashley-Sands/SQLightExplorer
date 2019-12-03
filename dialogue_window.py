@@ -1,6 +1,6 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
-import amsql_warning_window
-import amsql_text_window
+from PyQt5 import QtCore, QtWidgets
+from windows import amsql_text_window, amsql_warning_window, amsql_config_window
+from global_config import GlobalConfig as Config
 
 class DialogueWindow:
 
@@ -123,3 +123,29 @@ class DialogueWindow_TextEnter(DialogueWindow):
         self.text = self.app.text_input.text()
         super().dialog_accepted()
         print("TEXT: ", self.text)
+
+
+class DialogueWindow_Config( DialogueWindow ):
+
+    def window(self):
+        # create new dialogue window
+        self.dialog = QtWidgets.QDialog()
+        self.app = amsql_config_window.UiConfigDialog()
+        self.app.setupUi(self.dialog)
+        self.update_inputs()
+        self.dialog.show()
+
+    def dialog_accepted(self):
+        host = self.app.text_host.text()
+        port = self.app.text_port.text()
+
+        Config.set("host", host)
+        Config.set("port", port)
+
+    def update_inputs(self):
+
+        host = Config.get("host")
+        port = Config.get("port")
+
+        self.app.text_host.setText(host)
+        self.app.text_port.setText(port)
