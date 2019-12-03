@@ -1,8 +1,45 @@
+from global_config import GlobalConfig as Config
+import http.client
+import json
 
 class WebQuerys:
 
     def __init__(self):
-        pass
+        self.connection = http.client.HTTPConnection( Config.get("host"), Config.get("port"), timeout=Config.get("connection_timeout") )
+
+    def send_query(self, request_type, page, data_to_send):
+        """ Sends the query to host
+
+        :param request_type:    the type of request GET or POST
+        :param page:            full page path of request
+        :param data_to_send:    the data if any to send (POST only)
+        :return:                (status, response)
+        """
+        response = None
+        response_data = None
+        response_status = 404
+
+        try:
+            # send GET request
+            if request_type.upper() == "GET":
+                self.connection.request("GET", page)
+            # send POST request
+            elif request_type.upper() == "POST":
+                headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
+                self.connection.request("POST", page, data_to_send.encode(), headers)
+            else:
+                return 0, "Error, their is not request type "+request_type.upper()
+
+            print("Sending", response_data, "request: ", page)
+            # get the response data from the request
+            response = self.connection.getresponse()
+            response_data = response.read().decode()
+            response_status = response.status
+
+        except:
+            return 0, "Error, Connection timed out"
+
+        return response_status, response_data
 
     def open_database(self, db_name):
         pass
