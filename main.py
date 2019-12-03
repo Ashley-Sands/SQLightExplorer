@@ -3,7 +3,13 @@ import ui_helpers
 from ui_tab_table import ui_tabTable
 from ui_tree_view import UiTreeView
 
-# Signal functions
+# new window functions
+
+
+
+
+def new_text_window():
+    pass
 
 
 if __name__ == "__main__":
@@ -24,7 +30,7 @@ if __name__ == "__main__":
     ui_tab_table = ui_tabTable( main_app.tab_view )
     ui_tree_view = UiTreeView(main_app.treeWidget, ui_tab_table)
 
-
+    main_app.button_drop_table.clicked.connect(warning_dialogue.new_warning_window)
 
     # Finaly show the window :D
     MainWindow.show()
