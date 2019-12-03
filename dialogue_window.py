@@ -9,14 +9,26 @@ class DialogueWindow:
     DIALOG_STATUS_REJECTED = 2
 
     def __init__(self):
+
         self.dialog = None  # Dialog window
         self.app = None     # App class (access to UI elements)
         self.dialogStatus = self.DIALOG_STATUS_NONE
+        self.dialog_windows = {}
+
+    def set_dialog_windows(self, dialog_dict):
+        """ sets dialog window classes. (will overwrite)
+        :param dialog_dict:     dict of all dialogue windows(use to prevent opening multiple dialog windows)
+                                (can include self)
+        """
+        self.dialog_windows = dialog_dict
 
     def new_window(self):
         """ Creates new dialog window, and handles resetting status (do not override)
             Use window function to setup the dialogue window.
          """
+        if not self.can_open_window():
+            return
+
         self.reset_status()
         self.window()
         self.set_signals()
@@ -58,6 +70,24 @@ class DialogueWindow:
         self.clear_window()
         print("closed status", status)
 
+    def is_open(self):
+        """returns dialogue open status"""
+        return self.dialog != None
+
+    def can_open_window(self):
+        """ check to see if any dialogue windows are active (including self)
+
+        :return:
+        """
+        if self.is_open():
+            return False
+
+        for k in self.dialog_windows:
+            if self.dialog_windows[k].is_open():
+                return False
+
+        return True
+
 
 class DialogueWindow_Warning(DialogueWindow):
 
@@ -65,9 +95,6 @@ class DialogueWindow_Warning(DialogueWindow):
         super().__init__()
 
     def window(self):
-
-        if self.dialog != None:
-            return
 
         # create new dialogue window
         self.dialog = QtWidgets.QDialog()
@@ -85,9 +112,6 @@ class DialogueWindow_TextEnter(DialogueWindow):
         self.text = ""
 
     def window(self):
-
-        if self.dialog != None:
-            return
 
         # create out text input window
         self.dialog = QtWidgets.QDialog()
