@@ -1,9 +1,11 @@
 from windows import amsql_explorer_window
 from ui_objects.ui_tab_table import ui_tabTable
 from ui_objects.ui_tree_view import UiTreeView
-from dialogue_window import DialogueWindow_Warning, DialogueWindow_TextEnter, DialogueWindow_Config
+from dialogue_window import DialogueWindow_Warning, DialogueWindow_TextEnter, DialogueWindow_Config, DialogueWindow_Message
 from web_querys import WebQuerys
 
+
+dialog_message = DialogueWindow_Message("message")
 
 def dialogue_callback( dialog_name, accepted ):
 
@@ -14,8 +16,16 @@ def dialogue_callback( dialog_name, accepted ):
 
     if dialog_name == "open_database":
         response = web_query.open_database( dialogs["open_database"].text )
+        if str( response[0] ) == "404":
+            dialog_message.set_message("Error: Database Not Found")
+            dialog_message.new_window()
+        elif str( response[0] ) == "0":
+            dialog_message.set_message("Error: Connection Timed Out :(")
+            dialog_message.new_window()
+        else:
+            pass
 
-    print(response[0], response[1])
+    print("data:", response[0], response[1])
 
 
 dialogs = {}

@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtWidgets
-from windows import amsql_text_window, amsql_warning_window, amsql_config_window
+from windows import amsql_text_window, amsql_warning_window, amsql_config_window, amsql_message_window
 from global_config import GlobalConfig as Config
 
 class DialogueWindow:
@@ -158,3 +158,33 @@ class DialogueWindow_Config( DialogueWindow ):
 
         self.app.text_host.setText(host)
         self.app.text_port.setText(port)
+
+class DialogueWindow_Message( DialogueWindow ):
+
+    def __int__(self, name, callback):
+        super().__init__(name, callback)
+        self.message = ""
+
+    def window(self):
+
+        # create out text input window
+        self.dialog = QtWidgets.QDialog()
+        self.app = amsql_message_window.UiMessageDialog()
+        self.app.setupUi(self.dialog)
+        # set text
+        self.app.label.setText( self.get_formatted_message() )
+        self.dialog.show()
+
+    def get_formatted_message(self):
+        formatted_message = "<html><head/><body><p><span style=\" font-size:12pt;\">"
+        formatted_message += self.message
+        formatted_message += "</span></p></body></html>"
+
+        return formatted_message
+
+    def set_message(self, message):
+
+        self.message = message
+
+        if self.app is not None:
+            self.app.label.setText( self.get_formatted_message() )
