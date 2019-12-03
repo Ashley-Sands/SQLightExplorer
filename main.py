@@ -2,6 +2,10 @@ import amsql_viewer_ui
 import ui_helpers
 from ui_tab_table import ui_tabTable
 from ui_tree_view import UiTreeView
+from dialogue_window import DialogueWindow
+
+warning_dialogue = DialogueWindow();
+text_dialogue = DialogueWindow();
 
 # new window functions
 
