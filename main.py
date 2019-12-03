@@ -4,8 +4,8 @@ from ui_tab_table import ui_tabTable
 from ui_tree_view import UiTreeView
 from dialogue_window import DialogueWindow_Warning, DialogueWindow_TextEnter
 
-warning_dialogue = DialogueWindow_Warning();
-text_dialogue = DialogueWindow_TextEnter();
+warning_dialogue = DialogueWindow_Warning()
+text_dialogue = DialogueWindow_TextEnter()
 
 # new window functions
 
