@@ -27,7 +27,7 @@ class UiTextDialog(object):
         self.label.setTextFormat(QtCore.Qt.RichText)
         self.label.setObjectName("label")
         self.object_name = QtWidgets.QLabel(Dialog)
-        self.object_name.setGeometry(QtCore.QRect(65, 10, 189, 29))
+        self.object_name.setGeometry(QtCore.QRect(61, 10, 189, 29))
         self.object_name.setObjectName("object_name")
 
         self.retranslateUi(Dialog)
