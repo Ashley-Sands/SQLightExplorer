@@ -26,19 +26,23 @@ if __name__ == "__main__":
     ui_tree_view = UiTreeView(main_app.treeWidget, ui_tab_table)
 
     # Setup message dialog window
-    dialog_message = DialogueWindow_Message("message")
+    dialog_message = DialogueWindow_Message()
 
-    # Setup actions
+    # Setup actions (Tree view handles opening tables in tab)
     open_database_action = Action_OpenDatabase(dialog_message, ui_tree_view, message404="Error: Database Not Found")
     new_database_action = Action_NewDatabase(dialog_message, ui_tree_view, message404="Error: Database Already Exist")
+
 
     # Setup dialogue instances
     dialogs = {}
 
-    dialogs["drop_table"] = DialogueWindow_Warning("drop_table", dialogue_callback)  #TODO: Remove name from class / __init__ as the callback now sets it self insted of its name :)
-    dialogs["new_database"] = DialogueWindow_TextEnter("new_database", new_database_action.dialog_action)
-    dialogs["open_database"] = DialogueWindow_TextEnter("open_database", open_database_action.dialog_action)
-    dialogs["config"] = DialogueWindow_Config("config")
+    dialogs["drop_table"] = DialogueWindow_Warning(dialogue_callback)  #TODO: Remove name from class / __init__ as the callback now sets it self insted of its name :)
+    dialogs["new_database"] = DialogueWindow_TextEnter(new_database_action.dialog_action)
+    dialogs["open_database"] = DialogueWindow_TextEnter(open_database_action.dialog_action)
+    dialogs["config"] = DialogueWindow_Config()
+
+    # setup display values on dialog windows
+    dialogs["new_database"].set_standard_buttons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
 
     # set dict of dialogues in each dialogue instance to prevent multiple windows from being opened
     dialogs["drop_table"].set_dialog_windows(dialogs)

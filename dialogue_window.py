@@ -8,8 +8,7 @@ class DialogueWindow:
     DIALOG_STATUS_ACCEPTED = 1
     DIALOG_STATUS_REJECTED = 2
 
-    def __init__(self, name, callback=None):
-        self.name = name
+    def __init__(self, callback=None):
         self.dialog = None  # Dialog window
         self.app = None     # App class (access to UI elements)
         self.dialogStatus = self.DIALOG_STATUS_NONE
@@ -23,9 +22,6 @@ class DialogueWindow:
         """
         self.dialog_windows = dialog_dict
 
-    def set_name(self, name):
-        self.name = name
-
     def new_window(self):
         """ Creates new dialog window, and handles resetting status (do not override)
             Use window function to setup the dialogue window.
@@ -38,7 +34,7 @@ class DialogueWindow:
         self.set_signals()
 
     def window(self):
-        """ The window to be created """
+        """ The window to be created (needs overriding)"""
         pass
 
     def set_signals(self):
@@ -99,8 +95,8 @@ class DialogueWindow:
 
 class DialogueWindow_Warning(DialogueWindow):
 
-    def __init__(self, name, callback):
-        super().__init__(name, callback)
+    def __init__(self, callback):
+        super().__init__(callback)
 
     def window(self):
 
@@ -116,9 +112,10 @@ class DialogueWindow_Warning(DialogueWindow):
 
 class DialogueWindow_TextEnter(DialogueWindow):
 
-    def __init__(self, name, callback):
-        super().__init__(name, callback)
+    def __init__(self, callback):
+        super().__init__(callback)
         self.text = ""
+        self.standard_buttons = QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Open
 
     def window(self):
 
@@ -126,6 +123,7 @@ class DialogueWindow_TextEnter(DialogueWindow):
         self.dialog = QtWidgets.QDialog()
         self.app = amsql_text_window.UiTextDialog()
         self.app.setupUi(self.dialog)
+        self.app.buttons_yes.setStandardButtons( self.standard_buttons )
         self.dialog.show()
 
     def dialog_accepted(self):
@@ -133,6 +131,13 @@ class DialogueWindow_TextEnter(DialogueWindow):
         super().dialog_accepted()
         print("TEXT: ", self.text)
 
+    def set_standard_buttons(self, buttons):
+        """ sets the standard buttons to be displayed
+
+        :param buttons:  QtWidgets.QDialogButtonBox | (bitwise or) together
+        :return:         None
+        """
+        self.standard_buttons = buttons
 
 class DialogueWindow_Config( DialogueWindow ):
 
@@ -161,8 +166,8 @@ class DialogueWindow_Config( DialogueWindow ):
 
 class DialogueWindow_Message( DialogueWindow ):
 
-    def __int__(self, name, callback):
-        super().__init__(name, callback)
+    def __int__(self, callback):
+        super().__init__(callback)
         self.message = ""
 
     def window(self):
