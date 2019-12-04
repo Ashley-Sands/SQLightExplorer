@@ -66,7 +66,7 @@ class UiHelpers:
         # add our rows of columns
         for row in range(len(data)):
             for col in range(len(data[row])):
-                item = QtWidgets.QTableWidgetItem( data[row][col] )
+                item = QtWidgets.QTableWidgetItem( str(data[row][col]) )
                 table.setItem( row, col, item )
 
     def add_table_row(self, table, data, row = -1):
