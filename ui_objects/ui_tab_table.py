@@ -11,7 +11,7 @@ class ui_tabTable:
         self.translate = QtCore.QCoreApplication.translate
         self.tab_widget = tab_widget
         self.tab_widget.tabCloseRequested.connect( self.close_tab );
-        self.tabs = {}      # key tab names
+        self.tabs = {}      # key tab names (tab, table)
         self.tab_count = 0;
 
         self.help = UiHelpers()
@@ -19,16 +19,16 @@ class ui_tabTable:
     def add_tab(self, name):
         """ Adds new tab to table widget
 
-        :param object_name:     name of the object (should be unique to app)
         :param name:            name to display on tab
-        :param table_widget:    table to add tab to
-        :return:                the new tab
+        :return:                the new tab, None if already exist
         """
+
+        if name in self.tabs:
+            return None
 
         tab = QtWidgets.QWidget()
         tab.setObjectName( "tab_"+str(self.tab_count) )
 
-        self.tabs[name] = tab
         self.tab_widget.addTab(tab, "")
         self.tab_widget.setTabText(self.tab_widget.indexOf(tab), self.translate("MainWindow", name))
 
@@ -39,6 +39,7 @@ class ui_tabTable:
         # set active!
         self.tab_widget.setCurrentIndex(self.tab_widget.indexOf(tab))
 
+        self.tabs[name] = tab, table
         self.tab_count += 1
 
         return tab
