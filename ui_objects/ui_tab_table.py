@@ -49,7 +49,7 @@ class ui_tabTable:
         self.tabs[name] = tab, table
         self.tab_count += 1
 
-        return tab
+        return tab, table
 
     def set_table_columns(self, tab_name, column_names):
         """ Sets column names for tab with tab_name
