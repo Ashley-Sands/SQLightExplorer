@@ -119,7 +119,7 @@ class WebQuerys:
         :return:
         """
         data = WebQuerys.get_query_dict( db_name, table_name )
-        response_status, response_data = self.send_query("POST", "/open_database", data)
+        response_status, response_data = self.send_query("POST", "/column_names", data)
 
         return WebQuerys.response_to_dict(response_status, response_data)
 
