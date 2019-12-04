@@ -12,3 +12,7 @@ class GlobalConfig:
     def set(config_name, data):
         """Sets or adds (if not exist) to the global config"""
         GlobalConfig.__CONFIG__[config_name.lower()] = data
+
+    @staticmethod
+    def is_set(config_name):
+        return config_name in GlobalConfig.__CONFIG__
