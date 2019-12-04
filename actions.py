@@ -2,45 +2,50 @@ from web_querys import WebQuerys
 
 class Action:
 
-    def __init__(self, dialog_message, message404="Error: Not Found"):
+    def __init__(self, dialog_message):
         self.dialog_message = dialog_message
-        self.message404 = message404
         self.web_query = WebQuerys()
 
-    def request(self, dialog):
+    def request(self, data_object):
         """
 
-        :return: request responce
+        :return: request response
         """
         pass
 
-    def dialog_action(self, dialog, accepted):
+    def run_action(self, data_object, accepted):  # should be run_action
+        """ Runs the action handling serveer responces
+
+        :param data_object:  Object that contains all data for the action
+        :param accepted:     Alows binding to buttons (set to 1 if not button action)
+        :return:
+        """
+
         if accepted == 0:
             return
 
-        response = self.request(dialog)
+        response = self.request(data_object)
 
         if str(response[0]) == "404":
-            self.dialog_message.set_message(response[1]) #self.message404)
+            self.dialog_message.set_message(response[1])
             self.dialog_message.new_window()
         elif str(response[0]) == "408":
             self.dialog_message.set_message("Error: Connection Timed Out :(")
             self.dialog_message.new_window()
         else:
-            self.action(dialog, response[1])
+            self.action(data_object, response[1])
 
-    def action(self, dialog, response_data):
+    def action(self, data_object, response_data):
         pass
-
 
 class Action_NewDatabase(Action):
 
-    def __init__(self, dialog_message, tree_view, message404="Not Found"):
-        super().__init__(dialog_message, message404)
+    def __init__(self, dialog_message, tree_view):
+        super().__init__(dialog_message)
         self.tree_view = tree_view
 
     def request(self, dialog):
-        return self.web_query.new_database( WebQuerys.get_query_dict( dialog.text ) )
+        return self.web_query.new_database( dialog.text )
 
     def action(self, dialog, response):
 
@@ -51,7 +56,7 @@ class Action_NewDatabase(Action):
 class Action_OpenDatabase(Action_NewDatabase):
 
     def request(self, dialog):
-        return self.web_query.open_database( WebQuerys.get_query_dict( dialog.text ) )
+        return self.web_query.open_database( dialog.text )
 
     def action(self, dialog, response):
 
@@ -60,6 +65,9 @@ class Action_OpenDatabase(Action_NewDatabase):
         for r in response:
             self.tree_view.add_tree_item(dialog.text, r)
 
+class Action_GetTableColumns(Action):
 
+    def request(self, data_object):
+        return self.web_query.get_column_names(  )
 
 
