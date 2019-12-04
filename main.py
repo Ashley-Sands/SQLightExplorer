@@ -36,7 +36,7 @@ if __name__ == "__main__":
     # Setup dialogue instances
     dialogs = {}
 
-    dialogs["drop_table"] = DialogueWindow_Warning(dialogue_callback)  #TODO: Remove name from class / __init__ as the callback now sets it self insted of its name :)
+    dialogs["drop_table"] = DialogueWindow_Warning(dialogue_callback)
     dialogs["new_database"] = DialogueWindow_TextEnter(new_database_action.dialog_action)
     dialogs["open_database"] = DialogueWindow_TextEnter(open_database_action.dialog_action)
     dialogs["config"] = DialogueWindow_Config()
