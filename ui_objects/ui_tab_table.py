@@ -64,6 +64,20 @@ class ui_tabTable:
 
         self.help.set_table_columns(self.tabs[tab_name][1], column_names)
 
+    def set_table_rows(self, tab_name, rows):
+        """
+
+        :param tab_name:    name of tab to set rows in
+        :param rows:        List of rows (List of List)
+        :return:            None
+        """
+
+        if tab_name.lower() not in self.tabs:
+            return
+
+        self.help.set_table_rows(self.tabs[tab_name][1], rows)
+
+
     def close_tab(self, tab_index):
 
         if  self.tab_widget.tabText(tab_index) in self.tabs:

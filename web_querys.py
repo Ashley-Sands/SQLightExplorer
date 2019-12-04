@@ -123,8 +123,17 @@ class WebQuerys:
 
         return WebQuerys.response_to_dict(response_status, response_data)
 
-    def get_table_rows(self, table_name):
-        pass
+    def get_table_rows(self, db_name, table_name):
+        """ gets all rows from table
+
+            :param database_name:
+            :param table_name:
+            :return:
+            """
+        data = WebQuerys.get_query_dict(db_name, table_name)
+        response_status, response_data = self.send_query("POST", "/table_rows", data)
+
+        return WebQuerys.response_to_dict(response_status, response_data)
 
     def drop_table(self, table_name):
         pass

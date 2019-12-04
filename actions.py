@@ -109,3 +109,31 @@ class Action_TableColumns(Action):
 
     def valid_response_data(self, response):
         return type(response) is list and type(response[0]) is list
+
+class Action_TableRows(Action):
+
+    def __init__(self, dialog_message, tab_table ):
+        super().__init__(dialog_message)
+        self.tab_table = tab_table
+
+    def request(self, data_object):
+        """
+
+        :param data_object:     dict with keys 'database_name' and 'table_name'
+        :return:                request results
+        """
+        return self.web_query.get_table_rows(data_object["database_name"], data_object["table_name"])
+
+    def action(self, data_object, response):
+        """
+
+        :param data_object:     dict with keys 'database_name' and 'table_name'
+        :param response:        data from request
+        :return:                None
+        """
+
+        self.tab_table.set_table_rows("table:"+data_object["table_name"], response)
+
+    def valid_response_data(self, response):
+        return type(response) is list
+
