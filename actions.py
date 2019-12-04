@@ -21,7 +21,7 @@ class Action:
         response = self.request(dialog)
 
         if str(response[0]) == "404":
-            self.dialog_message.set_message(self.message404)
+            self.dialog_message.set_message(response[1]) #self.message404)
             self.dialog_message.new_window()
         elif str(response[0]) == "408":
             self.dialog_message.set_message("Error: Connection Timed Out :(")
