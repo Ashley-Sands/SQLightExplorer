@@ -40,7 +40,7 @@ class Action_NewDatabase(Action):
         self.tree_view = tree_view
 
     def request(self, dialog):
-        return self.web_query.new_database(dialog.text)
+        return self.web_query.new_database( WebQuerys.get_query_dict( dialog.text ) )
 
     def action(self, dialog, response):
 
@@ -51,7 +51,7 @@ class Action_NewDatabase(Action):
 class Action_OpenDatabase(Action_NewDatabase):
 
     def request(self, dialog):
-        return self.web_query.open_database(dialog.text)
+        return self.web_query.open_database( WebQuerys.get_query_dict( dialog.text ) )
 
     def action(self, dialog, response):
 

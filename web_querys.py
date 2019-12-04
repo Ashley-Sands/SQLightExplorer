@@ -7,18 +7,29 @@ class WebQuerys:
     def __init__(self):
         self.connection = None
 
+    @staticmethod
+    def get_query_dict(database, table=None):
+        """Creates dict to send to server"""
+        dic = {"database": database}
+
+        if table != None:
+            dic["table"] = table
+
+        return dic
+
     def send_query(self, request_type, page, data_to_send):
         """ Sends the query to host
 
         :param request_type:    the type of request GET or POST
         :param page:            full page path of request
-        :param data_to_send:    the data if any to send (POST only)
+        :param data_to_send:    the data if any to send (dict to be serialized to json) (POST only)
         :return:                (status, response)
         """
         response = None
         response_data = None
         response_status = 404
         page = Config.get("remote_root") + page
+        data = json.dumps(data_to_send)
 
         self.connection = http.client.HTTPConnection(Config.get("host"), Config.get("port"))
 
@@ -29,7 +40,9 @@ class WebQuerys:
             # send POST request
             elif request_type.upper() == "POST":
                 headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
-                self.connection.request("POST", page, data_to_send.encode(), headers)
+                print(data)
+                self.connection.request("POST", page, data.encode(), headers)
+
             else:
                 response_status = 404
                 response_data = "Error: their is not request type "+request_type.upper()
@@ -86,6 +99,12 @@ class WebQuerys:
         :param types:       sql column types
         :return:            None
         """
+        pass
+
+    def get_column_names(self, table_name):
+        pass
+
+    def get_table_rows(self, table_name):
         pass
 
     def drop_table(self, table_name):
