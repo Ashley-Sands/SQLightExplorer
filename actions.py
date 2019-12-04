@@ -79,8 +79,8 @@ class Action_OpenDatabase(Action_NewDatabase):
 
 class Action_TableColumns(Action):
 
-    def __init(self, dialog_message, tab_table ):
-        super.__init__(dialog_message)
+    def __init__(self, dialog_message, tab_table ):
+        super().__init__(dialog_message)
         self.tab_table = tab_table
 
     def request(self, data_object):
@@ -99,11 +99,11 @@ class Action_TableColumns(Action):
         :return:                None
         """
 
-        # the data in the response contains all column data (ie, name, type, ...)
-        # we only need the first and seconds elements one for the column names
+        # the data in the response contains all column data (ie, id, name, type, ...)
+        # we only need the 2nd element (col name) for the column names
         column_names = []
         for r in response:
-            column_names.append(r[0] + "(" + r[1] + ")" )
+            column_names.append(r[1])
 
         self.tab_table.set_table_columns("table:"+data_object["table_name"], column_names)
 

@@ -2,7 +2,7 @@ from windows import amsql_explorer_window
 from ui_objects.ui_tab_table import ui_tabTable
 from ui_objects.ui_tree_view import UiTreeView
 from dialogue_window import DialogueWindow_Warning, DialogueWindow_TextEnter, DialogueWindow_Config, DialogueWindow_Message
-from actions import Action_OpenDatabase, Action_NewDatabase
+from actions import Action_OpenDatabase, Action_NewDatabase, Action_TableColumns
 
 def dialogue_callback( dialog_name, accepted ):
     pass
@@ -18,6 +18,9 @@ if __name__ == "__main__":
     main_app = amsql_explorer_window.Ui_MainWindow()
     main_app.setupUi(MainWindow)
 
+    # Setup message dialog window
+    dialog_message = DialogueWindow_Message()
+
     # Add the welcome tab
     main_app.welcome_tab()
 
@@ -25,20 +28,20 @@ if __name__ == "__main__":
     ui_tab_table = ui_tabTable( main_app.tab_view )
     ui_tree_view = UiTreeView(main_app.treeWidget, ui_tab_table)
 
-    # Setup message dialog window
-    dialog_message = DialogueWindow_Message()
-
-    # Setup actions (Tree view handles opening tables in tab)
+    # Setup actions
     open_database_action = Action_OpenDatabase(dialog_message, ui_tree_view)
     new_database_action = Action_NewDatabase(dialog_message, ui_tree_view)
+    table_columns_action = Action_TableColumns(dialog_message, ui_tab_table)
 
+    # set actions on ui
+    ui_tree_view.set_actions(table_columns_action)
 
     # Setup dialogue instances
     dialogs = {}
 
     dialogs["drop_table"] = DialogueWindow_Warning(dialogue_callback)
-    dialogs["new_database"] = DialogueWindow_TextEnter(new_database_action.dialog_action)
-    dialogs["open_database"] = DialogueWindow_TextEnter(open_database_action.dialog_action)
+    dialogs["new_database"] = DialogueWindow_TextEnter(new_database_action.run_action)
+    dialogs["open_database"] = DialogueWindow_TextEnter(open_database_action.run_action)
     dialogs["config"] = DialogueWindow_Config()
 
     # setup display values on dialog windows
