@@ -1,5 +1,6 @@
 from PyQt5 import QtWidgets
 from ui_objects.ui_helpers import UiHelpers
+import web_querys
 
 class UiTreeView:
 
@@ -10,15 +11,29 @@ class UiTreeView:
         self.parent_items = {}  # key: display names
         self.help = UiHelpers()
 
+        self.open_table_action = None
+
         self.tree_view.itemDoubleClicked.connect( self.open_tree_item_in_tab )
+
+    def set_actions(self, open_table_action):
+        self.open_table_action = open_table_action
 
     def open_tree_item_in_tab(self, tree_item, column_id):
 
         if tree_item.parent() == None :
             return;
 
+        action_data = {}
+
+        # get the data required for the action
+        action_data["database_name"] = tree_item.parent().text(column_id)
+        action_data["table_name"] = tree_item.text(column_id)
+
         # add new tab and table.
-        self.tab_table.add_tab( "Table:"+tree_item.text(column_id) )
+        self.tab_table.add_tab( "Table:" + action_data["table_name"] )
+
+        self.open_table_action.run_action(action_data, 1)
+
 
     def add_tree_item(self, parent_name, str):
         """ add item to tree
