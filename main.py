@@ -29,8 +29,8 @@ if __name__ == "__main__":
     dialog_message = DialogueWindow_Message()
 
     # Setup actions (Tree view handles opening tables in tab)
-    open_database_action = Action_OpenDatabase(dialog_message, ui_tree_view, message404="Error: Database Not Found")
-    new_database_action = Action_NewDatabase(dialog_message, ui_tree_view, message404="Error: Database Already Exist")
+    open_database_action = Action_OpenDatabase(dialog_message, ui_tree_view)
+    new_database_action = Action_NewDatabase(dialog_message, ui_tree_view)
 
 
     # Setup dialogue instances
