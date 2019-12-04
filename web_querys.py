@@ -17,6 +17,22 @@ class WebQuerys:
 
         return dic
 
+    @staticmethod
+    def response_to_dict(response_status, response_data):
+        """ vaildates response for error handling
+
+        :param responce_status:     servers status
+        :param responce_data:       messages form server (json string)
+        :return:                    correct response and data as dict
+        """
+        if response_status == 200 or response_status == "200":
+            response = json.loads( response_data )
+            response_status = response["status"]
+            response_data = response["response"]
+
+        return response_status, response_data
+
+
     def send_query(self, request_type, page, data_to_send):
         """ Sends the query to host
 
@@ -67,14 +83,10 @@ class WebQuerys:
         :param db_name: name of db
         :return:        tuple (response status, list of tables)
         """
-        response_status, response_data = self.send_query("POST", "/open_database", db_name)
+        data = WebQuerys.get_query_dict( db_name )
+        response_status, response_data = self.send_query("POST", "/open_database", data)
 
-        if response_status == 200 or response_status == "200":
-            response = json.loads( response_data )
-            response_status = response["status"]
-            response_data = response["response"]
-
-        return response_status, response_data
+        return WebQuerys.response_to_dict( response_status, response_data )
 
     def new_database(self, db_name):
         """ Request a new database the data to view the tables
@@ -82,27 +94,34 @@ class WebQuerys:
         :param db_name: name of db
         :return:        tuple (response status, list of tables)
         """
-        response_status, response_data = self.send_query("POST", "/new_database", db_name)
+        data = WebQuerys.get_query_dict( db_name )
+        response_status, response_data = self.send_query("POST", "/new_database", data)
 
-        if response_status == 200 or response_status == "200":
-            response = json.loads( response_data )
-            response_status = response["status"]
-            response_data = response["response"]
+        return WebQuerys.response_to_dict( response_status, response_data )
 
-        return response_status, response_data
 
-    def new_table(self, table_name, columns, types):
+    def new_table(self, database_name, table_name, columns, types):
         """ sends request to server to create new table
 
-        :param table_name:  table name
-        :param columns:     list of column names
-        :param types:       sql column types
-        :return:            None
+        :param database_name:   database name
+        :param table_name:      table name
+        :param columns:         list of column names
+        :param types:           sql column types
+        :return:                None
         """
         pass
 
-    def get_column_names(self, table_name):
-        pass
+    def get_column_names(self, db_name, table_name):
+        """ gets all columns from table
+
+        :param database_name:
+        :param table_name:
+        :return:
+        """
+        data = WebQuerys.get_query_dict( db_name, table_name )
+        response_status, response_data = self.send_query("POST", "/open_database", data)
+
+        return WebQuerys.response_to_dict(response_status, response_data)
 
     def get_table_rows(self, table_name):
         pass
