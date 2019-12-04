@@ -31,7 +31,7 @@ class ui_tabTable:
         :return:                the new tab, None if already exist
         """
 
-        if name in self.tabs:
+        if name.lower() in self.tabs:
             return None
 
         tab = QtWidgets.QWidget()
@@ -46,7 +46,7 @@ class ui_tabTable:
         # set active!
         self.tab_widget.setCurrentIndex(self.tab_widget.indexOf(tab))
 
-        self.tabs[name] = tab, table
+        self.tabs[name.lower()] = tab, table
         self.tab_count += 1
 
         return tab, table
@@ -59,8 +59,8 @@ class ui_tabTable:
         :return:                None
         """
 
-        if tab_name not in self.tabs:
-            return None
+        if tab_name.lower() not in self.tabs:
+            return
 
         self.help.set_table_columns(self.tabs[tab_name][1], column_names)
 
