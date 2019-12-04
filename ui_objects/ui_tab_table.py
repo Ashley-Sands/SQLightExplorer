@@ -17,6 +17,13 @@ class ui_tabTable:
 
         self.help = UiHelpers()
 
+    def get_tab_data(self, tab_name):
+
+        if tab_name not in self.tabs:
+            return None
+
+        return self.tabs[tab_name]
+
     def add_tab(self, name):
         """ Adds new tab to table widget
 
