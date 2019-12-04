@@ -11,12 +11,12 @@ class UiTreeView:
         self.parent_items = {}  # key: display names
         self.help = UiHelpers()
 
-        self.open_table_action = None
+        self.open_table_action = [] # callback sig, actionData, 1
 
         self.tree_view.itemDoubleClicked.connect( self.open_tree_item_in_tab )
 
-    def set_actions(self, open_table_action):
-        self.open_table_action = open_table_action
+    def add_actions(self, open_table_action):
+        self.open_table_action.append(open_table_action)
 
     def open_tree_item_in_tab(self, tree_item, column_id):
 
@@ -32,8 +32,8 @@ class UiTreeView:
         # add new tab and table.
         self.tab_table.add_tab( "Table:" + action_data["table_name"] )
 
-        self.open_table_action.run_action(action_data, 1)
-
+        for action in self.open_table_action:
+            action.run_action(action_data, 1)
 
     def add_tree_item(self, parent_name, str):
         """ add item to tree
