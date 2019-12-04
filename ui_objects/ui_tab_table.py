@@ -10,7 +10,7 @@ class ui_tabTable:
         """
         self.translate = QtCore.QCoreApplication.translate
         self.tab_widget = tab_widget
-        self.tab_widget.tabCloseRequested.connect( self.close_tab );
+        self.tab_widget.tabCloseRequested.connect( self.close_tab )
 
         self.tabs = {}      # key tab names tuple(tab, table)
         self.tab_count = 0;

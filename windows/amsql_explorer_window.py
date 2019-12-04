@@ -154,7 +154,7 @@ class Ui_MainWindow(object):
         self.tab_view.setCurrentIndex(0)
 
         # self.treeWidget.doubleClicked['QModelIndex'].connect(self.treeWidget.collapseAll)
-        self.table_default.cellChanged['int','int'].connect(self.table_default.hideRow)
+        #self.table_default.cellChanged['int','int'].connect(self.table_default.hideRow)
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
