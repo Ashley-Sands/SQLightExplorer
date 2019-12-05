@@ -145,3 +145,22 @@ class Action_TableRows(Action):
     def valid_response_data(self, response):
         return type(response) is list
 
+class Action_updateTableRow(Action):
+
+    def request(self, data_object):
+        return self.web_query.edit_row(data_object["database_name"], data_object["table_name"],
+                                       data_object["set_columns"], data_object["set_values"],
+                                       data_object["where_columns"], data_object["where_values"])
+
+    def action(self, data_object, response):
+        """
+
+        :param data_object:     dict with keys "database_name", "table_name",
+                                               "set_columns"   , "set_data",
+                                               "where_columns" , "where_data"
+        :param response:        data from request
+        :return:                None
+        """
+
+    def valid_response_data(self, response):
+        return True

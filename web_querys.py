@@ -8,12 +8,27 @@ class WebQuerys:
         self.connection = None
 
     @staticmethod
-    def get_query_dict(database, table=None):
-        """Creates dict to send to server"""
+    def get_query_dict(database, table=None, sets=None, wheres=None):
+        """ Creates dict to send to server
+
+        :param database:    database name
+        :param table:       table name
+        :param sets:        tuple (set_columns, set_data)
+        :param wheres:      tuple (where_columns, where_data)
+        :return:            dict
+        """
         dic = {"database": database}
 
         if table != None:
             dic["table"] = table
+
+        if type(sets) is list or type(sets) is tuple:
+            dic["set_columns"] = sets[0]
+            dic["set_data"] = sets[1]
+
+        if type(wheres) is list or type(wheres) is tuple:
+            dic["where_columns"] = wheres[0]
+            dic["where_data"] = wheres[1]
 
         return dic
 
@@ -126,7 +141,7 @@ class WebQuerys:
     def get_table_rows(self, db_name, table_name):
         """ gets all rows from table
 
-            :param database_name:
+            :param db_name:
             :param table_name:
             :return:
             """
@@ -138,8 +153,12 @@ class WebQuerys:
     def drop_table(self, table_name):
         pass
 
-    def edit_value(self, table_name):
-        pass
+    def edit_row(self, db_name, table_name, set_columns, set_values, where_columns, where_data):
+
+        data = WebQuerys.get_query_dict(db_name, table_name, (set_columns, set_values), (where_columns, where_data))
+        response_status, response_data = self.send_query("POST", "/table_rows", data)
+
+        return WebQuerys.response_to_dict(response_status, response_data)
 
     def new_row(self, table_name):
         pass
