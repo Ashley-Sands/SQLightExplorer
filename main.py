@@ -25,7 +25,7 @@ if __name__ == "__main__":
     main_app.welcome_tab()
 
     # Setup the classes to manage the UI elements :)
-    ui_tab_table = ui_tabTable( main_app.tab_view )
+    ui_tab_table = ui_tabTable( main_app.tab_view, main_app.statusbar )
     ui_tree_view = UiTreeView(main_app.treeWidget, ui_tab_table)
 
     # Setup actions
