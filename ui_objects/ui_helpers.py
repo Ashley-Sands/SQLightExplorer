@@ -54,11 +54,22 @@ class UiHelpers:
             item.setText( self.translate("MainWindow", column_names[i] ) )
             table_widget.setHorizontalHeaderItem(i, item)
 
-    def set_table_rows(self, table, data):
+
+    def get_cell_flags(self, editable):
+        """Gets the cell flags"""
+        flags = QtCore.Qt.ItemIsSelectable
+
+        if editable:
+            flags = flags | QtCore.Qt.ItemIsEditable | QtCore.Qt.ItemIsEnabled
+
+        return flags
+
+    def set_table_rows(self, table, data, column_params):
         """ Set rows in table
 
         :param table:   table to set rows in
         :param data:    data to set in table, List[row][column]
+        :params column_params:  list of tuples of params for column. (editable, type)
         :return:        None
         """
 
@@ -67,6 +78,7 @@ class UiHelpers:
         for row in range(len(data)):
             for col in range(len(data[row])):
                 item = QtWidgets.QTableWidgetItem( str(data[row][col]) )
+                item.setFlags( self.get_cell_flags( column_params[col][0] ) )
                 table.setItem( row, col, item )
 
     def add_table_row(self, table, data, row = -1):

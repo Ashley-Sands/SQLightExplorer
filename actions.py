@@ -99,16 +99,24 @@ class Action_TableColumns(Action):
         :return:                None
         """
 
-        # the data in the response contains all column data (ie, id, name, type, ...)
+        # the data in the response contains all column data [ col_id, name, type, can_be_null, default_value, primary_key, editable] (len 7)
+        # editable IS NOT a sqlite value, it needs to be added by the user on the server side and signals if the column can be edited or not.
+        # if the value is not present then it is assumed that the column can be edited
         # we only need the 2nd element (col name) for the column names
-        column_names = []
+        column_names = []       # list of column names
+        column_params = []      # list of tuples containing column params (editable, type)
         for r in response:
-            column_names.append(r[1])
+            column_names.append( r[1] )
+            if  len(r) == 7:
+                column_params.append( (r[6], r[2] ) )
+            else:
+                column_params.append( (1, r[2]) )           # if the editable has not been set assume it to be editable
 
-        self.tab_table.set_table_columns("table:"+data_object["table_name"], column_names)
+        self.tab_table.set_table_columns("table:"+data_object["table_name"], column_names, column_params)
 
     def valid_response_data(self, response):
-        return type(response) is list and type(response[0]) is list
+        """Check that the data is a list of list, and that len nested list has a len of at least 6"""
+        return type(response) is list and type(response[0]) is list and len(response[0]) >= 6
 
 class Action_TableRows(Action):
 
