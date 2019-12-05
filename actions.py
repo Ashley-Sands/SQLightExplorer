@@ -39,9 +39,11 @@ class Action:
         if str(response[0]) == "404":
             self.dialog_message.set_message(response[1])
             self.dialog_message.new_window()
+            self.action_404(data_object)
         elif str(response[0]) == "408":
             self.dialog_message.set_message("Error: Connection Timed Out :(")
             self.dialog_message.new_window()
+            self.action_408(data_object)
         elif not self.valid_response_data(response[1]):
             self.dialog_message.set_message("Error: Invalid response :(")
             self.dialog_message.new_window()
@@ -49,6 +51,12 @@ class Action:
             self.action(data_object, response[1])
 
     def action(self, data_object, response_data):
+        pass
+
+    def action_404(self, data_object):
+        pass
+
+    def action_408(self, data_object):
         pass
 
     def valid_response_data(self, response):
