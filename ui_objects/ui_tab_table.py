@@ -3,7 +3,7 @@ from ui_objects.ui_helpers import UiHelpers
 
 class ui_tabTable:
 
-    def __init__(self, tab_widget):
+    def __init__(self, tab_widget, status_bar):
         """ Stores tab widget and manages tabs
 
         :param tab_widget:  the widget that contains tabs.
@@ -21,6 +21,7 @@ class ui_tabTable:
 
         self.setting_table_data = False
 
+        self.status_bar = status_bar
         self.help = UiHelpers()
 
     def add_item_changed_action(self, action):
@@ -114,7 +115,7 @@ class ui_tabTable:
         tab, table = self.get_tab_table_from_table_item(item)
 
         if tab is None:
-            print("Error: tab not found. can not change cell")  # TODO: dialog
+            self.status_bar.showMessage("Error: tab not found. can not change cell", 20000)
             return
 
         tab_name = self.tab_widget.tabText( self.tab_widget.indexOf(tab) )
@@ -123,7 +124,7 @@ class ui_tabTable:
 
         if not valid_data:
             item.setText(self.selected_cel_value)
-            print("Error: Invalid data type") # TODO: dialog
+            self.status_bar.showMessage("Error: Invalid data type", 20000)
             return
         else:
             self.selected_cel_value = item.text()   # updated the selected value if valid
