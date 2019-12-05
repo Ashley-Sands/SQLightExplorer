@@ -1,5 +1,12 @@
 from web_querys import WebQuerys
 
+
+class FakeDialog:
+    """Allows objects use the actions that send a dialog window rather than values.
+       it like Mock Dialog Data"""
+    def __init__(self, text):
+        self.text = text
+
 class Action:
 
     def __init__(self, dialog_message):
@@ -25,6 +32,9 @@ class Action:
             return
 
         response = self.request(data_object)
+
+        if response is None: # in the case of response being none it will handle its own error messages :)
+            return
 
         if str(response[0]) == "404":
             self.dialog_message.set_message(response[1])
@@ -55,9 +65,10 @@ class Action_NewDatabase(Action):
         return self.web_query.new_database( dialog.text )
 
     def action(self, dialog, response):
-
+        print("GGGGGGGgggggg", dialog.text)
         # Add the data to the tree
         self.tree_view.add_tree_item(None, dialog.text)  # add database
+        print("GGGGGGGgggggg")
 
     def valid_response_data(self, response):
         return True
@@ -76,6 +87,43 @@ class Action_OpenDatabase(Action_NewDatabase):
 
     def valid_response_data(self, response):
         return type(response) is list
+
+class Action_DropTable(Action):
+
+    def __init__(self, dialog_message, tree_view):
+        super().__init__(dialog_message)
+
+        self.tree_widget = tree_view.tree_view
+        self.database = None
+        self.refresh_database_action = Action_OpenDatabase(dialog_message, tree_view)
+
+    def request(self, data_object):
+
+        table = self.tree_widget.currentItem()
+        # check we have an item selected and it has a parent (not db selected)
+        if table is None or table.parent() is None:
+            self.dialog_message.set_message("Table not Selected")
+            self.dialog_message.new_window()
+            return None
+
+        self.database = table.parent()
+
+        return self.web_query.drop_table( self.database.text(0), table.text(0) )
+
+    def action(self, data_object, response):
+
+        if self.database is None:
+            return
+
+        database_name = self.database.text(0)
+
+        self.tree_widget.takeTopLevelItem( self.tree_widget.indexOfTopLevelItem(self.database) )
+        print("Hellooooo")
+        self.refresh_database_action.run_action(FakeDialog(database_name), 1)
+        print(":)")
+
+    def valid_response_data(self, response):
+        return True
 
 class Action_TableColumns(Action):
 

@@ -42,9 +42,8 @@ class UiTreeView:
         :param str:          item display text
         :return:             QTreeWidgetItem or none if error
         """
-
+        print("afasdfsadfsadfsadfsadfsdafas")
         item = None
-
         if parent_name == None:
             item = self.parent_items[str] = QtWidgets.QTreeWidgetItem(self.tree_view, [str])
         else:

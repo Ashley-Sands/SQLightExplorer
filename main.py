@@ -2,7 +2,7 @@ from windows import amsql_explorer_window
 from ui_objects.ui_tab_table import ui_tabTable
 from ui_objects.ui_tree_view import UiTreeView
 from dialogue_window import DialogueWindow_Warning, DialogueWindow_TextEnter, DialogueWindow_Config, DialogueWindow_Message
-from actions import Action_OpenDatabase, Action_NewDatabase, Action_TableColumns, Action_TableRows, Action_updateTableRow
+from actions import Action_OpenDatabase, Action_NewDatabase, Action_TableColumns, Action_TableRows, Action_updateTableRow, Action_DropTable
 
 def dialogue_callback( dialog_name, accepted ):
     pass
@@ -32,6 +32,8 @@ if __name__ == "__main__":
     open_database_action = Action_OpenDatabase(dialog_message, ui_tree_view)
     new_database_action = Action_NewDatabase(dialog_message, ui_tree_view)
 
+    drop_table_action = Action_DropTable(dialog_message, ui_tree_view)
+
     table_columns_action = Action_TableColumns(dialog_message, ui_tab_table)
     table_rows_action = Action_TableRows(dialog_message, ui_tab_table)
     table_item_changed_action = Action_updateTableRow(dialog_message)
@@ -44,7 +46,7 @@ if __name__ == "__main__":
     # Setup dialogue instances
     dialogs = {}
 
-    dialogs["drop_table"] = DialogueWindow_Warning(dialogue_callback)
+    dialogs["drop_table"] = DialogueWindow_Warning(drop_table_action.run_action)
     dialogs["new_database"] = DialogueWindow_TextEnter(new_database_action.run_action)
     dialogs["open_database"] = DialogueWindow_TextEnter(open_database_action.run_action)
     dialogs["config"] = DialogueWindow_Config()
