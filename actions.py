@@ -65,10 +65,9 @@ class Action_NewDatabase(Action):
         return self.web_query.new_database( dialog.text )
 
     def action(self, dialog, response):
-        print("GGGGGGGgggggg", dialog.text)
+
         # Add the data to the tree
         self.tree_view.add_tree_item(None, dialog.text)  # add database
-        print("GGGGGGGgggggg")
 
     def valid_response_data(self, response):
         return True
@@ -82,8 +81,12 @@ class Action_OpenDatabase(Action_NewDatabase):
 
         # Add the data to the tree
         super().action(dialog, response)
+        item = None
         for r in response:
-            self.tree_view.add_tree_item(dialog.text, r)
+            item = self.tree_view.add_tree_item(dialog.text, r)
+
+        if item is not None and item.parent() is not None:
+            self.tree_view.tree_view.expandItem(item.parent())
 
     def valid_response_data(self, response):
         return type(response) is list

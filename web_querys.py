@@ -144,7 +144,7 @@ class WebQuerys:
             :param db_name:
             :param table_name:
             :return:
-            """
+        """
         data = WebQuerys.get_query_dict(db_name, table_name)
         response_status, response_data = self.send_query("POST", "/table_rows", data)
 
