@@ -87,7 +87,7 @@ class Ui_MainWindow(object):
 
         self.tab_view = QtWidgets.QTabWidget(self.centralwidget)
         self.tab_view.setEnabled(True)
-        self.tab_view.setGeometry(QtCore.QRect(210, 10, 600, 421))
+        self.tab_view.setGeometry(QtCore.QRect(210, 10, 600, 414))
         self.tab_view.setAutoFillBackground(False)
         self.tab_view.setTabPosition(QtWidgets.QTabWidget.North)
         self.tab_view.setTabShape(QtWidgets.QTabWidget.Rounded)
@@ -194,6 +194,7 @@ class Ui_MainWindow(object):
         self.treeWidget.setSortingEnabled(__sortingEnabled)
         self.button_add_table.setText(_translate("MainWindow", "Add Table"))
         self.button_drop_table.setText(_translate("MainWindow", "Drop Table"))
+
         self.button_add_row.setText(_translate("MainWindow", "Add New Row"))
         self.button_remove_row.setText(_translate("MainWindow", "Remove Rows"))
 

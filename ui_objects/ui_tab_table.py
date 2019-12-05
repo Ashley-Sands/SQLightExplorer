@@ -51,7 +51,7 @@ class ui_tabTable:
         self.tab_widget.setTabText(self.tab_widget.indexOf(tab), self.translate("MainWindow", name))
 
         # create table view
-        table = self.help.create_table_widget(tab, "table_" + str(self.tab_count), (0, 15, 600, 371))
+        table = self.help.create_table_widget(tab, "table_" + str(self.tab_count), (0, 15, 598, 376))
         table.itemChanged.connect(self.cell_changed)
         table.itemPressed.connect(self.cell_selected)
 
