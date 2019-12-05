@@ -156,7 +156,7 @@ class WebQuerys:
     def edit_row(self, db_name, table_name, set_columns, set_values, where_columns, where_data):
 
         data = WebQuerys.get_query_dict(db_name, table_name, (set_columns, set_values), (where_columns, where_data))
-        response_status, response_data = self.send_query("POST", "/table_rows", data)
+        response_status, response_data = self.send_query("POST", "/update_row", data)
 
         return WebQuerys.response_to_dict(response_status, response_data)
 
