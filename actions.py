@@ -66,6 +66,9 @@ class Action_NewDatabase(Action):
 
     def action(self, dialog, response):
 
+        # remove if already exist (so it gets refreshed)
+        self.tree_view.remove_root_item(dialog.text)
+
         # Add the data to the tree
         self.tree_view.add_tree_item(None, dialog.text)  # add database
 
@@ -120,10 +123,8 @@ class Action_DropTable(Action):
 
         database_name = self.database.text(0)
 
-        self.tree_widget.takeTopLevelItem( self.tree_widget.indexOfTopLevelItem(self.database) )
-        print("Hellooooo")
         self.refresh_database_action.run_action(FakeDialog(database_name), 1)
-        print(":)")
+
 
     def valid_response_data(self, response):
         return True

@@ -40,7 +40,7 @@ class UiTreeView:
 
         :param parent_name:  display name of parent tree items (None = new parent)
         :param str:          item display text
-        :return:             QTreeWidgetItem or none if error
+        :return:             QTreeWidgetItem
         """
 
         item = None
@@ -50,3 +50,7 @@ class UiTreeView:
             item = QtWidgets.QTreeWidgetItem(self.parent_items[parent_name], [str])
 
         return item
+
+    def remove_root_item(self, parent_name):
+        if parent_name in self.parent_items:
+            self.tree_view.takeTopLevelItem(self.tree_view.indexOfTopLevelItem(self.parent_items[parent_name]))
