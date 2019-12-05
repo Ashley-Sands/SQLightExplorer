@@ -2,7 +2,7 @@ from windows import amsql_explorer_window
 from ui_objects.ui_tab_table import ui_tabTable
 from ui_objects.ui_tree_view import UiTreeView
 from dialogue_window import DialogueWindow_Warning, DialogueWindow_TextEnter, DialogueWindow_Config, DialogueWindow_Message
-from actions import Action_OpenDatabase, Action_NewDatabase, Action_TableColumns, Action_TableRows
+from actions import Action_OpenDatabase, Action_NewDatabase, Action_TableColumns, Action_TableRows, Action_updateTableRow
 
 def dialogue_callback( dialog_name, accepted ):
     pass
@@ -34,10 +34,12 @@ if __name__ == "__main__":
 
     table_columns_action = Action_TableColumns(dialog_message, ui_tab_table)
     table_rows_action = Action_TableRows(dialog_message, ui_tab_table)
+    table_item_changed_action = Action_updateTableRow(dialog_message)
 
     # set actions on ui
     ui_tree_view.add_actions(table_columns_action)
     ui_tree_view.add_actions(table_rows_action)
+    ui_tab_table.add_item_changed_action(table_item_changed_action)
 
     # Setup dialogue instances
     dialogs = {}

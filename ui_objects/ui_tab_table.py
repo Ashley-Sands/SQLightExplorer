@@ -121,6 +121,7 @@ class ui_tabTable:
         tab_name = self.tab_widget.tabText( self.tab_widget.indexOf(tab) )
         table_name = tab_name.split(":")[1]   # (table:table_name)
         valid_data = self.verify_value(item.text(), self.table_column_parmas[tab_name.lower()][item.column()][1])
+        set_column_name = table.horizontalHeaderItem( item.column() ).text()
 
         if not valid_data:
             item.setText(self.selected_cel_value)
@@ -130,13 +131,21 @@ class ui_tabTable:
             self.selected_cel_value = item.text()   # updated the selected value if valid
 
         # get the rowid value
-        rowid_value = table.item(item.row(), 0)                 # TODO: this will only use the first column for the WHERE when updateing cells
-        where_column_name = table.horizontalHeaderItem(0)       # Altho, we still get the name of the column
+        rowid_value = table.item(item.row(), 0).text()                  # TODO: this will only use the first column for the WHERE when updateing cells
+        where_column_name = table.horizontalHeaderItem(0).text()
 
-        print(item.text(), item.row(), item.column(), where_column_name.text(), "=", rowid_value.text())
+        print(item.text(), item.row(), item.column(), where_column_name, "=", rowid_value)
 
-        #for act in self.item_changed_action:
-            #act.run_action() # TODO
+        action_data = {}
+        action_data["database_name"] = "test_db"    # TODO:
+        action_data["table_name"] = table_name
+        action_data["set_columns"] = [set_column_name]
+        action_data["set_data"] = [item.text()]
+        action_data["where_columns"] = [where_column_name]
+        action_data["where_data"] = [rowid_value]
+
+        for act in self.item_changed_action:
+            act.run_action( action_data , 1 )
 
     def verify_value(self, value, value_type):
         """Verifies that the values matches the column value type"""
