@@ -12,6 +12,7 @@ class ui_tabTable:
         self.tab_widget = tab_widget
         self.tab_widget.tabCloseRequested.connect( self.close_tab )
 
+        self.selected_cel_value = ""    # used to restore value if invalid value is inputed
         self.item_changed_action = []
 
         self.tabs = {}      # key tab names tuple(tab, table)
@@ -51,6 +52,7 @@ class ui_tabTable:
         # create table view
         table = self.help.create_table_widget(tab, "table_" + str(self.tab_count), (0, 15, 600, 371))
         table.itemChanged.connect(self.cell_changed)
+        table.itemPressed.connect(self.cell_selected)
 
         # set active!
         self.tab_widget.setCurrentIndex(self.tab_widget.indexOf(tab))
@@ -92,19 +94,24 @@ class ui_tabTable:
 
         self.setting_table_data = False
 
+    def get_tab_table_from_table_item(self, item):
+        """Gets the tabs tuple from table item. None if not found"""
+        for k in self.tabs:
+            if self.tabs[k][1] == item.tableWidget():
+                return self.tabs[k]
+
+        return None, None
+
+    def cell_selected(self, item):
+        self.selected_cel_value = item.text()
+
     def cell_changed(self, item):
         """ signal/callback when cell changes in table """
 
         if self.setting_table_data is True:
             return
 
-        tab = None
-        table = None
-
-        for k in self.tabs:
-            if self.tabs[k][1] == item.tableWidget():
-                tab, table = self.tabs[k]
-                break
+        tab, table = self.get_tab_table_from_table_item(item)
 
         if tab is None:
             print("Error: tab not found. can not change cell")  # TODO: dialog
@@ -115,11 +122,13 @@ class ui_tabTable:
         valid_data = self.verify_value(item.text(), self.table_column_parmas[tab_name.lower()][item.column()][1])
 
         if not valid_data:
+            item.setText(self.selected_cel_value)
             print("Error: Invalid data type") # TODO: dialog
             return
+        else:
+            self.selected_cel_value = item.text()   # updated the selected value if valid
 
         # get the rowid value
-
         rowid_value = table.item(item.row(), 0)                 # TODO: this will only use the first column for the WHERE when updateing cells
         where_column_name = table.horizontalHeaderItem(0)       # Altho, we still get the name of the column
 
