@@ -99,10 +99,11 @@ class ui_tabTable:
             return
 
         tab = None
+        table = None
 
         for k in self.tabs:
             if self.tabs[k][1] == item.tableWidget():
-                tab = self.tabs[k][0]
+                tab, table = self.tabs[k]
                 break
 
         if tab is None:
@@ -117,7 +118,12 @@ class ui_tabTable:
             print("Error: Invalid data type") # TODO: dialog
             return
 
-        print(item.text(), item.row(), item.column())
+        # get the rowid value
+
+        rowid_value = table.item(item.row(), 0)                 # TODO: this will only use the first column for the WHERE when updateing cells
+        where_column_name = table.horizontalHeaderItem(0)       # Altho, we still get the name of the column
+
+        print(item.text(), item.row(), item.column(), where_column_name.text(), "=", rowid_value.text())
 
         #for act in self.item_changed_action:
             #act.run_action() # TODO
