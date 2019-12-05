@@ -67,6 +67,24 @@ class Ui_MainWindow(object):
         self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line.setObjectName("line")
 
+        self.horizontalLayoutWidget_3 = QtWidgets.QWidget(self.centralwidget)
+        self.horizontalLayoutWidget_3.setGeometry(QtCore.QRect(220, 430, 181, 31))
+        self.horizontalLayoutWidget_3.setObjectName("horizontalLayoutWidget_2")
+
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget_3)
+        self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+
+        self.button_add_row = QtWidgets.QPushButton(self.horizontalLayoutWidget_3)
+        self.button_add_row.setObjectName("add_row")
+        self.horizontalLayout_3.addWidget(self.button_add_row)
+
+        self.button_remove_row = QtWidgets.QPushButton(self.horizontalLayoutWidget_3)
+        self.button_remove_row.setObjectName("button_remove_row")
+        self.horizontalLayout_3.addWidget(self.button_remove_row)
+
+
+
         self.tab_view = QtWidgets.QTabWidget(self.centralwidget)
         self.tab_view.setEnabled(True)
         self.tab_view.setGeometry(QtCore.QRect(210, 10, 600, 421))
@@ -176,6 +194,8 @@ class Ui_MainWindow(object):
         self.treeWidget.setSortingEnabled(__sortingEnabled)
         self.button_add_table.setText(_translate("MainWindow", "Add Table"))
         self.button_drop_table.setText(_translate("MainWindow", "Drop Table"))
+        self.button_add_row.setText(_translate("MainWindow", "Add New Row"))
+        self.button_remove_row.setText(_translate("MainWindow", "Remove Rows"))
 
         item = self.table_default.verticalHeaderItem(0)
         item.setText(_translate("MainWindow", "0"))
