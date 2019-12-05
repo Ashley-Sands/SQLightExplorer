@@ -12,10 +12,15 @@ class ui_tabTable:
         self.tab_widget = tab_widget
         self.tab_widget.tabCloseRequested.connect( self.close_tab )
 
+        self.item_changed_action = []
+
         self.tabs = {}      # key tab names tuple(tab, table)
         self.tab_count = 0;
 
         self.help = UiHelpers()
+
+    def add_item_changed_action(self, action):
+        self.item_changed_action.append(action)
 
     def get_tab_data(self, tab_name):
 
@@ -42,6 +47,7 @@ class ui_tabTable:
 
         # create table view
         table = self.help.create_table_widget(tab, "table_" + str(self.tab_count), (0, 15, 600, 371))
+        table.itemChanged.connect(self.cell_changed)
 
         # set active!
         self.tab_widget.setCurrentIndex(self.tab_widget.indexOf(tab))
@@ -77,6 +83,18 @@ class ui_tabTable:
 
         self.help.set_table_rows(self.tabs[tab_name][1], rows)
 
+    def cell_changed(self, item):
+        """ signal/callback when cell changes in table """
+
+        for k in self.tabs:
+            if self.tabs[k][1] == item.tableWidget():
+                print("Found")
+                break
+
+        print(item.text(), item.row(), item.column())
+
+        for act in self.item_changed_action:
+            act.run_action() # TODO
 
     def close_tab(self, tab_index):
 

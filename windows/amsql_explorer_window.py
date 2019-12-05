@@ -245,5 +245,6 @@ if __name__ == "__main__":
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
+    ui.tab_view.currentWidget()
     MainWindow.show()
     sys.exit(app.exec_())
