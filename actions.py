@@ -174,9 +174,9 @@ class Action_TableColumns(Action):
         for r in response:
             column_names.append( r[1] )
             if  len(r) == 7:
-                column_params.append( (r[6], r[2] ) )
+                column_params.append( (r[6], r[2], r[4] ) )
             else:
-                column_params.append( (1, r[2]) )           # if the editable has not been set assume it to be editable
+                column_params.append( (1, r[2], r[4]) )           # if the editable has not been set assume it to be editable
 
         self.tab_table.set_table_columns("table:"+data_object["table_name"], column_names, column_params)
 
@@ -275,3 +275,18 @@ class Action_RemoveRowsFromTable(Action):
 
     def valid_response_data(self, response):
         return True
+
+# derive for removeRows since its only the request that is different
+class Action_InsertNewRow(Action_RemoveRowsFromTable):
+
+    def request(self, data_object):
+        # TODO: finish columns (also ui_tab_table.get_column_defaults)
+        db_name, table_name = self.tab_table.get_database_and_table_name()
+        column_names = self.web_query.get_column_names(db_name, table_name)
+        print(column_names)
+
+        if db_name is None or table_name is None:
+            return WebQuerys.response_to_dict(404, "No database or table provided")
+
+        return self.web_query.insert_row(db_name, table_name, [], [])   # insert default row?
+
