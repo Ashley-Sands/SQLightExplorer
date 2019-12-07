@@ -21,6 +21,11 @@ class Action:
         """
         pass
 
+    def button_run_action(self):
+        """ alows the action to be directly binded to a button signal
+        """
+        self.run_action([], 1)
+
     def run_action(self, data_object, accepted):  # should be run_action
         """ Runs the action handling serveer responces
 
