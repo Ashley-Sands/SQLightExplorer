@@ -48,6 +48,7 @@ class ui_tabTable:
         tab = QtWidgets.QWidget()
         tab.setObjectName( "tab_"+str(self.tab_count) )
 
+
         self.tab_widget.addTab(tab, "")
         self.tab_widget.setTabText(self.tab_widget.indexOf(tab), self.translate("MainWindow", name))
 
@@ -176,6 +177,23 @@ class ui_tabTable:
                 rows.append(i.row())
 
         return rows
+
+    def get_value_from_rows(self, column_id, rows):
+        """ gets values for a single column for rows
+        :return:    List of values from columns
+        """
+
+        tab, table = self.get_current_tab_table()
+        values = []
+        for r in rows:
+            v = table.item(column_id,  r)
+            values.append(v)
+
+        return values
+
+    def get_column_name(self, column_id):
+        tab, table = self.get_current_tab_table()
+        return table.horizontalHeaderItem(column_id).text()
 
     def verify_value(self, value, value_type):
         """Verifies that the values matches the column value type"""
