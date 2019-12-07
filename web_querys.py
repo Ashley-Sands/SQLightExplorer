@@ -166,3 +166,10 @@ class WebQuerys:
 
     def new_row(self, table_name):
         pass
+
+    def remove_row(self, db_name, table_name, where_columns, where_data):
+
+        data = WebQuerys.get_query_dict(db_name, table_name, wheres=(where_columns, where_data))
+        response_status, response_data = self.send_query("POST", "/remove_row", data)
+
+        return WebQuerys.response_to_dict(response_status, response_data)
