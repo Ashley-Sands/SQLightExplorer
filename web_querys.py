@@ -8,13 +8,14 @@ class WebQuerys:
         self.connection = None
 
     @staticmethod
-    def get_query_dict(database, table=None, sets=None, wheres=None):
+    def get_query_dict(database, table=None, sets=None, wheres=None, values=None):
         """ Creates dict to send to server
 
         :param database:    database name
         :param table:       table name
         :param sets:        tuple (set_columns, set_data)
         :param wheres:      tuple (where_columns, where_data)
+        :param values:      tuple (value_columns, value_data)
         :return:            dict
         """
         dic = {"database": database}
@@ -29,6 +30,10 @@ class WebQuerys:
         if type(wheres) is list or type(wheres) is tuple:
             dic["where_columns"] = wheres[0]
             dic["where_data"] = wheres[1]
+
+        if type(values) is list or type(values) is tuple:
+            dic["value_columns"] = values[0]
+            dic["value_data"] = values[1]
 
         return dic
 
@@ -164,8 +169,12 @@ class WebQuerys:
 
         return WebQuerys.response_to_dict(response_status, response_data)
 
-    def new_row(self, table_name):
-        pass
+    def insert_row(self, db_name, table_name, value_columns, value_data):
+
+        data = WebQuerys.get_query_dict(db_name, table_name, values=(value_columns, value_data))
+        response_status, response_data = self.send_query("POST", "/insert_row", data)
+
+        return WebQuerys.response_to_dict( response_status, response_data )
 
     def remove_row(self, db_name, table_name, where_columns, where_data):
 
