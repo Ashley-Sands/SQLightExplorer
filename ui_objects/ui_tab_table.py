@@ -12,11 +12,12 @@ class ui_tabTable:
         self.tab_widget = tab_widget
         self.tab_widget.tabCloseRequested.connect( self.close_tab )
 
+        self.selected_cel = None
         self.selected_cel_value = ""    # used to restore value if invalid value is inputed
         self.item_changed_action = []
 
         self.tabs = {}      # key tab names tuple(tab, table)
-        self.table_column_parmas = {}   # key tab name. (editable, input value# )
+        self.table_column_parmas = {}   # key tab name. (editable, input value type )
         self.tab_count = 0;
 
         self.setting_table_data = False
@@ -95,6 +96,18 @@ class ui_tabTable:
 
         self.setting_table_data = False
 
+    def get_current_tab_table(self):
+        """ Get the current tab and table if exist in obj.
+            (Some tabs are not tab table and wont be found)
+        """
+
+        for t in self.tabs:
+            if t[0] == self.tab_widget.currentWidget():
+                return t
+
+        return None, None
+
+
     def get_tab_table_from_table_item(self, item):
         """Gets the tabs tuple from table item. None if not found"""
         for k in self.tabs:
@@ -104,6 +117,7 @@ class ui_tabTable:
         return None, None
 
     def cell_selected(self, item):
+        self.selected_cel = item
         self.selected_cel_value = item.text()
 
     def cell_changed(self, item):
@@ -146,6 +160,22 @@ class ui_tabTable:
 
         for act in self.item_changed_action:
             act.run_action( action_data , 1 )
+
+    def get_selected_rows(self):
+        """Gets the selected rows from the table being displayed"""
+        tab, table = self.get_current_tab_table()
+
+        if tab is None:
+            return
+
+        items = table.selectedItems()
+        rows = []
+
+        for i in items:
+            if i.row() not in rows:
+                rows.append(i.row())
+
+        return rows
 
     def verify_value(self, value, value_type):
         """Verifies that the values matches the column value type"""
