@@ -17,9 +17,9 @@ class ui_tabTable:
         self.item_changed_action = []
 
         self.tabs = {}      # key tab names, tuple(tab, table)
-        self.tab_data = {}  # key tab names, dict{type, db_name, table_name}
+        self.tab_data = {}  # key tab names, dict{type, db_name, table_name, (table_columns_names)}
 
-        self.table_column_parmas = {}   # key tab name. (editable, input value type )
+        self.table_column_parmas = {}   # key tab name. (editable, input value type, default_value )
         self.tab_count = 0;
 
         self.setting_table_data = False
@@ -65,7 +65,7 @@ class ui_tabTable:
         self.tab_widget.setCurrentIndex(self.tab_widget.indexOf(tab))
 
         self.tabs[name.lower()] = tab, table
-        self.tab_data[name.lower()] = {"type": type_value, "db_name": database_name, "table_name": table_name}
+        self.tab_data[name.lower()] = {"type": type_value, "db_name": database_name, "table_name": table_name, "table_column_names": ()}
         self.tab_count += 1
         return tab, table
 
@@ -81,8 +81,15 @@ class ui_tabTable:
         if tab_name.lower() not in self.tabs:
             return
 
+        self.tab_data[tab_name.lower()]["table_column_names"] = column_names
         self.help.set_table_columns(self.tabs[tab_name][1], column_names)
         self.table_column_parmas[tab_name.lower()] = column_params
+
+    def get_column_default_values(self):
+        """Gets the default values for all columns on active table"""
+        # TODO: (also finish Action_InsertNewRow)
+        # map cols to defaults :)
+        pass
 
     def set_table_rows(self, tab_name, rows):
         """

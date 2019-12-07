@@ -7,6 +7,7 @@ from actions import FakeDialog
 
 from actions import Action_OpenDatabase, Action_NewDatabase, Action_TableColumns, Action_TableRows
 from actions import Action_updateTableRow, Action_DropTable, Action_RemoveRowsFromTable
+from actions import Action_InsertNewRow
 
 def dialogue_callback( dialog_name, accepted ):
     pass
@@ -42,6 +43,7 @@ if __name__ == "__main__":
     table_rows_action = Action_TableRows(dialog_message, ui_tab_table)
     table_item_changed_action = Action_updateTableRow(dialog_message)
     table_remove_rows_action = Action_RemoveRowsFromTable(dialog_message, ui_tab_table)
+    table_insert_row_action = Action_InsertNewRow(dialog_message, ui_tab_table)
 
     # set actions on ui
     ui_tree_view.add_actions(table_columns_action)
@@ -55,7 +57,7 @@ if __name__ == "__main__":
     dialogs["remove_rows"] = DialogueWindow_Warning(table_remove_rows_action.run_action)        # TODO: update table name in window
     dialogs["new_database"] = DialogueWindow_TextEnter(new_database_action.run_action)
     dialogs["open_database"] = DialogueWindow_TextEnter(open_database_action.run_action)
-    dialogs["config"] = DialogueWindow_Config()     # BUG: **crash**
+    dialogs["config"] = DialogueWindow_Config()                                                 # TODO: BUG: **crash**
 
     # setup display values on dialog windows
     dialogs["new_database"].set_standard_buttons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
@@ -72,7 +74,7 @@ if __name__ == "__main__":
     main_app.button_new_database.clicked.connect(dialogs["new_database"].new_window)
     main_app.button_open_database.clicked.connect(dialogs["open_database"].new_window)
     main_app.button_remove_row.clicked.connect(dialogs["remove_rows"].new_window)
-    main_app.button_add_row.clicked.connect(dialogue_callback)
+    main_app.button_add_row.clicked.connect(table_insert_row_action.button_run_action)
 
     # bind 'File' context menu buttons
     main_app.actionShow_Welcome_Screen.triggered.connect(main_app.welcome_tab)
