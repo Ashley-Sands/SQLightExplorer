@@ -44,7 +44,7 @@ class ui_tabTable:
         :return:                the new tab, None if already exist
         """
 
-        name = type+":"+table_name
+        name = type_value+":"+table_name
 
         if name.lower() in self.tabs:
             return None
@@ -67,7 +67,6 @@ class ui_tabTable:
         self.tabs[name.lower()] = tab, table
         self.tab_data[name.lower()] = {"type": type_value, "db_name": database_name, "table_name": table_name}
         self.tab_count += 1
-
         return tab, table
 
     def set_table_columns(self, tab_name, column_names, column_params):
@@ -109,7 +108,7 @@ class ui_tabTable:
         """
 
         for t in self.tabs:
-            if self.tabs[t] == self.tab_widget.currentWidget():
+            if self.tabs[t][0] == self.tab_widget.currentWidget():
                 return self.tabs[t]
 
         return None, None
@@ -117,7 +116,7 @@ class ui_tabTable:
     def get_current_tab_name(self):
 
         for t in self.tabs:
-            if self.tabs[t] == self.tab_widget.currentWidget():
+            if self.tabs[t][0] == self.tab_widget.currentWidget():
                 return t
 
     def get_tab_table_from_table_item(self, item):
@@ -178,7 +177,7 @@ class ui_tabTable:
         tab, table = self.get_current_tab_table()
 
         if tab is None:
-            return
+            return None
 
         items = table.selectedItems()
         rows = []
@@ -196,9 +195,10 @@ class ui_tabTable:
 
         tab, table = self.get_current_tab_table()
         values = []
+
         for r in rows:
-            v = table.item(column_id,  r)
-            values.append(v)
+            v = table.item(r, column_id)
+            values.append(v.text())
 
         return values
 
@@ -211,7 +211,7 @@ class ui_tabTable:
         """Gets the current database and table for selected table"""
         current_tab_name = self.get_current_tab_name()
         if current_tab_name is not None:
-            return self.tab_data[current_tab_name]["db_name"], self.tabs[current_tab_name]["table_name"]
+            return self.tab_data[current_tab_name]["db_name"], self.tab_data[current_tab_name]["table_name"]
         else:
             return None, None
 

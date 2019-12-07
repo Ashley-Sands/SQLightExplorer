@@ -226,3 +226,45 @@ class Action_updateTableRow(Action):
 
     def valid_response_data(self, response):
         return True
+
+class Action_RemoveRowsFromTable(Action):
+
+    def __init__(self, dialog_message, tab_table):
+        super().__init__(dialog_message)
+        self.tab_table = tab_table
+
+
+    def request(self, data_object):
+
+        db_name, table_name = self.tab_table.get_database_and_table_name()
+
+        if db_name is None or table_name is None:
+            return WebQuerys.response_to_dict(404, "No database or table provided")
+
+        rows_to_remove = self.tab_table.get_selected_rows()
+
+        if len(rows_to_remove) == 0:
+            return WebQuerys.response_to_dict(404, "Nothing Selected to be removed")
+
+        row_values = self.tab_table.get_value_from_rows(0, rows_to_remove)
+        where_column = self.tab_table.get_column_name(0)
+
+        # TODO: fix limatation on server! hack for OR
+        where_str = [" "+where_column+"=? OR"] * len(rows_to_remove)
+        where_str[-1] = where_str[-1][:-5]   # remove the last 5 chars from the lsat element since the server will add =? back :)
+        where_str = ''.join(where_str)          # like the todo says hacky
+
+        return self.web_query.remove_row(db_name, table_name, [where_str], row_values)
+
+    def action(self, data_object, response):
+        """
+
+                :param data_object:     dict with keys 'database_name' and 'table_name', 'where_colums', 'where_data'
+                :param response:        data from request
+                :return:                None
+        """
+        # refresh the table.
+
+
+    def valid_response_data(self, response):
+        return True

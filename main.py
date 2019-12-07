@@ -2,7 +2,11 @@ from windows import amsql_explorer_window
 from ui_objects.ui_tab_table import ui_tabTable
 from ui_objects.ui_tree_view import UiTreeView
 from dialogue_window import DialogueWindow_Warning, DialogueWindow_TextEnter, DialogueWindow_Config, DialogueWindow_Message
-from actions import Action_OpenDatabase, Action_NewDatabase, Action_TableColumns, Action_TableRows, Action_updateTableRow, Action_DropTable
+
+from actions import FakeDialog
+
+from actions import Action_OpenDatabase, Action_NewDatabase, Action_TableColumns, Action_TableRows
+from actions import Action_updateTableRow, Action_DropTable, Action_RemoveRowsFromTable
 
 def dialogue_callback( dialog_name, accepted ):
     pass
@@ -37,6 +41,7 @@ if __name__ == "__main__":
     table_columns_action = Action_TableColumns(dialog_message, ui_tab_table)
     table_rows_action = Action_TableRows(dialog_message, ui_tab_table)
     table_item_changed_action = Action_updateTableRow(dialog_message)
+    table_remove_rows_action = Action_RemoveRowsFromTable(dialog_message, ui_tab_table)
 
     # set actions on ui
     ui_tree_view.add_actions(table_columns_action)
@@ -46,16 +51,18 @@ if __name__ == "__main__":
     # Setup dialogue instances
     dialogs = {}
 
-    dialogs["drop_table"] = DialogueWindow_Warning(drop_table_action.run_action)
+    dialogs["drop_table"] = DialogueWindow_Warning(drop_table_action.run_action)                # TODO: update table name in window
+    dialogs["remove_rows"] = DialogueWindow_Warning(table_remove_rows_action.run_action)        # TODO: update table name in window
     dialogs["new_database"] = DialogueWindow_TextEnter(new_database_action.run_action)
     dialogs["open_database"] = DialogueWindow_TextEnter(open_database_action.run_action)
-    dialogs["config"] = DialogueWindow_Config()
+    dialogs["config"] = DialogueWindow_Config()     # BUG: **crash**
 
     # setup display values on dialog windows
     dialogs["new_database"].set_standard_buttons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
 
     # set dict of dialogues in each dialogue instance to prevent multiple windows from being opened
     dialogs["drop_table"].set_dialog_windows(dialogs)
+    dialogs["remove_rows"].set_dialog_windows(dialogs)
     dialogs["new_database"].set_dialog_windows(dialogs)
     dialogs["open_database"].set_dialog_windows(dialogs)
     dialogs["config"].set_dialog_windows(dialogs)
@@ -64,6 +71,8 @@ if __name__ == "__main__":
     main_app.button_drop_table.clicked.connect(dialogs["drop_table"].new_window)
     main_app.button_new_database.clicked.connect(dialogs["new_database"].new_window)
     main_app.button_open_database.clicked.connect(dialogs["open_database"].new_window)
+    main_app.button_remove_row.clicked.connect(dialogs["remove_rows"].new_window)
+    main_app.button_add_row.clicked.connect(dialogue_callback)
 
     # bind 'File' context menu buttons
     main_app.actionShow_Welcome_Screen.triggered.connect(main_app.welcome_tab)
