@@ -7,6 +7,7 @@ class FakeDialog:
     def __init__(self, text):
         self.text = text
 
+# TODO: there are a bunch on new methods in tab_table that would make most actions simpler
 class Action:
 
     def __init__(self, dialog_message):
@@ -227,12 +228,13 @@ class Action_updateTableRow(Action):
     def valid_response_data(self, response):
         return True
 
+
 class Action_RemoveRowsFromTable(Action):
 
     def __init__(self, dialog_message, tab_table):
         super().__init__(dialog_message)
         self.tab_table = tab_table
-
+        self.refresh_table_action = Action_TableRows(dialog_message, tab_table)
 
     def request(self, data_object):
 
@@ -258,13 +260,13 @@ class Action_RemoveRowsFromTable(Action):
 
     def action(self, data_object, response):
         """
-
-                :param data_object:     dict with keys 'database_name' and 'table_name', 'where_colums', 'where_data'
+                :param data_object:     None or empty
                 :param response:        data from request
                 :return:                None
         """
         # refresh the table.
-
+        db_name, table_name = self.tab_table.get_database_and_table_name()
+        self.refresh_table_action.run_action({"database_name": db_name, "table_name": table_name}, 1)
 
     def valid_response_data(self, response):
         return True
