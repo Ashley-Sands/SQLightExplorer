@@ -16,7 +16,9 @@ class ui_tabTable:
         self.selected_cel_value = ""    # used to restore value if invalid value is inputed
         self.item_changed_action = []
 
-        self.tabs = {}      # key tab names tuple(tab, table)
+        self.tabs = {}      # key tab names, tuple(tab, table)
+        self.tab_data = {}  # key tab names, dict{type, db_name, table_name}
+
         self.table_column_parmas = {}   # key tab name. (editable, input value type )
         self.tab_count = 0;
 
@@ -35,12 +37,14 @@ class ui_tabTable:
 
         return self.tabs[tab_name]
 
-    def add_tab(self, name):
+    def add_tab(self, type_value, database_name, table_name):
         """ Adds new tab to table widget
 
         :param name:            name to display on tab
         :return:                the new tab, None if already exist
         """
+
+        name = type+":"+table_name
 
         if name.lower() in self.tabs:
             return None
@@ -61,6 +65,7 @@ class ui_tabTable:
         self.tab_widget.setCurrentIndex(self.tab_widget.indexOf(tab))
 
         self.tabs[name.lower()] = tab, table
+        self.tab_data[name.lower()] = {"type": type_value, "db_name": database_name, "table_name": table_name}
         self.tab_count += 1
 
         return tab, table
@@ -97,17 +102,23 @@ class ui_tabTable:
 
         self.setting_table_data = False
 
+    # TODO this and get name should be done when the tab changes
     def get_current_tab_table(self):
         """ Get the current tab and table if exist in obj.
             (Some tabs are not tab table and wont be found)
         """
 
         for t in self.tabs:
-            if t[0] == self.tab_widget.currentWidget():
-                return t
+            if self.tabs[t] == self.tab_widget.currentWidget():
+                return self.tabs[t]
 
         return None, None
 
+    def get_current_tab_name(self):
+
+        for t in self.tabs:
+            if self.tabs[t] == self.tab_widget.currentWidget():
+                return t
 
     def get_tab_table_from_table_item(self, item):
         """Gets the tabs tuple from table item. None if not found"""
@@ -152,7 +163,7 @@ class ui_tabTable:
         print(item.text(), item.row(), item.column(), where_column_name, "=", rowid_value)
 
         action_data = {}
-        action_data["database_name"] = "test_db"    # TODO:
+        action_data["database_name"] = self.tab_data[tab_name]["db_name"]
         action_data["table_name"] = table_name
         action_data["set_columns"] = [set_column_name]
         action_data["set_data"] = [item.text()]
@@ -195,6 +206,15 @@ class ui_tabTable:
         """Get the column name from visable table"""
         tab, table = self.get_current_tab_table()
         return table.horizontalHeaderItem(column_id).text()
+
+    def get_database_and_table_name(self):
+        """Gets the current database and table for selected table"""
+        current_tab_name = self.get_current_tab_name()
+        if current_tab_name is not None:
+            return self.tab_data[current_tab_name]["db_name"], self.tabs[current_tab_name]["table_name"]
+        else:
+            return None, None
+
 
     def verify_value(self, value, value_type):
         """Verifies that the values matches the column value type"""

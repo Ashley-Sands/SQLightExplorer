@@ -30,7 +30,7 @@ class UiTreeView:
         action_data["table_name"] = tree_item.text(column_id)
 
         # add new tab and table.
-        self.tab_table.add_tab( "Table:" + action_data["table_name"] )
+        self.tab_table.add_tab( "Table", action_data["database_name"], action_data["table_name"] )
 
         for action in self.open_table_action:
             action.run_action(action_data, 1)
