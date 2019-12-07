@@ -79,6 +79,11 @@ if __name__ == "__main__":
     main_app.actionSettings.triggered.connect(dialogs["config"].new_window)
     main_app.actionQuit.triggered.connect(quit)
 
+    # add the test_db on start.
+    test_db_dialog = FakeDialog("test_db")
+
+    open_database_action.run_action( test_db_dialog, 1 )
+
     # Finally show the window :D
     MainWindow.show()
 
