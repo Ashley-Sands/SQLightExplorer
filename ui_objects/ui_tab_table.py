@@ -192,6 +192,7 @@ class ui_tabTable:
         return values
 
     def get_column_name(self, column_id):
+        """Get the column name from visable table"""
         tab, table = self.get_current_tab_table()
         return table.horizontalHeaderItem(column_id).text()
 
