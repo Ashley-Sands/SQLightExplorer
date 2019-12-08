@@ -1,12 +1,5 @@
 from web_querys import WebQuerys
 
-
-class FakeDialog:
-    """Allows objects use the actions that send a dialog window rather than values.
-       it like Mock Dialog Data"""
-    def __init__(self, text):
-        self.text = text
-
 # TODO: there are a bunch on new methods in tab_table that would make most actions simpler
 class Action:
 
@@ -75,32 +68,32 @@ class Action_NewDatabase(Action):
         super().__init__(dialog_message)
         self.tree_view = tree_view
 
-    def request(self, dialog):
-        return self.web_query.new_database( dialog.text )
+    def request(self, data_object):
+        return self.web_query.new_database( data_object["text"] )
 
-    def action(self, dialog, response):
+    def action(self, data_object, response):
 
         # remove if already exist (so it gets refreshed)
-        self.tree_view.remove_root_item(dialog.text)
+        self.tree_view.remove_root_item(data_object["text"])
 
         # Add the data to the tree
-        self.tree_view.add_tree_item(None, dialog.text)  # add database
+        self.tree_view.add_tree_item(None, data_object["text"])  # add database
 
     def valid_response_data(self, response):
         return True
 
 class Action_OpenDatabase(Action_NewDatabase):
 
-    def request(self, dialog):
-        return self.web_query.open_database( dialog.text )
+    def request(self, data_object):
+        return self.web_query.open_database( data_object["text"] )
 
-    def action(self, dialog, response):
+    def action(self, data_object, response):
 
         # Add the data to the tree
-        super().action(dialog, response)
+        super().action(data_object, response)
         item = None
         for r in response:
-            item = self.tree_view.add_tree_item(dialog.text, r)
+            item = self.tree_view.add_tree_item(data_object["text"], r)
 
         if item is not None and item.parent() is not None:
             self.tree_view.tree_view.expandItem(item.parent())
@@ -137,7 +130,7 @@ class Action_DropTable(Action):
 
         database_name = self.database.text(0)
 
-        self.refresh_database_action.run_action(FakeDialog(database_name), 1)
+        self.refresh_database_action.run_action({"text": database_name}, 1)
 
 
     def valid_response_data(self, response):

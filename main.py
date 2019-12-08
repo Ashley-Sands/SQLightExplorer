@@ -3,8 +3,6 @@ from ui_objects.ui_tab_table import ui_tabTable
 from ui_objects.ui_tree_view import UiTreeView
 from dialogue_window import DialogueWindow_Warning, DialogueWindow_TextEnter, DialogueWindow_Config, DialogueWindow_Message
 
-from actions import FakeDialog
-
 from actions import Action_OpenDatabase, Action_NewDatabase, Action_TableColumns, Action_TableRows
 from actions import Action_updateTableRow, Action_DropTable, Action_RemoveRowsFromTable
 from actions import Action_InsertNewRow
@@ -85,8 +83,7 @@ if __name__ == "__main__":
     startup_databases = global_config.GlobalConfig.get("default_db").split("\n")
     for db in startup_databases:
         if not db.isspace() and len(db) > 0:
-            test_db_dialog = FakeDialog(db)
-            open_database_action.run_action( test_db_dialog, 1 )
+            open_database_action.run_action( {"text": db}, 1 )
 
     # Finally show the window :D
     MainWindow.show()
