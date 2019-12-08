@@ -109,10 +109,6 @@ class DialogueWindow_Warning(DialogueWindow):
         self.app = amsql_warning_window.UiWarningDialog()
         self.app.setupUi(self.dialog)
 
-    def dialog_accepted(self):
-        super().dialog_accepted()
-
-
 class DialogueWindow_TextEnter(DialogueWindow):
 
     def __init__(self, callback):
