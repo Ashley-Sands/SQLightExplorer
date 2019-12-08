@@ -74,9 +74,13 @@ class DialogueWindow:
         self.clear_window()
 
         if self.callback is not None:
-            self.callback(self, status)
+            self.callback(self.callback_data_object(), status)
 
         print("closed status", status)
+
+    def callback_data_object(self):
+        """Data that is sent to the callback as the data_object"""
+        return []
 
     def is_open(self):
         """returns dialogue open status"""
@@ -109,6 +113,7 @@ class DialogueWindow_Warning(DialogueWindow):
         self.app = amsql_warning_window.UiWarningDialog()
         self.app.setupUi(self.dialog)
 
+
 class DialogueWindow_TextEnter(DialogueWindow):
 
     def __init__(self, callback):
@@ -129,6 +134,10 @@ class DialogueWindow_TextEnter(DialogueWindow):
         super().dialog_accepted()
         print("TEXT: ", self.text)
 
+    def callback_data_object(self):
+        # uses text for the data object
+        return [self.text]
+
     def set_standard_buttons(self, buttons):
         """ sets the standard buttons to be displayed
 
@@ -136,6 +145,7 @@ class DialogueWindow_TextEnter(DialogueWindow):
         :return:         None
         """
         self.standard_buttons = buttons
+
 
 class DialogueWindow_Config( DialogueWindow ):
 
@@ -145,8 +155,6 @@ class DialogueWindow_Config( DialogueWindow ):
         self.app = amsql_config_window.UiConfigDialog()
         self.app.setupUi(self.dialog)
         self.update_inputs()
-
-
 
     def dialog_accepted(self):
 
