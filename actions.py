@@ -211,6 +211,7 @@ class Action_TableRows(Action):
     def valid_response_data(self, response):
         return type(response) is list
 
+
 class Action_updateTableRow(Action):
 
     def request(self, data_object):
@@ -282,11 +283,11 @@ class Action_InsertNewRow(Action_RemoveRowsFromTable):
     def request(self, data_object):
         # TODO: finish columns (also ui_tab_table.get_column_defaults)
         db_name, table_name = self.tab_table.get_database_and_table_name()
-        column_names = self.web_query.get_column_names(db_name, table_name)
-        print(column_names)
+        column_names, column_defaults = self.tab_table.get_column_default_values()
+
+        print(column_names, column_defaults)
 
         if db_name is None or table_name is None:
             return WebQuerys.response_to_dict(404, "No database or table provided")
 
-        return self.web_query.insert_row(db_name, table_name, [], [])   # insert default row?
-
+        return self.web_query.insert_row(db_name, table_name, column_names, column_defaults)   # insert default row?

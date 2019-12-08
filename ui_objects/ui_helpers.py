@@ -77,6 +77,9 @@ class UiHelpers:
         # add our rows of columns
         for row in range(len(data)):
             for col in range(len(data[row])):
+                # replace None with no text :)
+                if data[row][col] is None:
+                    data[row][col] = ""
                 item = QtWidgets.QTableWidgetItem( str(data[row][col]) )
                 item.setFlags( self.get_cell_flags( column_params[col][0] ) )
                 table.setItem( row, col, item )

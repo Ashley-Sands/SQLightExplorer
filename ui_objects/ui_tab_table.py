@@ -86,10 +86,16 @@ class ui_tabTable:
         self.table_column_parmas[tab_name.lower()] = column_params
 
     def get_column_default_values(self):
-        """Gets the default values for all columns on active table"""
+        """Gets the default values for all columns on active table
+
+        :return:    column names, column defaul values
+        """
         # TODO: (also finish Action_InsertNewRow)
         # map cols to defaults :)
-        pass
+        table_name = self.get_current_tab_name() # TODO: change to self copy (once done)
+        column_defaults = [d[2] for d in self.table_column_parmas[table_name]]
+
+        return self.tab_data[table_name]["table_column_names"], column_defaults
 
     def set_table_rows(self, tab_name, rows):
         """
