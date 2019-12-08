@@ -142,16 +142,11 @@ class DialogueWindow_TextEnter(DialogueWindow):
 class DialogueWindow_Config( DialogueWindow ):
 
     def window(self):
-        print("Here")
         # create new dialogue window
         self.dialog = QtWidgets.QDialog()
-        print("12")
         self.app = amsql_config_window.UiConfigDialog()
-        print("out")
         self.app.setupUi(self.dialog)
-        print("21")
         self.update_inputs()
-        print("In")
         self.dialog.show()
 
 
@@ -159,20 +154,24 @@ class DialogueWindow_Config( DialogueWindow ):
     def dialog_accepted(self):
         host = self.app.text_host.text()
         port = self.app.text_port.text()
+        databases = self.app.text_default_databases.toPlainText()
 
         Config.set("host", host)
         Config.set("port", port)
+        Config.set("default_db", databases)
+
+        Config.save_to_file()
+
 
     def update_inputs(self):
 
         host = Config.get("host")
         port = Config.get("port")
-        print("Bip")
-        self.app.text_host.setText(str(host))
-        print("Bop")
-        self.app.text_port.setText(str(port))
-        print("Bopppp")
+        databases = Config.get("default_db")
 
+        self.app.text_host.setText(str(host))
+        self.app.text_port.setText(str(port))
+        self.app.text_default_databases.setPlainText(str(databases))
 
 class DialogueWindow_Message( DialogueWindow ):
 

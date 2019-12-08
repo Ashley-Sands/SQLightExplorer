@@ -1,5 +1,9 @@
+import json
+import os
+
 class GlobalConfig:
 
+    FILE_NAME = "config.amsql"
     __CONFIG__ = {}
 
     @staticmethod
@@ -16,3 +20,24 @@ class GlobalConfig:
     @staticmethod
     def is_set(config_name):
         return config_name in GlobalConfig.__CONFIG__
+
+    @staticmethod
+    def save_to_file():
+
+        file_str = json.dumps(GlobalConfig.__CONFIG__, indent=2)
+
+        with open(GlobalConfig.FILE_NAME, "w") as file:
+            file.write(file_str)
+
+
+    @staticmethod
+    def load_from_file():
+
+        file_str = ""
+        if os.path.exists(GlobalConfig.FILE_NAME):
+            with open(GlobalConfig.FILE_NAME, "r") as file:
+                file_str = file.read()
+        else:
+            print("No Config to load!")
+
+        GlobalConfig.__CONFIG__ = json.loads(file_str)

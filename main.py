@@ -14,8 +14,11 @@ def dialogue_callback( dialog_name, accepted ):
 
 if __name__ == "__main__":
     import amsql_config # setup config
+    import global_config
     import sys
     from PyQt5 import QtWidgets
+
+    global_config.GlobalConfig.load_from_file()
 
     # start the QApp
     app = QtWidgets.QApplication(sys.argv)
@@ -82,9 +85,11 @@ if __name__ == "__main__":
     main_app.actionQuit.triggered.connect(quit)
 
     # add the test_db on start.
-    test_db_dialog = FakeDialog("test_db")
-
-    open_database_action.run_action( test_db_dialog, 1 )
+    startup_databases = global_config.GlobalConfig.get("default_db").split("\n")
+    for db in startup_databases:
+        if not db.isspace() and len(db) > 0:
+            test_db_dialog = FakeDialog(db)
+            open_database_action.run_action( test_db_dialog, 1 )
 
     # Finally show the window :D
     MainWindow.show()
