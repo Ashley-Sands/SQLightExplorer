@@ -153,13 +153,18 @@ class DialogueWindow_Config( DialogueWindow ):
 
 
     def dialog_accepted(self):
+
         host = self.app.text_host.text()
         port = self.app.text_port.text()
         databases = self.app.text_default_databases.toPlainText()
+        timeout = self.app.spinBox_timeout.value()
+        host_root = self.app.text_root_dir.text()
 
         Config.set("host", host)
         Config.set("port", port)
         Config.set("default_db", databases)
+        Config.set("connection_timeout", timeout)
+        Config.set("remote_root", host_root)
 
         Config.save_to_file()
 
@@ -169,10 +174,15 @@ class DialogueWindow_Config( DialogueWindow ):
         host = Config.get("host")
         port = Config.get("port")
         databases = Config.get("default_db")
+        timeout = Config.get("connection_timeout")
+        host_root = Config.get("remote_root")
 
         self.app.text_host.setText(str(host))
         self.app.text_port.setText(str(port))
         self.app.text_default_databases.setPlainText(str(databases))
+        self.app.spinBox_timeout.setValue(timeout)
+        self.app.text_root_dir.setText(host_root)
+
 
 class DialogueWindow_Message( DialogueWindow ):
 
