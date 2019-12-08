@@ -5,7 +5,7 @@
 ### TODO
 [ ] New Table  
 [ ] Destroy Database  
-[ ] Fix major issues  
+[C] Fix major issues  
 [C] Add row  
 [ ] Refactor  
 -[ ] Actions  
@@ -17,7 +17,7 @@ if using sqlite don't forget the add the default column 'rowid' for the unique k
 
 ### Know Bugs
 ###### Major
-[] Opening options crashes app
+[Fixed] Opening options crashes app
 [Fixed] Updating row crashes
 
 ### Limitations
