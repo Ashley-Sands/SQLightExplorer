@@ -31,10 +31,14 @@ class DialogueWindow:
 
         self.reset_status()
         self.window()
+        # insure that dialog windows are always on top :)
+        self.dialog.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
+        self.dialog.show()
         self.set_signals()
 
     def window(self):
-        """ The window to be created (needs overriding)"""
+        """ The window to be created (needs overriding) """
+        # There is no need to call show(). this is handled in new window
         pass
 
     def set_signals(self):
@@ -104,7 +108,6 @@ class DialogueWindow_Warning(DialogueWindow):
         self.dialog = QtWidgets.QDialog()
         self.app = amsql_warning_window.UiWarningDialog()
         self.app.setupUi(self.dialog)
-        self.dialog.show()
 
     def dialog_accepted(self):
         super().dialog_accepted()
@@ -124,7 +127,6 @@ class DialogueWindow_TextEnter(DialogueWindow):
         self.app = amsql_text_window.UiTextDialog()
         self.app.setupUi(self.dialog)
         self.app.buttons_yes.setStandardButtons( self.standard_buttons )
-        self.dialog.show()
 
     def dialog_accepted(self):
         self.text = self.app.text_input.text()
@@ -147,7 +149,6 @@ class DialogueWindow_Config( DialogueWindow ):
         self.app = amsql_config_window.UiConfigDialog()
         self.app.setupUi(self.dialog)
         self.update_inputs()
-        self.dialog.show()
 
 
 
@@ -187,7 +188,6 @@ class DialogueWindow_Message( DialogueWindow ):
         self.app.setupUi(self.dialog)
         # set text
         self.app.label.setText( self.get_formatted_message() )
-        self.dialog.show()
 
     def get_formatted_message(self):
         formatted_message = "<html><head/><body><p><span style=\" font-size:12pt;\">"
