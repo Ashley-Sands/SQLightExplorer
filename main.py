@@ -9,9 +9,6 @@ from actions import Action_OpenDatabase, Action_NewDatabase, Action_TableColumns
 from actions import Action_updateTableRow, Action_DropTable, Action_RemoveRowsFromTable
 from actions import Action_InsertNewRow
 
-def dialogue_callback( dialog_name, accepted ):
-    pass
-
 if __name__ == "__main__":
     import amsql_config # setup config
     import global_config
@@ -60,7 +57,7 @@ if __name__ == "__main__":
     dialogs["remove_rows"] = DialogueWindow_Warning(table_remove_rows_action.run_action)        # TODO: update table name in window
     dialogs["new_database"] = DialogueWindow_TextEnter(new_database_action.run_action)
     dialogs["open_database"] = DialogueWindow_TextEnter(open_database_action.run_action)
-    dialogs["config"] = DialogueWindow_Config()                                                 # TODO: BUG: **crash**
+    dialogs["config"] = DialogueWindow_Config()
 
     # setup display values on dialog windows
     dialogs["new_database"].set_standard_buttons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
