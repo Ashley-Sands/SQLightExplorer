@@ -42,8 +42,6 @@ class Ui_MainWindow(object):
         self.treeWidget = QtWidgets.QTreeWidget(self.centralwidget)
         self.treeWidget.setGeometry(QtCore.QRect(10, 50, 181, 371))
         self.treeWidget.setObjectName("treeWidget")
-        item_0 = QtWidgets.QTreeWidgetItem(self.treeWidget)
-        item_1 = QtWidgets.QTreeWidgetItem(item_0)
 
         self.horizontalLayoutWidget_2 = QtWidgets.QWidget(self.centralwidget)
         self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(10, 430, 181, 31))
@@ -187,11 +185,7 @@ class Ui_MainWindow(object):
         self.button_new_database.setText(_translate("MainWindow", "New Database"))
         self.button_open_database.setText(_translate("MainWindow", "Open Database"))
         self.treeWidget.headerItem().setText(0, _translate("MainWindow", "Table Name"))
-        __sortingEnabled = self.treeWidget.isSortingEnabled()
-        self.treeWidget.setSortingEnabled(False)
-        self.treeWidget.topLevelItem(0).setText(0, _translate("MainWindow", "Preview.db"))
-        self.treeWidget.topLevelItem(0).child(0).setText(0, _translate("MainWindow", "Preview Table"))
-        self.treeWidget.setSortingEnabled(__sortingEnabled)
+
         self.button_add_table.setText(_translate("MainWindow", "Add Table"))
         self.button_drop_table.setText(_translate("MainWindow", "Drop Table"))
 
