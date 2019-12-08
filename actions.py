@@ -247,7 +247,7 @@ class Action_RemoveRowsFromTable(Action):
         db_name, table_name = self.tab_table.get_database_and_table_name()
 
         if db_name is None or table_name is None:
-            return WebQuerys.response_to_dict(404, "No database or table provided")
+            return WebQuerys.response_to_dict(404, "No database or table selected")
 
         rows_to_remove = self.tab_table.get_selected_rows()
 
@@ -281,13 +281,11 @@ class Action_RemoveRowsFromTable(Action):
 class Action_InsertNewRow(Action_RemoveRowsFromTable):
 
     def request(self, data_object):
-        # TODO: finish columns (also ui_tab_table.get_column_defaults)
         db_name, table_name = self.tab_table.get_database_and_table_name()
-        column_names, column_defaults = self.tab_table.get_column_default_values()
-
-        print(column_names, column_defaults)
 
         if db_name is None or table_name is None:
-            return WebQuerys.response_to_dict(404, "No database or table provided")
+            return WebQuerys.response_to_dict(404, "No database or table selected")
+
+        column_names, column_defaults = self.tab_table.get_column_default_values()
 
         return self.web_query.insert_row(db_name, table_name, column_names, column_defaults)   # insert default row?
