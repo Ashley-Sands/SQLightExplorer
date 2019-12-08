@@ -81,8 +81,6 @@ class Ui_MainWindow(object):
         self.button_remove_row.setObjectName("button_remove_row")
         self.horizontalLayout_3.addWidget(self.button_remove_row)
 
-
-
         self.tab_view = QtWidgets.QTabWidget(self.centralwidget)
         self.tab_view.setEnabled(True)
         self.tab_view.setGeometry(QtCore.QRect(210, 10, 600, 414))
@@ -95,44 +93,6 @@ class Ui_MainWindow(object):
         self.tab_view.setMovable(True)
         self.tab_view.setTabBarAutoHide(False)
         self.tab_view.setObjectName("tab_view")
-
-        self.tab_default = QtWidgets.QWidget()
-        self.tab_default.setObjectName("tab_default")
-        self.table_default = QtWidgets.QTableWidget(self.tab_default)
-        self.table_default.setGeometry(QtCore.QRect(0, 0, 600, 391))
-
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.table_default.sizePolicy().hasHeightForWidth())
-
-        self.table_default.setSizePolicy(sizePolicy)
-        self.table_default.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.table_default.setFrameShadow(QtWidgets.QFrame.Plain)
-        self.table_default.setObjectName("table_default")
-        self.table_default.setColumnCount(7)
-        self.table_default.setRowCount(1)
-
-        item = QtWidgets.QTableWidgetItem()
-        self.table_default.setVerticalHeaderItem(0, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.table_default.setHorizontalHeaderItem(0, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.table_default.setHorizontalHeaderItem(1, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.table_default.setHorizontalHeaderItem(2, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.table_default.setHorizontalHeaderItem(3, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.table_default.setHorizontalHeaderItem(4, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.table_default.setHorizontalHeaderItem(5, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.table_default.setHorizontalHeaderItem(6, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.table_default.setItem(0, 0, item)
-
-        self.tab_view.addTab(self.tab_default, "")
 
         MainWindow.setCentralWidget(self.centralwidget)
 
@@ -170,14 +130,12 @@ class Ui_MainWindow(object):
         self.tab_view.setCurrentIndex(0)
 
         # self.treeWidget.doubleClicked['QModelIndex'].connect(self.treeWidget.collapseAll)
-        #self.table_default.cellChanged['int','int'].connect(self.table_default.hideRow)
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
         MainWindow.setTabOrder(self.button_new_database, self.button_open_database)
         MainWindow.setTabOrder(self.button_open_database, self.treeWidget)
         MainWindow.setTabOrder(self.treeWidget, self.tab_view)
-        MainWindow.setTabOrder(self.tab_view, self.table_default)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -192,28 +150,6 @@ class Ui_MainWindow(object):
         self.button_add_row.setText(_translate("MainWindow", "Add New Row"))
         self.button_remove_row.setText(_translate("MainWindow", "Remove Rows"))
 
-        item = self.table_default.verticalHeaderItem(0)
-        item.setText(_translate("MainWindow", "0"))
-        item = self.table_default.horizontalHeaderItem(0)
-        item.setText(_translate("MainWindow", "Username"))
-        item = self.table_default.horizontalHeaderItem(1)
-        item.setText(_translate("MainWindow", "Name"))
-        item = self.table_default.horizontalHeaderItem(2)
-        item.setText(_translate("MainWindow", "Password"))
-        item = self.table_default.horizontalHeaderItem(3)
-        item.setText(_translate("MainWindow", "Phone number"))
-        item = self.table_default.horizontalHeaderItem(4)
-        item.setText(_translate("MainWindow", "Email"))
-        item = self.table_default.horizontalHeaderItem(5)
-        item.setText(_translate("MainWindow", "DOB"))
-        item = self.table_default.horizontalHeaderItem(6)
-        item.setText(_translate("MainWindow", "Email list"))
-        __sortingEnabled = self.table_default.isSortingEnabled()
-        self.table_default.setSortingEnabled(False)
-        item = self.table_default.item(0, 0)
-        item.setText(_translate("MainWindow", "New Item"))
-        self.table_default.setSortingEnabled(__sortingEnabled)
-        self.tab_view.setTabText(self.tab_view.indexOf(self.tab_default), _translate("MainWindow", "Default Tab"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.actionSettings.setText(_translate("MainWindow", "Settings"))
         self.actionQuit.setText(_translate("MainWindow", "Quit"))
