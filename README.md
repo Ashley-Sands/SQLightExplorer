@@ -6,7 +6,7 @@
 [ ] New Table  
 [ ] Destroy Database  
 [ ] Fix major issues  
-[ ] Add row  
+[C] Add row  
 [ ] Refactor  
 -[ ] Actions  
 -[ ] table tabs  
@@ -17,8 +17,8 @@ if using sqlite don't forget the add the default column 'rowid' for the unique k
 
 ### Know Bugs
 ###### Major
-- Opening options crashes app
-- Updating row crashes
+[] Opening options crashes app
+[Fixed] Updating row crashes
 
 ### Limitations
 
