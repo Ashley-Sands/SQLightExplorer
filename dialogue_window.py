@@ -80,7 +80,7 @@ class DialogueWindow:
 
     def callback_data_object(self):
         """Data that is sent to the callback as the data_object"""
-        return []
+        return {}
 
     def is_open(self):
         """returns dialogue open status"""
@@ -136,7 +136,7 @@ class DialogueWindow_TextEnter(DialogueWindow):
 
     def callback_data_object(self):
         # uses text for the data object
-        return [self.text]
+        return {"text": self.text}
 
     def set_standard_buttons(self, buttons):
         """ sets the standard buttons to be displayed
