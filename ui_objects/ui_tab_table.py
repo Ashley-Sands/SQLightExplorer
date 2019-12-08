@@ -169,7 +169,7 @@ class ui_tabTable:
         print(item.text(), item.row(), item.column(), where_column_name, "=", rowid_value)
 
         action_data = {}
-        action_data["database_name"] = self.tab_data[tab_name]["db_name"]
+        action_data["database_name"] = self.tab_data[tab_name.lower()]["db_name"]
         action_data["table_name"] = table_name
         action_data["set_columns"] = [set_column_name]
         action_data["set_data"] = [item.text()]
