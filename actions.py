@@ -1,4 +1,5 @@
 from web_querys import WebQuerys
+from ui_objects.ui_tab_table import ui_tabTable
 
 # TODO: there are a bunch on new methods in tab_table that would make most actions simpler
 class Action:
@@ -228,8 +229,10 @@ class Action_TableColumns(Action):
                 column_params.append( (1, r[2], r[4]) )           # if the editable has not been set assume it to be editable
 
         db_name, table_name = self.tree_view.get_selected_item_and_parent_text()
+        print(ui_tabTable.TAB_TYPE_TABLE, db_name, table_name)
+        tab_name = ui_tabTable.get_tab_name(ui_tabTable.TAB_TYPE_TABLE, db_name, table_name)
 
-        self.tab_table.set_table_columns("table:"+table_name, column_names, column_params)
+        self.tab_table.set_table_columns(tab_name, column_names, column_params)
 
     def valid_response_data(self, response):
         """Check that the data is a list of list, and that len nested list has a len of at least 6"""
@@ -270,7 +273,9 @@ class Action_TableRows(Action):
             db_name = data_object["database_name"]
             table_name = data_object["table_name"]
 
-        self.tab_table.set_table_rows("table:"+table_name, response)
+        tab_name = ui_tabTable.get_tab_name(ui_tabTable.TAB_TYPE_TABLE, db_name, table_name)
+
+        self.tab_table.set_table_rows(tab_name, response)
 
     def valid_response_data(self, response):
         return type(response) is list

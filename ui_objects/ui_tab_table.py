@@ -3,6 +3,8 @@ from ui_objects.ui_helpers import UiHelpers
 
 class ui_tabTable:
 
+    TAB_TYPE_TABLE = "Table"
+
     def __init__(self, tab_widget, status_bar):
         """ Stores tab widget and manages tabs
 
@@ -27,6 +29,10 @@ class ui_tabTable:
         self.status_bar = status_bar
         self.help = UiHelpers()
 
+    @staticmethod
+    def get_tab_name(tab_type, db_name, table_name):
+        return tab_type + ":" + db_name + "." + table_name
+
     def add_item_changed_action(self, action):
         self.item_changed_action.append(action)
 
@@ -37,14 +43,16 @@ class ui_tabTable:
 
         return self.tabs[tab_name]
 
-    def add_tab(self, type_value, database_name, table_name):
+    def add_tab(self, tab_type, database_name, table_name):
         """ Adds new tab to table widget
 
-        :param name:            name to display on tab
+        :param tab_type:        the type of tab ie. new_table, table
+        :param database_name:   name of the database the tab belongs to
+        :param table_name:      name of table the tab belongs to
         :return:                the new tab, None if already exist
         """
 
-        name = type_value+":"+table_name
+        name = ui_tabTable.get_tab_name(tab_type, database_name, table_name)
 
         if name.lower() in self.tabs:
             return None
@@ -65,32 +73,33 @@ class ui_tabTable:
         self.tab_widget.setCurrentIndex(self.tab_widget.indexOf(tab))
 
         self.tabs[name.lower()] = tab, table
-        self.tab_data[name.lower()] = {"type": type_value, "db_name": database_name, "table_name": table_name, "table_column_names": ()}
+        self.tab_data[name.lower()] = {"type": tab_type, "db_name": database_name, "table_name": table_name, "table_column_names": ()}
         self.tab_count += 1
         return tab, table
 
     def set_table_columns(self, tab_name, column_names, column_params):
         """ Sets column names for tab with tab_name
 
-        :param tab_name:        name of tab
+        :param tab_name:        name of tab to add columns to.
         :param column_names:    List of column names
         :param column_params:   List of tuples of colum params [( editable, type ), ...]
         :return:                None
         """
 
-        if tab_name.lower() not in self.tabs:
+        tab_name = tab_name.lower()
+
+        if tab_name not in self.tabs:
             return
 
-        self.tab_data[tab_name.lower()]["table_column_names"] = column_names
+        self.tab_data[tab_name]["table_column_names"] = column_names
         self.help.set_table_columns(self.tabs[tab_name][1], column_names)
-        self.table_column_parmas[tab_name.lower()] = column_params
+        self.table_column_parmas[tab_name] = column_params
 
     def get_column_default_values(self):
         """Gets the default values for all columns on active table
 
         :return:    column names, column defaul values
         """
-        # TODO: (also finish Action_InsertNewRow)
         # map cols to defaults :)
         table_name = self.get_current_tab_name() # TODO: change to self copy (once done)
         column_defaults = [d[2] for d in self.table_column_parmas[table_name]]
@@ -106,8 +115,9 @@ class ui_tabTable:
         """
 
         self.setting_table_data = True
+        tab_name = tab_name.lower()
 
-        if tab_name.lower() not in self.tabs:
+        if tab_name not in self.tabs:
             return
 
         self.help.set_table_rows(self.tabs[tab_name][1], rows, self.table_column_parmas[tab_name.lower()])
@@ -157,7 +167,7 @@ class ui_tabTable:
             return
 
         tab_name = self.tab_widget.tabText( self.tab_widget.indexOf(tab) )
-        table_name = tab_name.split(":")[1]   # (table:table_name)
+        db_name, table_name = self.get_database_and_table_name()
         valid_data = self.verify_value(item.text(), self.table_column_parmas[tab_name.lower()][item.column()][1])
         set_column_name = table.horizontalHeaderItem( item.column() ).text()
 
@@ -175,7 +185,7 @@ class ui_tabTable:
         print(item.text(), item.row(), item.column(), where_column_name, "=", rowid_value)
 
         action_data = {}
-        action_data["database_name"] = self.tab_data[tab_name.lower()]["db_name"]
+        action_data["database_name"] = db_name
         action_data["table_name"] = table_name
         action_data["set_columns"] = [set_column_name]
         action_data["set_data"] = [item.text()]
