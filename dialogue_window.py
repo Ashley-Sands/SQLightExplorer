@@ -11,7 +11,7 @@ class DialogueWindow:
     def __init__(self, callback=None):
         self.dialog = None  # Dialog window
         self.app = None     # App class (access to UI elements)
-        self.dialogStatus = self.DIALOG_STATUS_NONE
+        self.dialog_status = self.DIALOG_STATUS_NONE
         self.dialog_windows = {}
         self.callback = callback
 
@@ -48,7 +48,7 @@ class DialogueWindow:
 
     def reset_status(self):
         """ Resets status"""
-        self.dialogStatus = self.DIALOG_STATUS_NONE
+        self.dialog_status = self.DIALOG_STATUS_NONE
 
     def clear_window(self):
         self.dialog = None
@@ -56,11 +56,13 @@ class DialogueWindow:
 
     def dialog_accepted(self):
         """Signal function for accepted status"""
+        self.dialog_status = self.DIALOG_STATUS_ACCEPTED
         print("accepted")
         pass
 
     def dialog_rejected(self):
         """Signal function for rejected status"""
+        self.dialog_status = self.DIALOG_STATUS_REJECTED
         print("rejected")
         pass
 
