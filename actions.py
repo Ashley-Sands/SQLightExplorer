@@ -73,7 +73,7 @@ class Action:
 
     def valid_response_data(self, response):
         """ Checks if response is vails (needs overriding)"""
-        return False;
+        return False
 
 class Action_NewDatabase(Action):
 
@@ -150,6 +150,42 @@ class Action_DropTable(Action):
     def valid_response_data(self, response):
         return True
 
+
+class Action_OpenTableTabForNewTable(Action):
+
+    def __init__(self, dialogue_message, tree_view, tab_table):
+        super().__init__(dialogue_message)
+        self.tree_view = tree_view
+        self.tab_table = tab_table
+
+    def request(self, data_object):
+        """check that the table does no already exist in the selected database
+        :param data_object:     Dict containing key 'Text' with the value of the new table name
+        """
+        print("bee")
+        if len(data_object["text"]) == 0 or data_object["text"].isspace():
+            self.dialog_message.set_message("No table name entered")
+            self.dialog_message.new_window()
+            return None
+        print("ahh")
+        selected_database, table_name = self.tree_view.get_selected_item_and_parent_text()
+        table_name = data_object["text"]
+        table_name.replace(" ", "_")
+
+        if selected_database is None:
+            self.dialog_message.set_message("No database selected")
+            self.dialog_message.new_window()
+            return None
+
+        return self.web_query.table_does_not_exist(selected_database, table_name)
+
+
+    def action(self, data_object, response):
+        print("We good :)")
+        pass
+
+    def valid_response_data(self, response):
+        return True
 
 class Action_OpenTableTabFormTreeItem(Action):
 

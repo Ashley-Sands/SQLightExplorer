@@ -118,6 +118,13 @@ class WebQuerys:
 
         return WebQuerys.response_to_dict( response_status, response_data )
 
+    def table_does_not_exist(self, db_name, table_name):
+        """Send request to check db does not exist in table"""
+        data = WebQuerys.get_query_dict(db_name, table_name)
+        response_status, response_data = self.send_query("POST", "/table_not_exist", data)
+
+        return WebQuerys.response_to_dict( response_status, response_data )
+
 
     def new_table(self, database_name, table_name, columns, types):
         """ sends request to server to create new table

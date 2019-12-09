@@ -5,7 +5,7 @@ from dialogue_window import DialogueWindow_Warning, DialogueWindow_TextEnter, Di
 
 from actions import Action_OpenDatabase, Action_NewDatabase, Action_TableColumns, Action_TableRows
 from actions import Action_updateTableRow, Action_DropTable, Action_RemoveRowsFromTable
-from actions import Action_InsertNewRow, Action_OpenTableTabFormTreeItem
+from actions import Action_InsertNewRow, Action_OpenTableTabFormTreeItem, Action_OpenTableTabForNewTable
 
 def noAction(a, b):
     pass
@@ -37,10 +37,11 @@ if __name__ == "__main__":
     # Setup actions
     open_database_action = Action_OpenDatabase(dialog_message, ui_tree_view)
     new_database_action = Action_NewDatabase(dialog_message, ui_tree_view)
+    new_table_action = Action_OpenTableTabForNewTable(dialog_message, ui_tree_view, ui_tab_table)
 
     drop_table_action = Action_DropTable(dialog_message, ui_tree_view)
-
     open_table_in_tab_action = Action_OpenTableTabFormTreeItem(dialog_message, ui_tree_view, ui_tab_table)
+
     table_columns_action = Action_TableColumns(dialog_message, ui_tree_view, ui_tab_table)
     table_rows_action = Action_TableRows(dialog_message, ui_tree_view, ui_tab_table)
     table_item_changed_action = Action_updateTableRow(dialog_message)
@@ -60,12 +61,13 @@ if __name__ == "__main__":
     dialogs["remove_rows"] = DialogueWindow_Warning(table_remove_rows_action.run_action)        # TODO: update table name in window
     dialogs["new_database"] = DialogueWindow_TextEnter(new_database_action.run_action, "New database name")
     dialogs["open_database"] = DialogueWindow_TextEnter(open_database_action.run_action, "Existing database name")
-    dialogs["new_table"] = DialogueWindow_TextEnter(noAction, "New table name")
+    dialogs["new_table"] = DialogueWindow_TextEnter(new_table_action.run_action, "New table name")
 
     dialogs["config"] = DialogueWindow_Config()
 
     # setup display values on dialog windows
     dialogs["new_database"].set_standard_buttons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
+    dialogs["new_table"].set_standard_buttons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
 
     # set dict of dialogues in each dialogue instance to prevent multiple windows from being opened
     dialogs["drop_table"].set_dialog_windows(dialogs)
@@ -80,6 +82,7 @@ if __name__ == "__main__":
     main_app.button_new_database.clicked.connect(dialogs["new_database"].new_window)
     main_app.button_open_database.clicked.connect(dialogs["open_database"].new_window)
     main_app.button_remove_row.clicked.connect(dialogs["remove_rows"].new_window)
+    main_app.button_add_table.clicked.connect(dialogs["new_table"].new_window)
     main_app.button_add_row.clicked.connect(table_insert_row_action.button_run_action)
 
     # bind 'File' context menu buttons
