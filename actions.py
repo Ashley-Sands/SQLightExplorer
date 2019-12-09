@@ -3,9 +3,15 @@ from web_querys import WebQuerys
 # TODO: there are a bunch on new methods in tab_table that would make most actions simpler
 class Action:
 
+    ACTION_STATUS_404 = 0
+    ACTION_STATUS_408 = 1
+    ACTION_STATUS_INVALID_RESPONSE = 2
+    ACTION_STATUS_OK = 3
+
     def __init__(self, dialog_message):
         self.dialog_message = dialog_message
         self.web_query = WebQuerys()
+        self.status = self.ACTION_STATUS_404
 
     def request(self, data_object):
         """
@@ -24,7 +30,7 @@ class Action:
 
         :param data_object:  Object that contains all data for the action
         :param accepted:     Alows binding to buttons (set to 1 if not button action)
-        :return:
+        :return:            Action Status
         """
 
         if accepted == 0:
@@ -39,15 +45,21 @@ class Action:
             self.dialog_message.set_message(response[1])
             self.dialog_message.new_window()
             self.action_404(data_object)
+            self.status = self.ACTION_STATUS_404
         elif str(response[0]) == "408":
             self.dialog_message.set_message("Error: Connection Timed Out :(")
             self.dialog_message.new_window()
             self.action_408(data_object)
+            self.status = self.ACTION_STATUS_408
         elif not self.valid_response_data(response[1]):
             self.dialog_message.set_message("Error: Invalid response :(")
             self.dialog_message.new_window()
+            self.status = self.ACTION_STATUS_INVALID_RESPONSE
         else:
             self.action(data_object, response[1])
+            self.status = self.ACTION_STATUS_OK
+
+        return self.status
 
     def action(self, data_object, response_data):
         pass
