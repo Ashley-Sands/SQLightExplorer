@@ -7,6 +7,9 @@ from actions import Action_OpenDatabase, Action_NewDatabase, Action_TableColumns
 from actions import Action_updateTableRow, Action_DropTable, Action_RemoveRowsFromTable
 from actions import Action_InsertNewRow, Action_OpenTableTabFormTreeItem
 
+def noAction(a, b):
+    pass
+
 if __name__ == "__main__":
     import amsql_config # setup config
     import global_config
@@ -55,8 +58,10 @@ if __name__ == "__main__":
 
     dialogs["drop_table"] = DialogueWindow_Warning(drop_table_action.run_action)                # TODO: update table name in window
     dialogs["remove_rows"] = DialogueWindow_Warning(table_remove_rows_action.run_action)        # TODO: update table name in window
-    dialogs["new_database"] = DialogueWindow_TextEnter(new_database_action.run_action)
-    dialogs["open_database"] = DialogueWindow_TextEnter(open_database_action.run_action)
+    dialogs["new_database"] = DialogueWindow_TextEnter(new_database_action.run_action, "New database name")
+    dialogs["open_database"] = DialogueWindow_TextEnter(open_database_action.run_action, "Existing database name")
+    dialogs["new_table"] = DialogueWindow_TextEnter(noAction, "New table name")
+
     dialogs["config"] = DialogueWindow_Config()
 
     # setup display values on dialog windows
@@ -67,6 +72,7 @@ if __name__ == "__main__":
     dialogs["remove_rows"].set_dialog_windows(dialogs)
     dialogs["new_database"].set_dialog_windows(dialogs)
     dialogs["open_database"].set_dialog_windows(dialogs)
+    dialogs["new_table"].set_dialog_windows(dialogs)
     dialogs["config"].set_dialog_windows(dialogs)
 
     # bind buttons

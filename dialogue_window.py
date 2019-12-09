@@ -118,9 +118,10 @@ class DialogueWindow_Warning(DialogueWindow):
 
 class DialogueWindow_TextEnter(DialogueWindow):
 
-    def __init__(self, callback):
+    def __init__(self, callback, dialog_message):
         super().__init__(callback)
         self.text = ""
+        self.set_message(dialog_message)
         self.standard_buttons = QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Open
 
     def window(self):
@@ -129,6 +130,7 @@ class DialogueWindow_TextEnter(DialogueWindow):
         self.dialog = QtWidgets.QDialog()
         self.app = amsql_text_window.UiTextDialog()
         self.app.setupUi(self.dialog)
+        self.app.object_name.setText(self.dialog_message)
         self.app.buttons_yes.setStandardButtons( self.standard_buttons )
 
     def dialog_accepted(self):
@@ -147,6 +149,11 @@ class DialogueWindow_TextEnter(DialogueWindow):
         :return:         None
         """
         self.standard_buttons = buttons
+
+    def set_message(self, new_message):
+        self.dialog_message = "<html><head/><body><p><span style=\" font-size:12pt;\">"
+        self.dialog_message += new_message
+        self.dialog_message += "</span></p></body></html>"
 
 
 class DialogueWindow_Config( DialogueWindow ):

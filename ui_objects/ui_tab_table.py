@@ -67,7 +67,8 @@ class ui_tabTable:
         # create table view
         table = self.help.create_table_widget(tab, "table_" + str(self.tab_count), (0, 15, 598, 376))
         table.itemChanged.connect(self.cell_changed)
-        table.itemPressed.connect(self.cell_selected)
+        # table.itemPressed.connect(self.cell_selected)
+        table.currentItemChanged.connect(self.cell_selected)
 
         # set active!
         self.tab_widget.setCurrentIndex(self.tab_widget.indexOf(tab))
@@ -150,7 +151,7 @@ class ui_tabTable:
 
         return None, None
 
-    def cell_selected(self, item):
+    def cell_selected(self, item, prv_item):
         self.selected_cel = item
         self.selected_cel_value = item.text()
 
