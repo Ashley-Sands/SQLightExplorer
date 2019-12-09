@@ -131,6 +131,13 @@ class WebQuerys:
         """
         pass
 
+    def database_and_table_exist(self, db_name, table_name):
+        """Queries if a database and table exist"""
+        data = WebQuerys.get_query_dict(db_name, table_name)
+        response_status, response_data = self.send_query("POST", "/table_exist", data)
+
+        return WebQuerys.response_to_dict( response_status, response_data )
+
     def get_column_names(self, db_name, table_name):
         """ gets all columns from table
 
