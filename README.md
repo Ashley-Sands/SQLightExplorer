@@ -3,13 +3,14 @@
 ### Feather Set.
 
 ### TODO
-[ ] New Table  
+[WIP] New Table  
 [ ] Destroy Database  
 [C] Fix major issues  
 [C] Add row  
-[ ] Refactor  
--[ ] Actions  
--[ ] table tabs  
+[WIP] Refactor  
+-[WIP] Actions  
+-[WIP] table tabs  
+[ ] Undo steps?
 
 ### NOTES
 Column data needs to have editable add to the data on the server side  
