@@ -4,6 +4,7 @@ from ui_objects.ui_helpers import UiHelpers
 class ui_tabTable:
 
     TAB_TYPE_TABLE = "Table"
+    TAB_TYPE_NEW_TABLE = "New_Table"
 
     def __init__(self, tab_widget, status_bar):
         """ Stores tab widget and manages tabs
@@ -67,7 +68,6 @@ class ui_tabTable:
         # create table view
         table = self.help.create_table_widget(tab, "table_" + str(self.tab_count), (0, 15, 598, 376))
         table.itemChanged.connect(self.cell_changed)
-        # table.itemPressed.connect(self.cell_selected)
         table.currentItemChanged.connect(self.cell_selected)
 
         # set active!
@@ -158,7 +158,9 @@ class ui_tabTable:
     def cell_changed(self, item):
         """ signal/callback when cell changes in table """
 
-        if self.setting_table_data is True:
+        current_tab_name = self.get_current_tab_name()
+
+        if self.setting_table_data is True or self.tab_data["type"] != ui_tabTable.TAB_TYPE_TABLE:
             return
 
         tab, table = self.get_tab_table_from_table_item(item)
