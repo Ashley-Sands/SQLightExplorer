@@ -1,6 +1,7 @@
 from PyQt5 import QtWidgets
 from ui_objects.ui_helpers import UiHelpers
 import web_querys
+import actions
 
 class UiTreeView:
 
@@ -11,6 +12,7 @@ class UiTreeView:
         self.parent_items = {}  # key: display names
         self.help = UiHelpers()
 
+        self.cancel_action_on_400_status = False
         self.double_click_action = [] # callback sig, actionData, 1
 
         self.tree_view.itemDoubleClicked.connect( self.item_double_clicked )
@@ -23,7 +25,9 @@ class UiTreeView:
         action_data = {"column_id": column_id}
 
         for action in self.double_click_action: # TODO: erly exit if bad status from action
-            action.run_action(action_data, 1)
+            status = action.run_action(action_data, 1)
+            if self.cancel_action_on_400_status and status != actions.Action.ACTION_STATUS_OK:
+                break
 
     def add_tree_item(self, parent_name, str):
         """ add item to tree

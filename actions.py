@@ -166,6 +166,10 @@ class Action_OpenTableTabFormTreeItem(Action):
         print("Helloo bop")
 
         db_name, table_name = self.tree_view.get_selected_item_and_parent_text()
+
+        if db_name is None or table_name is None:
+            return None
+
         print(db_name, table_name)
 
         return self.web_query.database_and_table_exist(db_name, table_name) # TODO: find out why if cant find the db and table :|
@@ -196,7 +200,7 @@ class Action_TableColumns(Action):
     def request(self, data_object):
         """
 
-        :param data_object:     dict with keys 'database_name' and 'table_name'
+        :param data_object:     None or empty {}
         :return:                request results
         """
         db_name, table_name = self.tree_view.get_selected_item_and_parent_text()
@@ -205,7 +209,7 @@ class Action_TableColumns(Action):
     def action(self, data_object, response):
         """
 
-        :param data_object:     dict with keys 'database_name' and 'table_name'
+        :param data_object:     None or empty {}
         :param response:        data from request
         :return:                None
         """
@@ -223,7 +227,7 @@ class Action_TableColumns(Action):
             else:
                 column_params.append( (1, r[2], r[4]) )           # if the editable has not been set assume it to be editable
 
-        db_name, table_name = self.tree_view.get_selected_item_and_parent_text()    ## TODO: test...
+        db_name, table_name = self.tree_view.get_selected_item_and_parent_text()
 
         self.tab_table.set_table_columns("table:"+table_name, column_names, column_params)
 
@@ -233,27 +237,40 @@ class Action_TableColumns(Action):
 
 class Action_TableRows(Action):
 
-    def __init__(self, dialog_message, tab_table ):
+    def __init__(self, dialog_message, tree_view, tab_table ):
         super().__init__(dialog_message)
         self.tab_table = tab_table
+        self.tree_view = tree_view
 
     def request(self, data_object):
         """
 
-        :param data_object:     dict with keys 'database_name' and 'table_name'
+        :param data_object:     None or empty {}. if tree_vew is set to not data object must contain keys 'database_name' & 'table_name'
         :return:                request results
         """
-        return self.web_query.get_table_rows(data_object["database_name"], data_object["table_name"])
+        if self.tree_view is not None:
+            db_name, table_name = self.tree_view.get_selected_item_and_parent_text()
+        else:
+            db_name = data_object["database_name"]
+            table_name = data_object["table_name"]
+
+        return self.web_query.get_table_rows(db_name, table_name)
 
     def action(self, data_object, response):
         """
 
-        :param data_object:     dict with keys 'database_name' and 'table_name'
+        :param data_object:     None or empty {}. if tree_vew is set to not data object must contain keys 'database_name' & 'table_name'
         :param response:        data from request
         :return:                None
         """
 
-        self.tab_table.set_table_rows("table:"+data_object["table_name"], response)
+        if self.tree_view is not None:
+            db_name, table_name = self.tree_view.get_selected_item_and_parent_text()
+        else:
+            db_name = data_object["database_name"]
+            table_name = data_object["table_name"]
+
+        self.tab_table.set_table_rows("table:"+table_name, response)
 
     def valid_response_data(self, response):
         return type(response) is list
@@ -287,7 +304,7 @@ class Action_RemoveRowsFromTable(Action):
     def __init__(self, dialog_message, tab_table):
         super().__init__(dialog_message)
         self.tab_table = tab_table
-        self.refresh_table_action = Action_TableRows(dialog_message, tab_table)
+        self.refresh_table_action = Action_TableRows(dialog_message, None, tab_table)
 
     def request(self, data_object):
 

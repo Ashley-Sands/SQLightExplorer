@@ -38,8 +38,8 @@ if __name__ == "__main__":
     drop_table_action = Action_DropTable(dialog_message, ui_tree_view)
 
     open_table_in_tab_action = Action_OpenTableTabFormTreeItem(dialog_message, ui_tree_view, ui_tab_table)
-    table_columns_action = Action_TableColumns(dialog_message, ui_tab_table)
-    table_rows_action = Action_TableRows(dialog_message, ui_tab_table)
+    table_columns_action = Action_TableColumns(dialog_message, ui_tree_view, ui_tab_table)
+    table_rows_action = Action_TableRows(dialog_message, ui_tree_view, ui_tab_table)
     table_item_changed_action = Action_updateTableRow(dialog_message)
     table_remove_rows_action = Action_RemoveRowsFromTable(dialog_message, ui_tab_table)
     table_insert_row_action = Action_InsertNewRow(dialog_message, ui_tab_table)
