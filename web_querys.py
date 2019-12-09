@@ -83,12 +83,11 @@ class WebQuerys:
                 response_status = 404
                 response_data = "Error: their is not request type "+request_type.upper()
 
-            print("Sending", response_data, "request: ", page)
+            print("Sending request: ", page)
             # get the response data from the request
             response = self.connection.getresponse()
             response_data = response.read().decode()
             response_status = response.status
-
         except:
             response_status = 408
             response_data = "Error: Connection timed out"
