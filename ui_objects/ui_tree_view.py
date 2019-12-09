@@ -5,10 +5,10 @@ import actions
 
 class UiTreeView:
 
-    def __init__(self, tree_view, tab_table):
+    def __init__(self, tree_view, status_bar):
 
         self.tree_view = tree_view  # widget
-        self.tab_table = tab_table
+        self.status_bar = status_bar
         self.parent_items = {}  # key: display names
         self.help = UiHelpers()
 
@@ -24,7 +24,7 @@ class UiTreeView:
 
         action_data = {"column_id": column_id}
 
-        for action in self.double_click_action: # TODO: erly exit if bad status from action
+        for action in self.double_click_action:
             status = action.run_action(action_data, 1)
             if self.cancel_action_on_400_status and status != actions.Action.ACTION_STATUS_OK:
                 break

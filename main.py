@@ -29,7 +29,7 @@ if __name__ == "__main__":
 
     # Setup the classes to manage the UI elements :)
     ui_tab_table = ui_tabTable( main_app.tab_view, main_app.statusbar )
-    ui_tree_view = UiTreeView(main_app.treeWidget, ui_tab_table)
+    ui_tree_view = UiTreeView(main_app.treeWidget, main_app.statusbar )
 
     # Setup actions
     open_database_action = Action_OpenDatabase(dialog_message, ui_tree_view)
