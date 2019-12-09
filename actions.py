@@ -13,7 +13,7 @@ class Action:
         self.web_query = WebQuerys()
         self.status = self.ACTION_STATUS_404
 
-    def request(self, data_object):
+    def request(self, data_object):     # TODO: by default this should return stats 404, not found.
         """
 
         :return: request response
@@ -88,7 +88,7 @@ class Action_NewDatabase(Action):
         # remove if already exist (so it gets refreshed)
         self.tree_view.remove_root_item(data_object["text"])
 
-        # Add the data to the tree
+        # Add parent data to the tree
         self.tree_view.add_tree_item(None, data_object["text"])  # add database
 
     def valid_response_data(self, response):
@@ -101,7 +101,7 @@ class Action_OpenDatabase(Action_NewDatabase):
 
     def action(self, data_object, response):
 
-        # Add the data to the tree
+        # Add child data to the tree
         super().action(data_object, response)
         item = None
         for r in response:
@@ -112,6 +112,7 @@ class Action_OpenDatabase(Action_NewDatabase):
 
     def valid_response_data(self, response):
         return type(response) is list
+
 
 class Action_DropTable(Action):
 
@@ -148,10 +149,48 @@ class Action_DropTable(Action):
     def valid_response_data(self, response):
         return True
 
+
+class Action_OpenTableTabFormTreeItem(Action):
+
+    def __init__(self, dialogue_message, tree_view, tab_table):
+        super().__init__(dialogue_message)
+        self.tree_view = tree_view
+        self.tab_table = tab_table
+
+    def request(self, data_object):
+        """ Check database and table exist
+
+        :param data_object:  None
+        :return:             Status and response from server
+        """
+        print("Helloo bop")
+
+        db_name, table_name = self.tree_view.get_selected_item_and_parent_text()
+        print(db_name, table_name)
+
+        return self.web_query.database_and_table_exist(db_name, table_name) # TODO: find out why if cant find the db and table :|
+
+    def action(self, data_object, response_data):
+        """ Opens a new tab with the selected table from database
+
+        :param data_object:         None
+        :param response_data:       None
+        :return:                    None
+        """
+        print("Helloo Worldgfdgdgds")
+
+        db_name, table_name = self.tree_view.get_selected_item_and_parent_text()
+        self.tab_table.add_tab( "Table", db_name, table_name )
+
+    def valid_response_data(self, response):
+        return True
+
+
 class Action_TableColumns(Action):
 
-    def __init__(self, dialog_message, tab_table ):
+    def __init__(self, dialog_message, tree_view, tab_table ):
         super().__init__(dialog_message)
+        self.tree_view = tree_view
         self.tab_table = tab_table
 
     def request(self, data_object):
@@ -160,7 +199,8 @@ class Action_TableColumns(Action):
         :param data_object:     dict with keys 'database_name' and 'table_name'
         :return:                request results
         """
-        return self.web_query.get_column_names(data_object["database_name"], data_object["table_name"])
+        db_name, table_name = self.tree_view.get_selected_item_and_parent_text()
+        return self.web_query.get_column_names(db_name, table_name)
 
     def action(self, data_object, response):
         """
@@ -183,7 +223,9 @@ class Action_TableColumns(Action):
             else:
                 column_params.append( (1, r[2], r[4]) )           # if the editable has not been set assume it to be editable
 
-        self.tab_table.set_table_columns("table:"+data_object["table_name"], column_names, column_params)
+        db_name, table_name = self.tree_view.get_selected_item_and_parent_text()    ## TODO: test...
+
+        self.tab_table.set_table_columns("table:"+table_name, column_names, column_params)
 
     def valid_response_data(self, response):
         """Check that the data is a list of list, and that len nested list has a len of at least 6"""

@@ -5,7 +5,7 @@ from dialogue_window import DialogueWindow_Warning, DialogueWindow_TextEnter, Di
 
 from actions import Action_OpenDatabase, Action_NewDatabase, Action_TableColumns, Action_TableRows
 from actions import Action_updateTableRow, Action_DropTable, Action_RemoveRowsFromTable
-from actions import Action_InsertNewRow
+from actions import Action_InsertNewRow, Action_OpenTableTabFormTreeItem
 
 if __name__ == "__main__":
     import amsql_config # setup config
@@ -37,6 +37,7 @@ if __name__ == "__main__":
 
     drop_table_action = Action_DropTable(dialog_message, ui_tree_view)
 
+    open_table_in_tab_action = Action_OpenTableTabFormTreeItem(dialog_message, ui_tree_view, ui_tab_table)
     table_columns_action = Action_TableColumns(dialog_message, ui_tab_table)
     table_rows_action = Action_TableRows(dialog_message, ui_tab_table)
     table_item_changed_action = Action_updateTableRow(dialog_message)
@@ -44,6 +45,7 @@ if __name__ == "__main__":
     table_insert_row_action = Action_InsertNewRow(dialog_message, ui_tab_table)
 
     # set actions on ui
+    ui_tree_view.add_actions(open_table_in_tab_action)
     ui_tree_view.add_actions(table_columns_action)
     ui_tree_view.add_actions(table_rows_action)
     ui_tab_table.add_item_changed_action(table_item_changed_action)
