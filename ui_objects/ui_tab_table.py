@@ -23,8 +23,13 @@ class ui_tabTable:
         self.tab_data = {}  # key tab names, dict{type, db_name, table_name}
         self.tab_count = 0
 
+        self.table_cell_changed_actions = []  # need to be stored in here so we can bind them when we create the table
+
         self.status_bar = status_bar
         self.help = UiHelpers()
+
+    def add_action(self, action):
+        self.table_cell_changed_actions.append( action )
 
     @staticmethod
     def get_tab_name(tab_type, db_name, table_name):
@@ -61,6 +66,7 @@ class ui_tabTable:
         # create table view
         table = DbTable_Table(self.status_bar, tab_type, database_name, table_name)
         table.new_table(tab, self.tab_count)
+        table.add_actions( self.table_cell_changed_actions )
 
         # set active!
         self.tab_widget.setCurrentIndex(self.tab_widget.indexOf(tab))

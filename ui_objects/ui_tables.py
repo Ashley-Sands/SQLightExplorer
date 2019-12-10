@@ -23,7 +23,12 @@ class BaseTable:
         self.cell_changed_action = []
 
     def add_action(self, action):
+        """Add a single action"""
         self.cell_changed_action.append( action )
+
+    def add_actions(self, actions):
+        """Add a list of actions"""
+        self.cell_changed_action =[ *self.cell_changed_action, *actions ]
 
     def new_table(self, parent_widget, tab_count):
         """(Virtual) gets the table and returns table widget"""
@@ -81,7 +86,8 @@ class BaseTable:
 
     def get_value_type_for_column(self, column_id):
         """Gets the value type for column id"""
-        return self.column_params[ [*self.column_params][column_id] ]["value_type"]
+
+        return self.column_params[ [*self.column_params][column_id] ][1]
 
     def get_selected_rows(self):
         """ Gets a list of selected rows"""
@@ -134,7 +140,6 @@ class DbTable_Table(BaseTable):
 
         for act in self.cell_changed_action:
             act.run_action( action_data, 1 )
-
 
 class NewTable_Table(BaseTable):
     pass
