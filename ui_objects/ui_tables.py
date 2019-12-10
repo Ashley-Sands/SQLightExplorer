@@ -119,11 +119,9 @@ class DbTable_Table(BaseTable):
         if self.setting_rows:
             return
 
-        print("Its ME...")
+        valid_data = self.verify_cell_data_type( item.text(), self.get_value_type_for_column( item.column() ) )
 
-        vaild_data = self.verify_cell_data_type( item.text, self.get_value_type_for_column( item.column() ) )
-        print("**Crashed**", "Well maybe you fixed it if you can see this")
-        if not vaild_data:
+        if not valid_data:
             item.setText( self.selected_cel_value )
             self.status_bar.showMessage("Error: Invalid Data type", 20000)
             return
@@ -136,7 +134,7 @@ class DbTable_Table(BaseTable):
         action_data["set_columns"] = [ [*self.column_params][item.column()] ]   # TODO: i think this works
         action_data["set_data"] = [item.text()]
         action_data["where_columns"] = [ [*self.column_params][0] ]   # in this case we will only use the first column as are where
-        action_data["where_values"] = [ self.table_widget.item( item.row(), 0 ) ]
+        action_data["where_data"] = [ self.table_widget.item( item.row(), 0 ).text() ]
 
         for act in self.cell_changed_action:
             act.run_action( action_data, 1 )
