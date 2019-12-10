@@ -247,8 +247,10 @@ class Action_TableColumns(Action):
         :return:                None
         """
 
-        # the data in the response contains all column data [ col_id, name, type, can_be_null, default_value, primary_key, editable] (len 7)
-        # editable IS NOT a sqlite value, it needs to be added by the user on the server side and signals if the column can be edited or not.
+        # the data in the response contains all column data
+        # [ col_id, name, type, can_be_null, default_value, primary_key, editable] (len 7)
+        # editable IS NOT a sqlite value, it needs to be added by the user on the server side
+        # and signals if the column can be edited or not.
         # if the value is not present then it is assumed that the column can be edited
         # we only need the 2nd element (col name) for the column names
         column_names = []       # list of column names
@@ -258,7 +260,7 @@ class Action_TableColumns(Action):
             if  len(r) == 7:
                 column_params.append( (r[6], r[2], r[4] ) )
             else:
-                column_params.append( (1, r[2], r[4]) )           # if the editable has not been set assume it to be editable
+                column_params.append( (1, r[2], r[4]) )     # if the editable has not been set assume it to be editable
 
         db_name, table_name = self.tree_view.get_selected_item_and_parent_text()
 
