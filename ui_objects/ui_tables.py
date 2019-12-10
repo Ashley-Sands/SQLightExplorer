@@ -13,7 +13,7 @@ class BaseTable:
         self.database_name = db_name
         self.table_name = table_name
 
-        self.column_params = {}  # columns labels are keys, values dict of params (editable, value_type, default_value )
+        self.column_params = {}  # columns labels are keys, values tuple of params (editable, value_type, default_value)
 
         self.selected_cel = None
         self.selected_cel_value = ""
@@ -74,7 +74,9 @@ class BaseTable:
 
         :return:    dict of default value {col_label: default value}
         """
-        default_values = {cl: self.column_params[cl]["default_value"] for cl in self.column_params}
+
+        default_values = {cl: self.column_params[cl][2] for cl in self.column_params}
+
         return default_values
 
     def get_value_type_for_column(self, column_id):
