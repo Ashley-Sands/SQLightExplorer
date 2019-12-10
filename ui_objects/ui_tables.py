@@ -9,18 +9,23 @@ class BaseTable:
         self.table_type = table_type
         self.column_values = {}  # columns labels are keys value params (editable, input value type, default_value )
 
+        self.selected_cel = None
+        self.selected_cel_value = ""
+
         self.setting_rows = False       # used to prevent callbacks
+
+    def new_table(self, parent_widget):
+        """(Virtual) gets the table and returns table widget"""
+
+        self.help.create_table_widget(parent_widget, "table_" + str(self.tab_count), (0, 15, 598, 376))
 
         self.table_widget.itemChanged.connect(self.cell_content_changed)
         self.table_widget.currentItemChanged.connect(self.cell_selected_item_changed)
 
-    def new_table(self, parent_widget):
-        """(Abstract) gets the table and returns table widget"""
-        pass
-
     def cell_selected_item_changed(self, item, prv_item):
-        """(Abstract) called when the table item selection has changed"""
-        pass
+        """(Virtual) called when the table item selection has changed"""
+        self.selected_cel = item
+        self.selected_cel_value = item.text()
 
     def cell_content_changed(self, item):
         """(Abstract) called when cell content has changes in table """
@@ -82,7 +87,9 @@ class BaseTable:
 
 
 class DbTable_Table(BaseTable):
-    pass
+
+    def cell_content_changed(self, item):
+        pass
 
 class NewTable_Table(BaseTable):
     pass
