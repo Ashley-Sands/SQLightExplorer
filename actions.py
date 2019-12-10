@@ -1,6 +1,7 @@
 from web_querys import WebQuerys
 from ui_objects.ui_tab_table import ui_tabTable
 
+
 # TODO: there are a bunch on new methods in tab_table that would make most actions simpler
 class Action:
 
@@ -75,6 +76,7 @@ class Action:
         """ Checks if response is vails (needs overriding)"""
         return False
 
+
 class Action_NewDatabase(Action):
 
     def __init__(self, dialog_message, tree_view):
@@ -94,6 +96,7 @@ class Action_NewDatabase(Action):
 
     def valid_response_data(self, response):
         return True
+
 
 class Action_OpenDatabase(Action_NewDatabase):
 
@@ -179,13 +182,13 @@ class Action_OpenTableTabForNewTable(Action):   # TODO: this is what we are work
 
         return self.web_query.table_does_not_exist(selected_database, table_name)
 
-
     def action(self, data_object, response):
         print("We good :)")
         pass
 
     def valid_response_data(self, response):
         return True
+
 
 class Action_OpenTableTabFormTreeItem(Action):
 
@@ -380,6 +383,7 @@ class Action_RemoveRowsFromTable(Action):
 
     def valid_response_data(self, response):
         return True
+
 
 # derive for removeRows since its only the request that is different
 class Action_InsertNewRow(Action_RemoveRowsFromTable):
