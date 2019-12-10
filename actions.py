@@ -350,27 +350,12 @@ class Action_RemoveRowsFromTable(Action):
             return WebQuerys.response_to_dict(404, "No database or table selected")
         elif ui_table.table_type is not ui_tabTable.TAB_TYPE_TABLE:
             return WebQuerys.response_to_dict(404, "Can not remove rows from new tables")
-        # OLD CODE
-        '''
-        db_name, table_name = self.tab_table.get_database_and_table_name()
 
-        if db_name is None or table_name is None:
-            return WebQuerys.response_to_dict(404, "No database or table selected")
-            
-        rows_to_remove = self.tab_table.get_selected_rows()
-
-        '''
-        # Eof
         rows_to_remove = ui_table.get_selected_rows()
 
         if len(rows_to_remove) == 0:
             return WebQuerys.response_to_dict(404, "Nothing Selected to be removed")
 
-        # old code
-        # row_values = self.tab_table.get_value_from_rows(0, rows_to_remove)
-        # where_column = self.tab_table.get_column_name(0)
-        # Eof
-        # only use the first column witch is the unique row id that sqlite sets by default
         where_values = ui_table.get_column_values_for_rows(0, rows_to_remove)
         where_column = ui_table.get_column_name(0)
         print("Helloo World...**********************....")

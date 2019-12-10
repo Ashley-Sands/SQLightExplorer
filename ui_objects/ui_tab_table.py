@@ -167,41 +167,6 @@ class ui_tabTable:
         for act in self.item_changed_action:
             act.run_action( action_data , 1 )
 
-    def get_selected_rows(self):
-        """Gets the selected rows from the table being displayed"""
-        tab, table = self.get_current_tab_table()
-
-        if tab is None:
-            return None
-
-        items = table.selectedItems()
-        rows = []
-
-        for i in items:
-            if i.row() not in rows:
-                rows.append(i.row())
-
-        return rows
-
-    def get_value_from_rows(self, column_id, rows):
-        """ gets values for a single column for rows
-        :return:    List of values from columns
-        """
-
-        tab, table = self.get_current_tab_table()
-        values = []
-
-        for r in rows:
-            v = table.item(r, column_id)
-            values.append(v.text())
-
-        return values
-
-    def get_column_name(self, column_id):
-        """Get the column name from visable table"""
-        tab, table = self.get_current_tab_table()
-        return table.horizontalHeaderItem(column_id).text()
-
     def get_database_and_table_name(self):
         """Gets the current database and table for selected table"""
         current_tab_name = self.get_current_tab_name()
