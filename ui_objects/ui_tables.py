@@ -2,22 +2,33 @@ import ui_objects.ui_helpers
 
 class BaseTable:
 
-    def __init__(self, table_widget, table_type):
+    def __init__(self, table_widget, status_bar, table_type, db_name, table_name):
 
         self.help = ui_objects.ui_helpers.UiHelpers()
+
         self.table_widget = table_widget
+        self.status_bar = status_bar
         self.table_type = table_type
-        self.column_values = {}  # columns labels are keys value params (editable, input value type, default_value )
+
+        self.database_name = db_name
+        self.table_name = table_name
+
+        self.column_params = {}  # columns labels are keys, values dict of params (editable, value_type, default_value )
 
         self.selected_cel = None
         self.selected_cel_value = ""
 
         self.setting_rows = False       # used to prevent callbacks
 
-    def new_table(self, parent_widget):
+        self.cell_changed_action = []
+
+    def add_action(self, action):
+        self.cell_changed_action.append( action )
+
+    def new_table(self, parent_widget, tab_count):
         """(Virtual) gets the table and returns table widget"""
 
-        self.help.create_table_widget(parent_widget, "table_" + str(self.tab_count), (0, 15, 598, 376))
+        self.help.create_table_widget(parent_widget, "table_" + str(tab_count), (0, 15, 598, 376))
 
         self.table_widget.itemChanged.connect(self.cell_content_changed)
         self.table_widget.currentItemChanged.connect(self.cell_selected_item_changed)
@@ -44,7 +55,7 @@ class BaseTable:
         :param params:  List of dict (editable, value_type, default_value) Must match columns
         """
 
-        self.column_values = dict(zip(column_labels, params))
+        self.column_params = dict(zip(column_labels, params))
         self.help.set_table_columns(self.table_widget, column_labels)
 
         pass
@@ -55,7 +66,7 @@ class BaseTable:
         """
 
         self.setting_rows = True
-        self.help.set_table_rows(self.table_widget, rows, self.column_values)   # TODO: help.set_table_rows need column params updating to dict
+        self.help.set_table_rows(self.table_widget, rows, self.column_params)   # TODO: help.set_table_rows need column params updating to dict
         self.setting_rows = False
 
     def get_default_values(self):
@@ -63,8 +74,12 @@ class BaseTable:
 
         :return:    dict of default value {col_label: default value}
         """
-        default_values = { cl: self.column_values[cl]["default_value"] for cl in self.column_values }
+        default_values = {cl: self.column_params[cl]["default_value"] for cl in self.column_params}
         return default_values
+
+    def get_value_type_for_column(self, column_id):
+        """Gets the value type for column id"""
+        return self.column_params[ [*self.column_params][column_id] ]["value_type"]
 
     def get_selected_rows(self):
         """ Gets a list of selected rows"""
@@ -85,6 +100,9 @@ class BaseTable:
         """ Gets values for a single columns rows"""
         return [ self.table_widget.item(r, column_id).text() for r in rows ]
 
+    def verify_cell_data_type(self, data, data_type):
+        """ (Virtual) Verifies cells data type is correct """
+        return True
 
 class DbTable_Table(BaseTable):
 
