@@ -1,5 +1,6 @@
 from PyQt5 import QtCore, QtWidgets
 from ui_objects.ui_helpers import UiHelpers
+from ui_objects.ui_tables import DbTable_Table, NewTable_Table
 
 class ui_tabTable:
 
@@ -66,16 +67,21 @@ class ui_tabTable:
         self.tab_widget.setTabText(self.tab_widget.indexOf(tab), self.translate("MainWindow", name))
 
         # create table view
-        table = self.help.create_table_widget(tab, "table_" + str(self.tab_count), (0, 15, 598, 376))
-        table.itemChanged.connect(self.cell_changed)
-        table.currentItemChanged.connect(self.cell_selected)
-
+        table = DbTable_Table(self.status_bar, tab_type, database_name, table_name)
+        table.new_table(tab, self.tab_count)
+        print("MADE IT HERE :)")
+        ## OLD CODE
+        # table = self.help.create_table_widget(tab, "table_" + str(self.tab_count), (0, 15, 598, 376))
+        # table.itemChanged.connect(self.cell_changed)
+        # table.currentItemChanged.connect(self.cell_selected)
+        ## Eof
         # set active!
         self.tab_widget.setCurrentIndex(self.tab_widget.indexOf(tab))
 
         self.tabs[name.lower()] = tab, table
         self.tab_data[name.lower()] = {"type": tab_type, "db_name": database_name, "table_name": table_name, "table_column_names": ()}
         self.tab_count += 1
+
         return tab, table
 
     def set_table_columns(self, tab_name, column_names, column_params):

@@ -2,11 +2,11 @@ import ui_objects.ui_helpers
 
 class BaseTable:
 
-    def __init__(self, table_widget, status_bar, table_type, db_name, table_name):
+    def __init__(self, status_bar, table_type, db_name, table_name):
 
         self.help = ui_objects.ui_helpers.UiHelpers()
 
-        self.table_widget = table_widget
+        self.table_widget = None
         self.status_bar = status_bar
         self.table_type = table_type
 
@@ -28,7 +28,7 @@ class BaseTable:
     def new_table(self, parent_widget, tab_count):
         """(Virtual) gets the table and returns table widget"""
 
-        self.help.create_table_widget(parent_widget, "table_" + str(tab_count), (0, 15, 598, 376))
+        self.table_widget = self.help.create_table_widget(parent_widget, "table_" + str(tab_count), (0, 15, 598, 376))
 
         self.table_widget.itemChanged.connect(self.cell_content_changed)
         self.table_widget.currentItemChanged.connect(self.cell_selected_item_changed)

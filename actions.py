@@ -151,7 +151,7 @@ class Action_DropTable(Action):
         return True
 
 
-class Action_OpenTableTabForNewTable(Action):
+class Action_OpenTableTabForNewTable(Action):   # TODO: this is what we are working towards...
 
     def __init__(self, dialogue_message, tree_view, tab_table):
         super().__init__(dialogue_message)
@@ -187,7 +187,7 @@ class Action_OpenTableTabForNewTable(Action):
     def valid_response_data(self, response):
         return True
 
-class Action_OpenTableTabFormTreeItem(Action):
+class Action_OpenTableTabFormTreeItem(Action):   # TODO: refactor ~TASK 1
 
     def __init__(self, dialogue_message, tree_view, tab_table):
         super().__init__(dialogue_message)
@@ -200,14 +200,11 @@ class Action_OpenTableTabFormTreeItem(Action):
         :param data_object:  None
         :return:             Status and response from server
         """
-        print("Helloo bop")
 
         db_name, table_name = self.tree_view.get_selected_item_and_parent_text()
 
         if db_name is None or table_name is None:
             return None
-
-        print(db_name, table_name)
 
         return self.web_query.database_and_table_exist(db_name, table_name) # TODO: find out why if cant find the db and table :|
 
@@ -221,13 +218,13 @@ class Action_OpenTableTabFormTreeItem(Action):
         print("Helloo Worldgfdgdgds")
 
         db_name, table_name = self.tree_view.get_selected_item_and_parent_text()
-        self.tab_table.add_tab( "Table", db_name, table_name )
+        self.tab_table.add_tab( ui_tabTable.TAB_TYPE_TABLE, db_name, table_name )
 
     def valid_response_data(self, response):
         return True
 
 
-class Action_TableColumns(Action):
+class Action_TableColumns(Action):  # TODO: Refactor ~Task 2
 
     def __init__(self, dialog_message, tree_view, tab_table ):
         super().__init__(dialog_message)
@@ -274,7 +271,7 @@ class Action_TableColumns(Action):
         """Check that the data is a list of list, and that len nested list has a len of at least 6"""
         return type(response) is list and type(response[0]) is list and len(response[0]) >= 6
 
-class Action_TableRows(Action):
+class Action_TableRows(Action):  # TODO: Refactor ~Task 3
 
     def __init__(self, dialog_message, tree_view, tab_table ):
         super().__init__(dialog_message)
