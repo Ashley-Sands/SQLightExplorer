@@ -264,7 +264,7 @@ class Action_TableColumns(Action):  # TODO: Refactor ~Task 2
         db_name, table_name = self.tree_view.get_selected_item_and_parent_text()
 
         ui_table = self.tab_table.get_tab_ui_table(ui_tabTable.TAB_TYPE_TABLE, db_name, table_name)
-        ui_table.set_columns( column_names, column_names )
+        ui_table.set_columns( column_names, column_params )
 
     def valid_response_data(self, response):
         """Check that the data is a list of list, and that len nested list has a len of at least 6"""
