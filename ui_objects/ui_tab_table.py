@@ -94,24 +94,6 @@ class ui_tabTable:
 
         return self.tab_data[table_name]["table_column_names"], column_defaults
 
-    def set_table_rows(self, tab_name, rows):
-        """
-
-        :param tab_name:    name of tab to set rows in
-        :param rows:        List of rows (List of List)
-        :return:            None
-        """
-
-        self.setting_table_data = True
-        tab_name = tab_name.lower()
-
-        if tab_name not in self.tabs:
-            return
-
-        self.help.set_table_rows(self.tabs[tab_name][1], rows, self.table_column_parmas[tab_name.lower()])
-
-        self.setting_table_data = False
-
     # TODO this and get name should be done when the tab changes
     def get_current_tab_table(self):
         """ Get the current tab and table if exist in obj.
