@@ -83,17 +83,6 @@ class ui_tabTable:
 
         return self.tabs[ self.get_tab_name(tab_type, db_name, table_name).lower() ][1]
 
-    def get_column_default_values(self):
-        """Gets the default values for all columns on active table
-
-        :return:    column names, column defaul values
-        """
-        # map cols to defaults :)
-        table_name = self.get_current_tab_name() # TODO: change to self copy (once done)
-        column_defaults = [d[2] for d in self.table_column_parmas[table_name]]
-
-        return self.tab_data[table_name]["table_column_names"], column_defaults
-
     # TODO this and get name should be done when the tab changes
     def get_current_tab_table(self):
         """ Get the current tab and table if exist in obj.

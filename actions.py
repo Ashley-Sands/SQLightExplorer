@@ -395,17 +395,4 @@ class Action_InsertNewRow(Action_RemoveRowsFromTable):
 
         column_names, column_default_values = zip( *ui_table.get_default_values().items() )
 
-        # old Code
-        '''        
-        db_name, table_name = self.tab_table.get_database_and_table_name()
-
-        if db_name is None or table_name is None:
-            return WebQuerys.response_to_dict(404, "No database or table selected")
-
-        column_names, column_defaults = self.tab_table.get_column_default_values()
-        
-        return self.web_query.insert_row(db_name, table_name, column_names, column_defaults)   # insert default row?
-
-        '''
-        # Eof
         return self.web_query.insert_row(ui_table.database_name, ui_table.table_name, column_names, column_default_values)
