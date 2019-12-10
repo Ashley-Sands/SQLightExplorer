@@ -187,7 +187,7 @@ class Action_OpenTableTabForNewTable(Action):   # TODO: this is what we are work
     def valid_response_data(self, response):
         return True
 
-class Action_OpenTableTabFormTreeItem(Action):   # TODO: refactor ~TASK 1
+class Action_OpenTableTabFormTreeItem(Action):
 
     def __init__(self, dialogue_message, tree_view, tab_table):
         super().__init__(dialogue_message)
@@ -262,10 +262,16 @@ class Action_TableColumns(Action):  # TODO: Refactor ~Task 2
                 column_params.append( (1, r[2], r[4]) )           # if the editable has not been set assume it to be editable
 
         db_name, table_name = self.tree_view.get_selected_item_and_parent_text()
-        print(ui_tabTable.TAB_TYPE_TABLE, db_name, table_name)
-        tab_name = ui_tabTable.get_tab_name(ui_tabTable.TAB_TYPE_TABLE, db_name, table_name)
 
-        self.tab_table.set_table_columns(tab_name, column_names, column_params)
+        # OLD CODE
+        # tab_name = ui_tabTable.get_tab_name(ui_tabTable.TAB_TYPE_TABLE, db_name, table_name)
+        # self.tab_table.set_table_columns(tab_name, column_names, column_params)
+        # Eof
+        ui_table = self.tab_table.get_tab_ui_table(ui_tabTable.TAB_TYPE_TABLE, db_name, table_name)
+
+        ui_table.set_columns( column_names, column_names )
+
+        print("Made It here :D")
 
     def valid_response_data(self, response):
         """Check that the data is a list of list, and that len nested list has a len of at least 6"""

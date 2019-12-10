@@ -69,7 +69,7 @@ class ui_tabTable:
         # create table view
         table = DbTable_Table(self.status_bar, tab_type, database_name, table_name)
         table.new_table(tab, self.tab_count)
-        print("MADE IT HERE :)")
+
         ## OLD CODE
         # table = self.help.create_table_widget(tab, "table_" + str(self.tab_count), (0, 15, 598, 376))
         # table.itemChanged.connect(self.cell_changed)
@@ -83,6 +83,10 @@ class ui_tabTable:
         self.tab_count += 1
 
         return tab, table
+
+    def get_tab_ui_table(self, tab_type, db_name, table_name):
+        print(ui_tabTable.TAB_TYPE_TABLE, db_name, table_name, "Here----")
+        return self.tabs[ self.get_tab_name(tab_type, db_name, table_name).lower() ][1]
 
     def set_table_columns(self, tab_name, column_names, column_params):
         """ Sets column names for tab with tab_name
