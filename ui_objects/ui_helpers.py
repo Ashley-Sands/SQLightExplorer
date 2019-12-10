@@ -67,21 +67,24 @@ class UiHelpers:
     def set_table_rows(self, table, data, column_params):
         """ Set rows in table
 
-        :param table:   table to set rows in
-        :param data:    data to set in table, List[row][column]
-        :params column_params:  list of tuples of params for column. (editable, type)
-        :return:        None
+        :param table:          table to set rows in
+        :param data:           data to set in table, List[row][column]
+        :param column_params:  list of tuples of params for column. (editable, type)
+        :return:               None
         """
-
+        column_names = [*column_params]  # get out keys are a list
         table.setRowCount( len(data) )
+
         # add our rows of columns
         for row in range(len(data)):
             for col in range(len(data[row])):
                 # replace None with no text :)
                 if data[row][col] is None:
                     data[row][col] = ""
+
                 item = QtWidgets.QTableWidgetItem( str(data[row][col]) )
-                item.setFlags( self.get_cell_flags( column_params[col][0] ) )
+                item.setFlags( self.get_cell_flags( column_params[column_names[col]][0] ) )
+
                 table.setItem( row, col, item )
 
     def add_table_row(self, table, data, row = -1):

@@ -215,7 +215,6 @@ class Action_OpenTableTabFormTreeItem(Action):
         :param response_data:       None
         :return:                    None
         """
-        print("Helloo Worldgfdgdgds")
 
         db_name, table_name = self.tree_view.get_selected_item_and_parent_text()
         self.tab_table.add_tab( ui_tabTable.TAB_TYPE_TABLE, db_name, table_name )
@@ -224,7 +223,7 @@ class Action_OpenTableTabFormTreeItem(Action):
         return True
 
 
-class Action_TableColumns(Action):  # TODO: Refactor ~Task 2
+class Action_TableColumns(Action):
 
     def __init__(self, dialog_message, tree_view, tab_table ):
         super().__init__(dialog_message)
@@ -305,9 +304,13 @@ class Action_TableRows(Action):  # TODO: Refactor ~Task 3
             db_name = data_object["database_name"]
             table_name = data_object["table_name"]
 
-        tab_name = ui_tabTable.get_tab_name(ui_tabTable.TAB_TYPE_TABLE, db_name, table_name)
+        # OLD CODE #
+        # tab_name = ui_tabTable.get_tab_name(ui_tabTable.TAB_TYPE_TABLE, db_name, table_name)
+        # self.tab_table.set_table_rows(tab_name, response)
+        # Eof
+        ui_table = self.tab_table.get_tab_ui_table(ui_tabTable.TAB_TYPE_TABLE, db_name, table_name)
+        ui_table.set_rows(response)
 
-        self.tab_table.set_table_rows(tab_name, response)
 
     def valid_response_data(self, response):
         return type(response) is list

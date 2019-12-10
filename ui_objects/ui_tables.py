@@ -106,10 +106,15 @@ class BaseTable:
 
 class DbTable_Table(BaseTable):
 
-    def cell_content_changed(self, item):
+    def cell_content_changed(self, item):   # TODO: Fix **crash**
+
+        if self.setting_rows:
+            return
+
+        print("Its ME...")
 
         vaild_data = self.verify_cell_data_type( item.text, self.get_value_type_for_column( item.column() ) )
-
+        print("**Crashed**", "Well maybe you fixed it if you can see this")
         if not vaild_data:
             item.setText( self.selected_cel_value )
             self.status_bar.showMessage("Error: Invalid Data type", 20000)
