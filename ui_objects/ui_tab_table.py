@@ -70,11 +70,6 @@ class ui_tabTable:
         table = DbTable_Table(self.status_bar, tab_type, database_name, table_name)
         table.new_table(tab, self.tab_count)
 
-        ## OLD CODE
-        # table = self.help.create_table_widget(tab, "table_" + str(self.tab_count), (0, 15, 598, 376))
-        # table.itemChanged.connect(self.cell_changed)
-        # table.currentItemChanged.connect(self.cell_selected)
-        ## Eof
         # set active!
         self.tab_widget.setCurrentIndex(self.tab_widget.indexOf(tab))
 
@@ -85,26 +80,8 @@ class ui_tabTable:
         return tab, table
 
     def get_tab_ui_table(self, tab_type, db_name, table_name):
-        print(ui_tabTable.TAB_TYPE_TABLE, db_name, table_name, "Here----")
+
         return self.tabs[ self.get_tab_name(tab_type, db_name, table_name).lower() ][1]
-
-    def set_table_columns(self, tab_name, column_names, column_params):
-        """ Sets column names for tab with tab_name
-
-        :param tab_name:        name of tab to add columns to.
-        :param column_names:    List of column names
-        :param column_params:   List of tuples of colum params [( editable, type ), ...]
-        :return:                None
-        """
-
-        tab_name = tab_name.lower()
-
-        if tab_name not in self.tabs:
-            return
-
-        self.tab_data[tab_name]["table_column_names"] = column_names
-        self.help.set_table_columns(self.tabs[tab_name][1], column_names)
-        self.table_column_parmas[tab_name] = column_params
 
     def get_column_default_values(self):
         """Gets the default values for all columns on active table
