@@ -269,7 +269,7 @@ class Action_TableColumns(Action):
         """Check that the data is a list of list, and that len nested list has a len of at least 6"""
         return type(response) is list and type(response[0]) is list and len(response[0]) >= 6
 
-class Action_TableRows(Action):  # TODO: Refactor ~Task 3
+class Action_TableRows(Action):
 
     def __init__(self, dialog_message, tree_view, tab_table ):
         super().__init__(dialog_message)
@@ -344,25 +344,42 @@ class Action_RemoveRowsFromTable(Action):
 
     def request(self, data_object):
 
+        ui_table = self.tab_table.get_current_tab_table()[1]
+
+        if ui_table is None:
+            return WebQuerys.response_to_dict(404, "No database or table selected")
+        elif ui_table.table_type is not ui_tabTable.TAB_TYPE_TABLE:
+            return WebQuerys.response_to_dict(404, "Can not remove rows from new tables")
+        # OLD CODE
+        '''
         db_name, table_name = self.tab_table.get_database_and_table_name()
 
         if db_name is None or table_name is None:
             return WebQuerys.response_to_dict(404, "No database or table selected")
-
+            
         rows_to_remove = self.tab_table.get_selected_rows()
+
+        '''
+        # Eof
+        rows_to_remove = ui_table.get_selected_rows()
 
         if len(rows_to_remove) == 0:
             return WebQuerys.response_to_dict(404, "Nothing Selected to be removed")
 
-        row_values = self.tab_table.get_value_from_rows(0, rows_to_remove)
-        where_column = self.tab_table.get_column_name(0)
-
+        # old code
+        # row_values = self.tab_table.get_value_from_rows(0, rows_to_remove)
+        # where_column = self.tab_table.get_column_name(0)
+        # Eof
+        # only use the first column witch is the unique row id that sqlite sets by default
+        where_values = ui_table.get_column_values_for_rows(0, rows_to_remove)
+        where_column = ui_table.get_column_name(0)
+        print("Helloo World...**********************....")
         # TODO: fix limatation on server! hack for OR
         where_str = [" "+where_column+"=? OR"] * len(rows_to_remove)
-        where_str[-1] = where_str[-1][:-5]   # remove the last 5 chars from the lsat element since the server will add =? back :)
+        where_str[-1] = where_str[-1][:-5]      # remove the last 5 chars from the lsat element since the server will add =? back :)
         where_str = ''.join(where_str)          # like the todo says hacky
-
-        return self.web_query.remove_row(db_name, table_name, [where_str], row_values)
+        print("Helloo World...*******************--------------------***....")
+        return self.web_query.remove_row(ui_table.database_name, ui_table.table_name, [where_str], where_values)
 
     def action(self, data_object, response):
         """
