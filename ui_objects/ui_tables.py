@@ -107,7 +107,27 @@ class BaseTable:
 class DbTable_Table(BaseTable):
 
     def cell_content_changed(self, item):
-        pass
+
+        vaild_data = self.verify_cell_data_type( item.text, self.get_value_type_for_column( item.column() ) )
+
+        if not vaild_data:
+            item.setText( self.selected_cel_value )
+            self.status_bar.showMessage("Error: Invalid Data type", 20000)
+            return
+        else:
+            self.selected_cel_value = item.text()
+
+        action_data = {}
+        action_data["database_name"] = self.database_name
+        action_data["table_name"] = self.table_name
+        action_data["set_columns"] = [ [*self.column_params][item.column()] ]   # TODO: i think this works
+        action_data["set_data"] = [item.text()]
+        action_data["where_columns"] = [ [*self.column_params][0] ]   # in this case we will only use the first column as are where
+        action_data["where_values"] = [ self.table_widget.item( item.row(), 0 ) ]
+
+        for act in self.cell_changed_action:
+            act.run_action( action_data, 1 )
+
 
 class NewTable_Table(BaseTable):
     pass
