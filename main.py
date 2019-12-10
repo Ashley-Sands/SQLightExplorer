@@ -52,7 +52,7 @@ if __name__ == "__main__":
     ui_tree_view.add_actions(open_table_in_tab_action)
     ui_tree_view.add_actions(table_columns_action)
     ui_tree_view.add_actions(table_rows_action)
-    ui_tab_table.add_item_changed_action(table_item_changed_action)
+    ui_tab_table.get_current_tab_table()[1].add_item_changed_action(table_item_changed_action)
 
     # Setup dialogue instances
     dialogs = {}
