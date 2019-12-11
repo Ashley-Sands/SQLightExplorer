@@ -15,6 +15,7 @@ if __name__ == "__main__":
     import global_config
     import sys
     from PyQt5 import QtWidgets
+    import ui_objects.ui_helpers
 
     global_config.GlobalConfig.load_from_file()
 
@@ -23,6 +24,8 @@ if __name__ == "__main__":
     MainWindow = QtWidgets.QMainWindow()
     main_app = amsql_explorer_window.Ui_MainWindow()
     main_app.setupUi(MainWindow)
+
+    ui_objects.ui_helpers.UiHelpers.central_widget = main_app.centralwidget
 
     # Setup message dialog window
     dialog_message = DialogueWindow_Message()

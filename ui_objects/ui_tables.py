@@ -1,4 +1,6 @@
+from PyQt5 import QtCore, QtWidgets
 import ui_objects.ui_helpers
+from global_config import GlobalConfig
 
 class BaseTable:
 
@@ -140,4 +142,68 @@ class DbTable_Table(BaseTable):
             act.run_action( action_data, 1 )
 
 class NewTable_Table(BaseTable):
-    pass
+
+    combo_box_count = 0     # static
+
+    def __init__(self, status_bar, table_type, db_name, table_name, tab):
+        super().__init__(status_bar, table_type, db_name, table_name)
+        self.tab = tab
+
+    def new_table(self, parent_widget, tab_count):
+        super().new_table( parent_widget, tab_count )
+
+        table_geometry = self.table_widget.geometry()
+
+        table_height = table_geometry.height()
+        row_height = 30
+
+        table_geometry.setHeight(table_height)
+        self.table_widget.setGeometry(table_geometry)
+
+
+        column_values = []# * (self.table_widget.columnCount())
+
+        # add rows for our values
+        self.help.add_table_row(self.table_widget, column_values, label="Column Name", row_height=row_height)
+        self.help.add_table_row(self.table_widget, column_values, label="Value Type", row_height=row_height)
+        self.help.add_table_row(self.table_widget, column_values, label="Value Length", row_height=row_height)
+        self.help.add_table_row(self.table_widget, column_values, label="Default Value", row_height=row_height)
+        self.help.add_table_row(self.table_widget, column_values, label="", row_height=row_height)
+
+        # add our first column
+        self.add_column_to_end("Column ", (1, "ANY", None))
+        self.add_column_to_end("Column ", (1, "ANY", None))
+
+        save_button = self.help.create_button("Save Table", "save_table"+str(NewTable_Table.combo_box_count), (360, 440, 100, 50), pressed_signal=self.save_table_button)
+        add_column_button = self.help.create_button("Add Column", "add_column_table"+str(NewTable_Table.combo_box_count), (360, 440, 100, 50), pressed_signal=self.add_column_button)
+
+        self.table_widget.setCellWidget(4, 0, save_button)
+        self.table_widget.setCellWidget(4, 1, add_column_button)
+
+    def add_column_to_end(self, column_label, params):
+
+        col_id = self.table_widget.columnCount()
+        self.help.add_table_column(self.table_widget, col_id, column_label+str(col_id), [""]*5)
+
+        combo_box_values = GlobalConfig.get("value_types").split("\n")
+        combo_box = self.help.create_combo_box(combo_box_values, NewTable_Table.combo_box_count)
+        NewTable_Table.combo_box_count += 1
+
+        self.table_widget.setCellWidget(1, col_id, combo_box)
+
+        # prevent the button row being edited
+        last_col_item = self.table_widget.item(4, col_id)
+
+        if last_col_item is not None:
+            last_col_item.setFlags( self.help.get_cell_flags(0) )
+
+
+    def add_column_button(self):
+        self.add_column_to_end("Column ", (1, "ANY", None))
+
+    def save_table_button(self):
+        pass
+
+    def cell_content_changed(self, item):
+        pass
+

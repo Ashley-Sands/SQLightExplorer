@@ -184,6 +184,10 @@ class Action_OpenTableTabForNewTable(Action):   # TODO: this is what we are work
 
     def action(self, data_object, response):
         print("We good :)")
+        selected_database = self.tree_view.get_selected_item_and_parent_text()[0]
+        table_name = data_object["text"]
+        table_name.replace(" ", "_")
+        self.tab_table.add_tab(ui_tabTable.TAB_TYPE_NEW_TABLE, selected_database, table_name)
         pass
 
     def valid_response_data(self, response):

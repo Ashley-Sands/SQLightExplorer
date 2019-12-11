@@ -3,5 +3,6 @@
   "port": "8000",
   "connection_timeout": 10,
   "remote_root": "/amsql",
-  "default_db": "test_db\ncube_killer"
+  "default_db": "test_db\ncube_killer",
+  "value_types": "FLOAT\nINT\nVARCHAR\nBOOL"
 }

@@ -59,14 +59,20 @@ class ui_tabTable:
         tab = QtWidgets.QWidget()
         tab.setObjectName( "tab_"+str(self.tab_count) )
 
-
         self.tab_widget.addTab(tab, "")
         self.tab_widget.setTabText(self.tab_widget.indexOf(tab), self.translate("MainWindow", name))
 
         # create table view
-        table = DbTable_Table(self.status_bar, tab_type, database_name, table_name)
-        table.new_table(tab, self.tab_count)
-        table.add_actions( self.table_cell_changed_actions )
+        if tab_type == self.TAB_TYPE_TABLE:
+            table = DbTable_Table(self.status_bar, tab_type, database_name, table_name)
+            table.new_table(tab, self.tab_count)
+            table.add_actions( self.table_cell_changed_actions )
+        elif tab_type == self.TAB_TYPE_NEW_TABLE:
+            table = NewTable_Table(self.status_bar, tab_type, database_name, table_name, self)
+            table.new_table(tab, self.tab_count)
+        else:
+            print("Error Tab type not found")
+            return
 
         # set active!
         self.tab_widget.setCurrentIndex(self.tab_widget.indexOf(tab))

@@ -2,6 +2,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class UiHelpers:
 
+    central_widget = None       # static main window widget
+
     def __init__(self):
         self.translate = QtCore.QCoreApplication.translate
 
@@ -54,6 +56,17 @@ class UiHelpers:
             item.setText( self.translate("MainWindow", column_names[i] ) )
             table_widget.setHorizontalHeaderItem(i, item)
 
+    def add_table_column(self, table_widget, column_id, label, row_data):
+
+        table_widget.insertColumn(column_id)
+        item = QtWidgets.QTableWidgetItem()
+        item.setText(self.translate("MainWindow", label))
+        table_widget.setHorizontalHeaderItem(column_id, item)
+
+        for row in range( len(row_data) ):
+            item = QtWidgets.QTableWidgetItem(row_data[row])
+            table_widget.setItem( row, column_id, item )
+
 
     def get_cell_flags(self, editable):
         """Gets the cell flags"""
@@ -87,7 +100,7 @@ class UiHelpers:
 
                 table.setItem( row, col, item )
 
-    def add_table_row(self, table, data, row = -1):
+    def add_table_row(self, table, data, row = -1, label=None, row_height=-1):
         """Add row at position
 
         :param table:   Table to add row to
@@ -100,6 +113,14 @@ class UiHelpers:
             row = table.rowCount()
 
         table.insertRow(row)
+
+        if label is not None:
+            item = QtWidgets.QTableWidgetItem()
+            item.setText(self.translate("MainWindow", label))
+            table.setVerticalHeaderItem(row, item)
+
+        if row_height > 1:
+            table.setRowHeight(row, row_height)
 
         for col in range( len(data) ):
             item = QtWidgets.QTableWidgetItem(data[col])
@@ -115,3 +136,31 @@ class UiHelpers:
 
         return QtWidgets.QTreeWidgetItem(parent, [str])
 
+    def create_combo_box(self, values, id):
+        """ Creates a combo box filled with values
+
+        :param values:  List of values
+        :param id:      Id of combo box
+        :return:        combo box
+        """
+        comboBox = QtWidgets.QComboBox()
+        comboBox.setGeometry(QtCore.QRect(100, 20, 191, 22))
+        comboBox.setObjectName("comboBox_"+str(id))
+
+        for v in values:
+            comboBox.addItem(v)
+
+        return comboBox
+
+    def create_button(self, label, obj_name, position, pressed_signal=None):
+
+        button = QtWidgets.QPushButton(label)
+        button.setObjectName(obj_name)
+        #button.setText( self.translate("MainWindow", label) )
+        button.setGeometry(position[0], position[1], position[2], position[3])
+
+
+        if pressed_signal is not None:
+            button.clicked.connect(pressed_signal)
+
+        return button
