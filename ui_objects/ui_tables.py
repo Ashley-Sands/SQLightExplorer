@@ -110,9 +110,22 @@ class BaseTable:
         """ Gets values for a single columns rows"""
         return [ self.table_widget.item(r, column_id).text() for r in rows ]
 
-    def verify_cell_data_type(self, data, data_type):
+    def verify_cell_data_type(self, value, value_type):
         """ (Virtual) Verifies cells data type is correct """
-        return True
+        verified = True
+
+        # TODO: Varchar length
+        try:
+            if value_type.lower() == "int":
+                int(value)
+            elif value_type.lower() == "float":
+                float(value)
+        except:
+            verified = False
+
+        print("Value Type:", value_type, "Vaild:", verified)
+
+        return verified
 
 class DbTable_Table(BaseTable):
 
@@ -140,6 +153,7 @@ class DbTable_Table(BaseTable):
 
         for act in self.cell_changed_action:
             act.run_action( action_data, 1 )
+
 
 class NewTable_Table(BaseTable):
 
@@ -205,5 +219,33 @@ class NewTable_Table(BaseTable):
         pass
 
     def cell_content_changed(self, item):
-        pass
+
+        if item is None:
+            return
+
+        # length cells must be INT
+        # default value must be TYPE cell
+        row = item.row()
+        value = item.text()
+        valid_data = True
+
+        if row == 2:    # length row
+            valid_data =  self.verify_cell_data_type( value, "int" )
+        elif row == 3:  # default value
+            column = item.column()
+            type_value = self.table_widget.cellWidget(1, column)
+
+            if type_value is None:
+                return
+
+            type_value = type_value.currentText().lower()
+            valid_data =  self.verify_cell_data_type( value, type_value )
+
+        if not valid_data:
+            item.setText( self.selected_cel_value )
+            self.status_bar.showMessage("Error: Invalid Data type", 20000)
+            return
+        else:
+            self.selected_cel_value = item.text()
+
 
