@@ -415,7 +415,7 @@ class Action_AddTable(Action):
     def __init__(self, dialog_message, tree_view, tab_table):
         super().__init__(dialog_message)
         self.tab_table = tab_table
-        self.tree_view = tree_view
+        self.refresh_tree_action = Action_OpenDatabase(dialog_message, tree_view)
 
     def request(self, data_object):
 
@@ -427,6 +427,7 @@ class Action_AddTable(Action):
     def action(self, data_object, response):
 
         self.tab_table.close_current_tab()
+        self.refresh_tree_action.run_action({"text":data_object["database_name"]}, 1)
 
     def valid_response_data(self, response):
         return True
