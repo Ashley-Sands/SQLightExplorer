@@ -154,7 +154,7 @@ class Action_DropTable(Action):
         return True
 
 
-class Action_OpenTableTabForNewTable(Action):   # TODO: this is what we are working towards...
+class Action_OpenTableTabForNewTable(Action):
 
     def __init__(self, dialogue_message, tree_view, tab_table):
         super().__init__(dialogue_message)
@@ -404,3 +404,14 @@ class Action_InsertNewRow(Action_RemoveRowsFromTable):
         column_names, column_default_values = zip( *ui_table.get_default_values().items() )
 
         return self.web_query.insert_row(ui_table.database_name, ui_table.table_name, column_names, column_default_values)
+
+class Action_AddTable(Action):
+
+    def request(self, data_object):
+        pass
+
+    def action(self, data_object, response):
+        pass
+
+    def valid_response_data(self, response):
+        return True

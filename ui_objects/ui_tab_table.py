@@ -24,12 +24,16 @@ class ui_tabTable:
         self.tab_count = 0
 
         self.table_cell_changed_actions = []  # need to be stored in here so we can bind them when we create the table
+        self.new_table_save_actions = []
 
         self.status_bar = status_bar
         self.help = UiHelpers()
 
-    def add_action(self, action):
-        self.table_cell_changed_actions.append( action )
+    def add_action(self, tab_type, action):
+        if tab_type == ui_tabTable.TAB_TYPE_TABLE:
+            self.table_cell_changed_actions.append( action )
+        elif tab_type == ui_tabTable.TAB_TYPE_NEW_TABLE:
+            self.new_table_save_actions.append( action )
 
     @staticmethod
     def get_tab_name(tab_type, db_name, table_name):
@@ -70,6 +74,7 @@ class ui_tabTable:
         elif tab_type == self.TAB_TYPE_NEW_TABLE:
             table = NewTable_Table(self.status_bar, tab_type, database_name, table_name, self)
             table.new_table(tab, self.tab_count)
+            table.add_save_table_actions(self.new_table_save_actions)
         else:
             print("Error Tab type not found")
             return

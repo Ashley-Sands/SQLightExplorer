@@ -6,6 +6,7 @@ from dialogue_window import DialogueWindow_Warning, DialogueWindow_TextEnter, Di
 from actions import Action_OpenDatabase, Action_NewDatabase, Action_TableColumns, Action_TableRows
 from actions import Action_updateTableRow, Action_DropTable, Action_RemoveRowsFromTable
 from actions import Action_InsertNewRow, Action_OpenTableTabFormTreeItem, Action_OpenTableTabForNewTable
+from actions import Action_AddTable
 
 def noAction(a, b):
     pass
@@ -41,7 +42,7 @@ if __name__ == "__main__":
     open_database_action = Action_OpenDatabase(dialog_message, ui_tree_view)
     new_database_action = Action_NewDatabase(dialog_message, ui_tree_view)
     new_table_action = Action_OpenTableTabForNewTable(dialog_message, ui_tree_view, ui_tab_table)
-
+    new_table_save_action = Action_AddTable(dialog_message)
     drop_table_action = Action_DropTable(dialog_message, ui_tree_view)
     open_table_in_tab_action = Action_OpenTableTabFormTreeItem(dialog_message, ui_tree_view, ui_tab_table)
 
@@ -55,7 +56,8 @@ if __name__ == "__main__":
     ui_tree_view.add_actions(open_table_in_tab_action)
     ui_tree_view.add_actions(table_columns_action)
     ui_tree_view.add_actions(table_rows_action)
-    ui_tab_table.add_action(table_item_changed_action)
+
+    ui_tab_table.add_action(ui_tabTable.TAB_TYPE_TABLE, table_item_changed_action)
 
     # Setup dialogue instances
     dialogs = {}
@@ -93,7 +95,7 @@ if __name__ == "__main__":
     main_app.actionSettings.triggered.connect(dialogs["config"].new_window)
     main_app.actionQuit.triggered.connect(quit)
 
-    # add the test_db on start.
+    # add default db's on start.
     startup_databases = global_config.GlobalConfig.get("default_db").split("\n")
     for db in startup_databases:
         if not db.isspace() and len(db) > 0:
