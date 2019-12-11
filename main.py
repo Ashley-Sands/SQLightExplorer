@@ -42,7 +42,7 @@ if __name__ == "__main__":
     open_database_action = Action_OpenDatabase(dialog_message, ui_tree_view)
     new_database_action = Action_NewDatabase(dialog_message, ui_tree_view)
     new_table_action = Action_OpenTableTabForNewTable(dialog_message, ui_tree_view, ui_tab_table)
-    new_table_save_action = Action_AddTable(dialog_message)
+    new_table_save_action = Action_AddTable(dialog_message, ui_tree_view, ui_tab_table )
     drop_table_action = Action_DropTable(dialog_message, ui_tree_view)
     open_table_in_tab_action = Action_OpenTableTabFormTreeItem(dialog_message, ui_tree_view, ui_tab_table)
 

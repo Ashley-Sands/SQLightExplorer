@@ -144,6 +144,11 @@ class ui_tabTable:
 
         return verified
 
+    def close_current_tab(self):
+
+        tab_index = self.tab_widget.indexOf(self.get_current_tab_table()[0])
+        self.close_tab(tab_index)
+
     def close_tab(self, tab_index):
         # delete tab data
         if self.tab_widget.tabText(tab_index) in self.tabs:
