@@ -8,7 +8,7 @@ class WebQuerys:
         self.connection = None
 
     @staticmethod
-    def get_query_dict(database, table=None, sets=None, wheres=None, values=None):
+    def get_query_dict(database, table=None, sets=None, wheres=None, values=None, column_names=None, data_types=None, data_lens=None, default_values=None):
         """ Creates dict to send to server
 
         :param database:    database name
@@ -34,6 +34,18 @@ class WebQuerys:
         if type(values) is list or type(values) is tuple:
             dic["value_columns"] = values[0]
             dic["value_data"] = values[1]
+
+        if column_names is not None:
+            dic["column_names"] = column_names
+
+        if data_types is not None:
+            dic["data_types"] = data_types
+
+        if data_lens is not None:
+            dic["data_lengths"] = data_lens
+
+        if default_values is not None:
+            dic["default_values"] = default_values
 
         return dic
 
@@ -125,8 +137,7 @@ class WebQuerys:
 
         return WebQuerys.response_to_dict( response_status, response_data )
 
-
-    def new_table(self, database_name, table_name, columns, types):
+    def new_table(self, database_name, table_name, column_names, value_types, value_lengths, default_values):
         """ sends request to server to create new table
 
         :param database_name:   database name
@@ -135,7 +146,11 @@ class WebQuerys:
         :param types:           sql column types
         :return:                None
         """
-        pass
+        data = WebQuerys.get_query_dict(database_name, table_name, column_names=column_names,
+                                        data_types=value_types, data_lens=value_lengths, default_values=default_values )
+        response_status, response_data = self.send_query("POST", "/new_table", data)
+
+        return WebQuerys.response_to_dict( response_status, response_data )
 
     def database_and_table_exist(self, db_name, table_name):
         """Queries if a database and table exist"""

@@ -93,7 +93,7 @@ class BaseTable:
         return self.column_params[ [*self.column_params][column_id] ][1]
 
     def get_selected_rows(self):
-        """ Gets a list of selected rows"""
+        """ Gets a list of selected row id"""
         selected_items = self.table_widget.selectedItems()
         rows = []
 
@@ -110,6 +110,14 @@ class BaseTable:
     def get_column_values_for_rows(self, column_id, rows):
         """ Gets values for a single columns rows"""
         return [ self.table_widget.item(r, column_id).text() for r in rows ]
+
+    def get_row_values_for_cols(self, row_id, cols):
+        """ Gets values for a single columns rows"""
+        return [ self.table_widget.item(row_id, c).text() for c in cols ]
+
+    def get_row_widget_values_for_cols(self, row_id, cols):
+        """ Gets values for a single columns rows"""
+        return [ self.table_widget.cellWidget(row_id, c).currentText() for c in cols ]
 
     def verify_cell_data_type(self, value, value_type):
         """ (Virtual) Verifies cells data type is correct """
@@ -225,8 +233,29 @@ class NewTable_Table(BaseTable):
     def save_table_button_action(self):
         """ triggers save table action"""
 
+        columns = [i for i in range(self.table_widget.columnCount())]
+
+        act_data = {}
+        act_data["database_name"] = self.database_name
+        act_data["table_name"] = self.table_name
+        act_data["column_names"] = self.get_row_values_for_cols(0, columns)
+        act_data["data_types"] = self.get_row_widget_values_for_cols(1, columns)
+        act_data["data_lengths"] = self.get_row_values_for_cols(2, columns)
+        act_data["default_values"] = self.get_row_values_for_cols(3, columns)
+
+
+        # clear out any columns with no names and replace spaces with '_'
+        for i, v in enumerate(act_data["column_names"]):
+            if v.isspace() or v == "":
+                for k in act_data:
+                    if k != "table_name" and k != "database_name":
+                        act_data[k].pop(i)
+            else:
+                act_data["column_names"][i].replace(" ", "_")
+
         for act in self.save_table_actions:
-            pass
+            act.run_action(act_data, 1)
+
 
     def cell_content_changed(self, item):
 

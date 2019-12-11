@@ -408,9 +408,14 @@ class Action_InsertNewRow(Action_RemoveRowsFromTable):
 class Action_AddTable(Action):
 
     def request(self, data_object):
-        pass
+        print("BBBBBBBBBBBBBBBBBBBBBIP", data_object)
+        return self.web_query.new_table(data_object["database_name"], data_object["table_name"],
+                                        data_object["column_names"], data_object["data_types"],
+                                        data_object["data_lengths"], data_object["default_values"] )
+
 
     def action(self, data_object, response):
+        print("Bip")
         pass
 
     def valid_response_data(self, response):

@@ -58,6 +58,7 @@ if __name__ == "__main__":
     ui_tree_view.add_actions(table_rows_action)
 
     ui_tab_table.add_action(ui_tabTable.TAB_TYPE_TABLE, table_item_changed_action)
+    ui_tab_table.add_action(ui_tabTable.TAB_TYPE_NEW_TABLE, new_table_save_action)
 
     # Setup dialogue instances
     dialogs = {}
