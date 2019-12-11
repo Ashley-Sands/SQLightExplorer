@@ -1,6 +1,6 @@
 from web_querys import WebQuerys
 from ui_objects.ui_tab_table import ui_tabTable
-
+import re
 
 # TODO: there are a bunch on new methods in tab_table that would make most actions simpler
 class Action:
@@ -165,12 +165,17 @@ class Action_OpenTableTabForNewTable(Action):
         """check that the table does no already exist in the selected database
         :param data_object:     Dict containing key 'Text' with the value of the new table name
         """
-        print("bee")
-        if len(data_object["text"]) == 0 or data_object["text"].isspace():
-            self.dialog_message.set_message("No table name entered")
+        regex = "[a-zA-Z]"
+        if len(data_object["text"]) == 0 or data_object["text"].isspace()  :
+            self.dialog_message.set_message("Error: No table name entered")
             self.dialog_message.new_window()
             return None
-        print("ahh")
+        elif len( re.findall(regex, data_object["text"][0]) ) == 0:
+            print(data_object["text"][0], re.findall(regex, data_object["text"][0]))
+            self.dialog_message.set_message("Error: Database must start with a letter")
+            self.dialog_message.new_window()
+            return None
+
         selected_database, table_name = self.tree_view.get_selected_item_and_parent_text()
         table_name = data_object["text"]
         table_name.replace(" ", "_")
