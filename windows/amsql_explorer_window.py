@@ -184,7 +184,7 @@ class Ui_MainWindow(object):
         self.tab_view.addTab(self.tab_welcome, "")
 
         self.label.setText(_translate("MainWindow",
-                                      "<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:600;\">AMSql </span><span style=\" font-size:14pt; vertical-align:super;\">v0.2</span></p><p align=\"center\"><span style=\" font-size:12pt;\">AMSql is simple tool to view and edit sql lite databases over http/https</span></p><p><br/></p><p><span style=\" font-size:10pt;\">Once you have added a database, double click on a table nested in the database to view in a new tab :)</span></p><p><br/></p><p><span style=\" font-size:10pt;\">Featchers...</span></p></body></html>"))
+                                      "<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:600;\">AMSql </span><span style=\" font-size:14pt; vertical-align:super;\">v0.3</span></p><p align=\"center\"><span style=\" font-size:12pt;\">AMSql is simple tool to view and edit sql lite databases over http/https</span></p><p><br/></p><p><span style=\" font-size:10pt;\">Once you have added a database, double click on a table nested in the database to view in a new tab :)</span></p><p><br/></p><p><span style=\" font-size:10pt;\">Featchers...</span></p></body></html>"))
         self.tab_view.setTabText(self.tab_view.indexOf(self.tab_welcome), _translate("MainWindow", "Welcome"))
         self.tab_view.setCurrentIndex(self.tab_view.indexOf(self.tab_welcome))
 
