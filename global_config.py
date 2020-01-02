@@ -37,7 +37,9 @@ class GlobalConfig:
         if os.path.exists(GlobalConfig.FILE_NAME):
             with open(GlobalConfig.FILE_NAME, "r") as file:
                 file_str = file.read()
+
+            GlobalConfig.__CONFIG__ = json.loads(file_str)
+
         else:
             print("No Config to load!")
 
-        GlobalConfig.__CONFIG__ = json.loads(file_str)

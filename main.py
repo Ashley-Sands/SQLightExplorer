@@ -12,6 +12,7 @@ def noAction(a, b):
     pass
 
 if __name__ == "__main__":
+
     import amsql_config # setup config
     import global_config
     import sys
