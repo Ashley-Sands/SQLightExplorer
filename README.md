@@ -20,6 +20,7 @@ if using sqlite don't forget the add the default column 'rowid' for the unique k
 ###### Major
 [Fixed] Opening options crashes app
 [Fixed] Updating row crashes
+[Fixed] Fixed crash when there are not valueTypes in the config file (if theres event a config file)
 
 ### Limitations
 

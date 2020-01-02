@@ -1,8 +1,0 @@
-{
-  "host": "127.0.0.1",
-  "port": "8000",
-  "connection_timeout": 10,
-  "remote_root": "/amsql",
-  "default_db": "test_db\ncube_killer\npacman",
-  "value_types": "FLOAT\nINT\nVARCHAR\nBOOL"
-}

@@ -11,6 +11,9 @@ class GlobalConfig:
         """Gets the config data for name"""
         if config_name.lower() in GlobalConfig.__CONFIG__:
             return GlobalConfig.__CONFIG__[config_name.lower()]
+        else:
+            print("Error: Config not found", config_name)
+            return " ";
 
     @staticmethod
     def set(config_name, data):
@@ -19,7 +22,7 @@ class GlobalConfig:
 
     @staticmethod
     def is_set(config_name):
-        return config_name in GlobalConfig.__CONFIG__
+        return config_name.lower() in GlobalConfig.__CONFIG__
 
     @staticmethod
     def save_to_file():
