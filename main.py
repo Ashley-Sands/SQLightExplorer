@@ -95,7 +95,7 @@ if __name__ == "__main__":
     # bind 'File' context menu buttons
     main_app.actionShow_Welcome_Screen.triggered.connect(main_app.welcome_tab)
     main_app.actionSettings.triggered.connect(dialogs["config"].new_window)
-    main_app.actionQuit.triggered.connect(quit)
+    main_app.actionQuit.triggered.connect(sys.exit)
 
     # add default db's on start.
     startup_databases = global_config.GlobalConfig.get("default_db").split("\n")
@@ -105,5 +105,4 @@ if __name__ == "__main__":
 
     # Finally show the window :D
     MainWindow.show()
-
     sys.exit(app.exec_())
