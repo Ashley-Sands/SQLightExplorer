@@ -1,9 +1,9 @@
 # AMSqlite Explorer
 
 ### Running AMSqlite
-Run '/build/main.exe' to run the standalone build of the AMSqlite
-The AMSqlite has been build using PyInstaller 3.5
-To run AMSqlite from source run main.py using python 3.7 with PyQt5 (version 5.13.2) installed
+Run '/build/main.exe' to run the standalone build of the AMSqlite  
+The AMSqlite has been build using PyInstaller 3.5  
+To run AMSqlite from source run main.py using python 3.7 with PyQt5 (version 5.13.2) installed  
 
 ### Feather Set.
 - Database Feathers
