@@ -18,21 +18,19 @@
   - able to add and removed data types
   
 ### NOTES
-This has been designed to work with a backend server (Git repo: [GIT REPO HERE])
-Column data needs to have editable add to the data on the server side  
-if using sqlite don't forget the add the default column 'rowid' for the unique key, and it should be set to NOT editable 
+This has been designed to work with a backend server (Git repo: https://github.com/Ashley-Sands/Comp-280-PythonServer)
 
-### Limitations
-Designed to work with sqlLite.
+Column data needs to have editable added server end  
+if using sqlite don't forget to add the default column 'rowid' for the unique key, and it should be set to NOT editable 
 
 ### TODO
 [WIP] New Table  
 [ ] Destroy Database  
 [C] Fix major issues  
 [C] Add row  
-[WIP] Refactor  
--[WIP] Actions  
--[WIP] table tabs  
+[C] Refactor  
+-[C] Actions  
+-[C] table tabs  
 [ ] Undo steps?
 
 ### Know Bugs
