@@ -1,22 +1,35 @@
 # AMSqlite Explorer
 
+### Running AMSqlite
+Run '/build/main.exe' to run the standalone build of the AMSqlite
+The AMSqlite has been build using PyInstaller 3.5
+To run AMSqlite from source run main.py using python 3.7 with PyQt5 (version 5.13.2) installed
+
 ### Feather Set.
 - Database Feathers
   - Add new database
   - Open existing databases
   - Add New Tables
     - supports default values,
-    - DataTypes (also verifies Int, Floats and Varchars)
+    - max value length,
+    - and DataTypes (also verifies Int, Floats and Varchars)
   - Drop tables
   - Add new data rows to table
   - Remove rows from table
 - Options (config)
-  - able to define sever address
-  - able to define port
-  - able to define timeout
+  - able to define sever address,
+  - define port,
+  - define timeout,
   - add default db to load
-  - able to add and removed data types
-  
+  - and add data types
+
+### Using AMSqlite
+To open a table in a new tab, double click on the table name listed below 
+database (left side) (also refreshes table view if open)   
+Double click on a table cell to edit the value  
+When added a new table any column names left empty will NOT be added  
+To changes the app's settings go to ```Options``` located in ```File``` in the tool bar
+ 
 ### NOTES
 This has been designed to work with a backend server (Git repo: https://github.com/Ashley-Sands/Comp-280-PythonServer)
 
