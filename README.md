@@ -5,8 +5,8 @@ Run '/build/main.exe' to run the standalone build of the AMSqlite
 The AMSqlite has been build using PyInstaller 3.5  
 To run AMSqlite from source run main.py using python 3.7 with PyQt5 (version 5.13.2) installed  
 
-### Feather Set.
-- Database Feathers
+### Features Set.
+- Database Features
   - Add new database
   - Open existing databases
   - Add New Tables
@@ -16,6 +16,7 @@ To run AMSqlite from source run main.py using python 3.7 with PyQt5 (version 5.1
   - Drop tables
   - Add new data rows to table
   - Remove rows from table
+  - update tables
 - Options (config)
   - able to define sever address,
   - define port,
