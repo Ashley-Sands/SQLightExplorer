@@ -46,6 +46,7 @@ if using sqlite don't forget to add the default column 'rowid' for the unique ke
 -[C] Actions  
 -[C] table tabs  
 [ ] Undo steps?
+[ ] Update text in dialogue windows
 
 ### Know Bugs
 ###### Major
