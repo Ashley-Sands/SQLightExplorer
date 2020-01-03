@@ -43,8 +43,15 @@ class BaseTable:
 
     def cell_selected_item_changed(self, item, prv_item):
         """(Virtual) called when the table item selection has changed"""
+
         self.selected_cel = item
-        self.selected_cel_value = item.text()
+
+        if self.selected_cel is None:
+            self.selected_cel = ""
+        else:
+            self.selected_cel_value = item.text()
+
+
 
     def cell_content_changed(self, item):
         """(Abstract) called when cell content has changes in table """

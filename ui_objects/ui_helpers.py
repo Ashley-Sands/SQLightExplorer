@@ -85,7 +85,7 @@ class UiHelpers:
         :param column_params:  list of tuples of params for column. (editable, type)
         :return:               None
         """
-        column_names = [*column_params]  # get out keys are a list
+        column_names = [*column_params]  # get our keys are as list
         table.setRowCount( len(data) )
 
         # add our rows of columns

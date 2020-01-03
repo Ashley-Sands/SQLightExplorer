@@ -311,7 +311,6 @@ class Action_TableRows(Action):
         :param response:        data from request
         :return:                None
         """
-
         if self.tree_view is not None:
             db_name, table_name = self.tree_view.get_selected_item_and_parent_text()
         else:
@@ -320,7 +319,6 @@ class Action_TableRows(Action):
 
         ui_table = self.tab_table.get_tab_ui_table(ui_tabTable.TAB_TYPE_TABLE, db_name, table_name)
         ui_table.set_rows(response)
-
 
     def valid_response_data(self, response):
         return type(response) is list
