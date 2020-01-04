@@ -54,5 +54,5 @@ if using sqlite don't forget to add the default column 'rowid' for the unique ke
 [Fixed] Updating row crashes  
 [Fixed] Fixed crash when there are not valueTypes in the config file (if theres event a config file)  
 [Fixed] Fix crash when removing the last row from table
-
+[ ] Fix tab not reopening once closed
 
