@@ -150,10 +150,12 @@ class ui_tabTable:
         self.close_tab(tab_index)
 
     def close_tab(self, tab_index):
-        # delete tab data
-        if self.tab_widget.tabText(tab_index) in self.tabs:
-            del self.tabs[self.tab_widget.tabText(tab_index)]
 
-        # bye bye, tab :)
+        tab_name = self.tab_widget.tabText(tab_index).lower();
+
+        # bye bye, tab, i will never forget you...
         self.tab_widget.removeTab(tab_index)
 
+        # ...Oh, wait, what!?!?
+        if tab_name in self.tabs:
+            del self.tabs[tab_name]
